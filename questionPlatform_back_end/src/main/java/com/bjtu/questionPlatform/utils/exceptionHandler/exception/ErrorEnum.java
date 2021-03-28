@@ -12,6 +12,7 @@ public enum ErrorEnum implements BaseErrorInfoInterface, Serializable {
     DUPLICATE_USERNAME(400,"该用户名已被注册"),
     SIGNATURE_NOT_MATCH(401,"Token验证失败"),
     ERROR_NICKNAME_OR_PASSWORD(401,"用户名或密码错误"),
+    ERROR_VERIFY_CODE(401,"验证码错误"),
     NOT_FOUND(404, "未找到该资源!"),
     INTERNAL_SERVER_ERROR(500, "服务器内部错误!"),
     SERVER_BUSY(503,"服务器正忙，请稍后再试!")

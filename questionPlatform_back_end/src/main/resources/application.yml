@@ -1,6 +1,11 @@
 server:
   port: 8090
 spring:
+  mail:
+    host: smtp.sina.com
+    username: gk2018bingo@sina.com
+    password: 2989ce3b3c5c9f4a
+    default-encoding: utf-8
   datasource:
     #    url: jdbc:mysql://39.107.205.151:3306/fwwb_dataset?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
@@ -20,3 +25,8 @@ jwt:
   header: token
   secret: CodingLiOOT
   expiration: 2400000
+
+mail:
+  fromMail:
+    addr : gk2018bingo@sina.com
+    subject: 主题：邮件验证码
