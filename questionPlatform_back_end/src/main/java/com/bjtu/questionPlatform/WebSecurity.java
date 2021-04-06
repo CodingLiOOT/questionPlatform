@@ -45,6 +45,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/user/login").permitAll()
+                .antMatchers("/api/user/sendVerifyCode").permitAll()
+                .antMatchers("/api/user/register").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .antMatchers("/error").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()  // 允许匿名访问

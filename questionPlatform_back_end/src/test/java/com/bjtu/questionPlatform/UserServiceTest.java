@@ -19,7 +19,7 @@ public class UserServiceTest extends FrameworkApplicationTests {
 
     @Test
     public void loginTest() {
-        System.out.println(userService.userLogin("Ljz123hhh", "Ljz123hhh"));
+        //System.out.println(userService.userLogin("Ljz123hhh", "Ljz123hhh",0));
     }
 
     @Test

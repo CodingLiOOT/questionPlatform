@@ -19,23 +19,24 @@ import java.util.Random;
 @Slf4j
 @Component
 public class VerifyCodeUtils {
-    private Jedis jedis=JedisInstance.getInstance().getResource();
+    private Jedis jedis = JedisInstance.getInstance().getResource();
 
-    public String generateCode(String key){
+    public String generateCode(String key) {
         StringBuilder str = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
             str.append(random.nextInt(10));
         }
-        String code=str.toString();
-        jedis.setex(key,300,code);
+        String code = str.toString();
+        jedis.setex(key, 300, code);
         return code;
     }
 
-    public boolean verifyCode(String key,String value){
-        if(!value.equals(jedis.get(key))){
+    public boolean verifyCode(String key, String value) {
+        if (!value.equals(jedis.get(key))) {
             throw new DefinitionException(ErrorEnum.ERROR_VERIFY_CODE);
         }
+        jedis.del(key);
         return true;
     }
 

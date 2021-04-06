@@ -8,6 +8,7 @@ import com.bjtu.questionPlatform.utils.exceptionHandler.exception.DefinitionExce
 import com.bjtu.questionPlatform.utils.exceptionHandler.exception.ErrorEnum;
 import com.bjtu.questionPlatform.utils.token.JWTUtils;
 import com.bjtu.questionPlatform.utils.token.JwtUser;
+import com.bjtu.questionPlatform.utils.verifyCodeUtils.VerifyCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,17 +33,24 @@ public class UserServiceImpl implements UserService {
     private JwtUserServiceImpl jwtUserService;
     @Autowired
     private EncodeUtil encodeUtil;
+    @Autowired
+    private VerifyCodeUtils verifyCodeUtils;
 
     @Override
-    public String userLogin(String username, String password) {
-        User user = userMapper.selectUserByUserName(username);
-        if (user == null || !encodeUtil.verifyEncode(password, user.getMail(), user.getPassword())) {
-            throw new DefinitionException(ErrorEnum.ERROR_NICKNAME_OR_PASSWORD);
+    public String userLogin(User user) {
+        if (user.getLoginType() == 1) {
+            verifyCodeUtils.verifyCode(user.getMail(), user.getVerifyCode());
+        } else {
+            User userBean = userMapper.selectUserByUserName(user.getUsername());
+            if (user == null) {
+                encodeUtil.verifyEncode(user.getPassword(), user.getMail(), user.getPassword());
+            }
         }
-        JwtUser userDetails = (JwtUser) jwtUserService.loadUserByUsername(username);
+        JwtUser userDetails = (JwtUser) jwtUserService.loadUserByUsername(user.getUsername());
         String token = jwtUtils.generateToken(userDetails);
         return token;
     }
+
 
     @Override
     public void register(User user) {

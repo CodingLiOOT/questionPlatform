@@ -4,7 +4,7 @@ import com.bjtu.questionPlatform.entity.User;
 
 public interface UserService {
 
-    String userLogin(String username,String password);
+    String userLogin(User user);
 
     void register(User user);
 }

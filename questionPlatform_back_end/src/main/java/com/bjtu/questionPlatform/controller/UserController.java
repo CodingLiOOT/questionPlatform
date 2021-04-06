@@ -1,12 +1,12 @@
 package com.bjtu.questionPlatform.controller;
 
 import com.bjtu.questionPlatform.entity.User;
+import com.bjtu.questionPlatform.service.MailService;
 import com.bjtu.questionPlatform.service.UserService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,19 +22,21 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private MailService mailService;
 
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/login")
     public Pair<String, String> login(@RequestBody User user) {
-        return Pair.of("token", userService.userLogin(user.getUsername(), user.getPassword()));
+        return Pair.of("token", userService.userLogin(user));
     }
 
     @CrossOrigin
     @ResponseResultBody
-    @PostMapping(value = "/test")
-    @PreAuthorize("hasAnyRole('admin')")
-    public String test(@RequestBody User user) {
-        return "hello";
+    @PostMapping(value = "/sendVerifyCode")
+    public void sendVerifyCode(@RequestBody User user) {
+        mailService.sendMail(user.getMail());
     }
+
 }

@@ -16,6 +16,10 @@ import java.util.List;
 @Data
 public class User implements Serializable {
 
+    private Integer loginType;
+
+    private String verifyCode;
+
     private String id;
 
     private String avatar;
