@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 public class User implements Serializable {
 
-    private Integer id;
+    private String id;
 
     private String avatar;
 

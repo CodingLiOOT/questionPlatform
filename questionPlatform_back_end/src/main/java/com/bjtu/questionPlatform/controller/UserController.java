@@ -3,8 +3,8 @@ package com.bjtu.questionPlatform.controller;
 import com.bjtu.questionPlatform.entity.User;
 import com.bjtu.questionPlatform.service.UserService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
-import com.bjtu.questionPlatform.utils.resultUtils.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,18 +26,15 @@ public class UserController {
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/login")
-    public String login(@RequestBody User user){
-        log.info("enter controller ");
-        return userService.userLogin(user.getUsername(),user.getPassword());
-        //return Result.success(token,"登录成功").toString();
+    public Pair<String, String> login(@RequestBody User user) {
+        return Pair.of("token", userService.userLogin(user.getUsername(), user.getPassword()));
     }
 
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/test")
     @PreAuthorize("hasAnyRole('admin')")
-    public String test(@RequestBody User user){
-        log.info("enter controller ");
+    public String test(@RequestBody User user) {
         return "hello";
     }
 }

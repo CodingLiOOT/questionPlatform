@@ -26,7 +26,9 @@ jwt:
   secret: CodingLiOOT
   expiration: 2400000
 
+encode:
+  secret: CodingLiOOT
 mail:
   fromMail:
-    addr : gk2018bingo@sina.com
+    addr: gk2018bingo@sina.com
     subject: 主题：邮件验证码

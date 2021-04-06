@@ -23,7 +23,7 @@ import java.util.List;
 @Data
 public class JwtUser implements UserDetails {
 
-    private Integer ID;
+    private String ID;
     private String username;
     private String password;
     private Integer state;
