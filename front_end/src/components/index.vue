@@ -3,7 +3,7 @@
     <h1>主页面</h1>
     欢迎你!
     <el-button type="primary" @click="test()">test</el-button>
-    <span v-if="token"> {{ user.name }}
+    <span v-if="token">
             <el-button type="warning" @click="logout">注销</el-button>
         </span>
     <el-button v-else type="success" @click="login">点击登录</el-button>

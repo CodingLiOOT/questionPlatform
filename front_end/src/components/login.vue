@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       dataForm: {
-        userName: '',
+        username: '',
         password: ''
       },
       dataRule: {
@@ -50,8 +50,9 @@ export default {
         if (valid) {
 
           this.$API.p_Login({
-            userName: this.dataForm.userName,
+            username: this.dataForm.userName,
             password: this.dataForm.password,
+            loginType: 0
           })
             .then(
               res => {

@@ -42,8 +42,8 @@ public class UserServiceImpl implements UserService {
             verifyCodeUtils.verifyCode(user.getMail(), user.getVerifyCode());
         } else {
             User userBean = userMapper.selectUserByUserName(user.getUsername());
-            if (user == null) {
-                encodeUtil.verifyEncode(user.getPassword(), user.getMail(), user.getPassword());
+            if (user == null||!encodeUtil.verifyEncode(user.getPassword(), userBean.getMail(), userBean.getPassword())) {
+                throw new DefinitionException(ErrorEnum.ERROR_NICKNAME_OR_PASSWORD);
             }
         }
         JwtUser userDetails = (JwtUser) jwtUserService.loadUserByUsername(user.getUsername());
