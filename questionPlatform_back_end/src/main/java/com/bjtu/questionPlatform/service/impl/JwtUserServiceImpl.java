@@ -38,9 +38,7 @@ public class JwtUserServiceImpl implements UserDetailsService {
         List<Role> roles=userMapper.selectRoleByUserName(s);
         user.setRoles(roles);
         List<SimpleGrantedAuthority> collect =new ArrayList<>();
-        roles.forEach(role -> {
-            collect.add(new SimpleGrantedAuthority("ROLE_"+role.getRoleName()));
-        });
+        roles.forEach(role -> collect.add(new SimpleGrantedAuthority("ROLE_"+role.getRoleName())));
         return new JwtUser(user.getId(),user.getUsername(), user.getPassword(), user.getState(), collect);
     }
 }

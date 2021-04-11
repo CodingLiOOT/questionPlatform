@@ -19,7 +19,7 @@ import java.util.Random;
 @Slf4j
 @Component
 public class VerifyCodeUtils {
-    private Jedis jedis = JedisInstance.getInstance().getResource();
+    private final Jedis jedis = JedisInstance.getInstance().getResource();
 
     public String generateCode(String key) {
         StringBuilder str = new StringBuilder();

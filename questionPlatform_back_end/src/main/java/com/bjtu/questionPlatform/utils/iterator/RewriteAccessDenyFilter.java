@@ -24,7 +24,7 @@ import java.io.PrintWriter;
 @Component
 public class RewriteAccessDenyFilter implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
         httpServletResponse.setCharacterEncoding("utf-8");
         httpServletResponse.setContentType("application/json; charset=utf-8");
         PrintWriter writer = httpServletResponse.getWriter();

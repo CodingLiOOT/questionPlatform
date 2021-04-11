@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.util.Random;
 
 /**
  * @program: questionPlatform_back_end
@@ -42,7 +41,6 @@ public class MailServiceImpl implements MailService {
         Context context = new Context();
         context.setVariable("verifyCode", verifyCode);
 
-        String emailContent = templateEngine.process("emailTemplate", context);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(from);
         message.setTo(to);
@@ -50,7 +48,7 @@ public class MailServiceImpl implements MailService {
         message.setText("您的验证码为：" + verifyCode + ", 有效时间为5分钟");
         try {
             mailSender.send(message);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
     }

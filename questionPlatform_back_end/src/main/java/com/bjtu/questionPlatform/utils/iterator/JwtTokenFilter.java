@@ -37,7 +37,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String authHeader = request.getHeader(jwtUtils.getHeader());
-        if (authHeader != null && StringUtils.isNotEmpty(authHeader)) {
+        if (StringUtils.isNotEmpty(authHeader)) {
             String username = jwtUtils.getUsernameFromToken(authHeader);
             log.info(username);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

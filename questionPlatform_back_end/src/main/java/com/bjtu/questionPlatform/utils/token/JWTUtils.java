@@ -94,7 +94,6 @@ public class JWTUtils implements Serializable {
     public Boolean validateToken(String token,UserDetails userDetails){
         JwtUser jwtUser =(JwtUser) userDetails;
         String username=getUsernameFromToken(token);
-        Boolean is=isTokenExpired(token);
         if (!(username.equals(jwtUser.getUsername()))||isTokenExpired(token)){
             throw new DefinitionException(ErrorEnum.SIGNATURE_NOT_MATCH);
         }

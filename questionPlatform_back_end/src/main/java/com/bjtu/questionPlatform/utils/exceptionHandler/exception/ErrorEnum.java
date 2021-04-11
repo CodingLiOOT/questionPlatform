@@ -18,8 +18,8 @@ public enum ErrorEnum implements BaseErrorInfoInterface, Serializable {
     SERVER_BUSY(503,"服务器正忙，请稍后再试!")
     ;
 
-    private Integer errorCode;
-    private String errorMsg;
+    private final Integer errorCode;
+    private final String errorMsg;
 
     @Override
     public Integer getResultCode() {
