@@ -40,6 +40,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.cors();
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class) // 添加token过滤器
                 .exceptionHandling().authenticationEntryPoint(rewriteAccessDenyFilter)// 凭证无效时的处理
                 .and()

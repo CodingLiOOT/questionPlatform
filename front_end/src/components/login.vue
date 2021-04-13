@@ -55,8 +55,8 @@ export default {
             loginType: 0
           })
             .then(
-              res => {
-                this.$store.commit('login', res);
+              data => {
+                this.$store.commit('login', data);
                 //this.$router.replace('/index')
                 let redirect=decodeURIComponent(this.$route.query.redirect||'/index');
                 this.$router.push({path:redirect});

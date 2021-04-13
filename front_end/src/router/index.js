@@ -45,6 +45,11 @@ const router = new Router({
       path: '/register',
       name: 'register',
       component: () => import("../components/Register")
+    },
+    {
+      path: '/fileDemo',
+      name:'fileDemo',
+      component:()=>import("../components/FileDemo")
     }
   ],
 })

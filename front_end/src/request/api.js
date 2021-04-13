@@ -1,4 +1,4 @@
-import {get,post} from './http'
+import {get,post,uploadFile} from './http'
 
 
 export default class api {
@@ -23,4 +23,6 @@ export default class api {
    * @returns {Promise<unknown>}
    */
   static g_getAllUser=p=>get('/user/getAllUser',p);
+
+  static p_testUpload=p=>uploadFile('/file/upload',p);
 }
