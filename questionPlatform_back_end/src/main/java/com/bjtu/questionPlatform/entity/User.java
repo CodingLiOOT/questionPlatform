@@ -1,5 +1,6 @@
 package com.bjtu.questionPlatform.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,7 +21,7 @@ public class User implements Serializable {
 
     private String verifyCode;
 
-    private String id;
+    private String ID;
 
     private String avatar;
 
@@ -28,6 +29,7 @@ public class User implements Serializable {
 
     private String password;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp createdDate;
 
     private String phone;

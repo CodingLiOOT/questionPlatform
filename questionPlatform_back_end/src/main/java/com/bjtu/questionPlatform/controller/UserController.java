@@ -39,4 +39,11 @@ public class UserController {
         mailService.sendMail(user.getMail());
     }
 
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/register")
+    public void register(@RequestBody User user){
+        userService.register(user);
+    }
+
 }

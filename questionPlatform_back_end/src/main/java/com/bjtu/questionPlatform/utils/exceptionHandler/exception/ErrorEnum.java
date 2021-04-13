@@ -9,7 +9,7 @@ public enum ErrorEnum implements BaseErrorInfoInterface, Serializable {
     SUCCESS(200,"成功！"),
     BODY_NOT_MATCH(400,"请求数据格式不符"),
     ACCESS_DENY(403,"您没有访问的权限"),
-    DUPLICATE_USERNAME(400,"该用户名已被注册"),
+    DUPLICATE_USERNAME_OR_MAIL(400,"该用户名或邮箱已被注册"),
     SIGNATURE_NOT_MATCH(401,"Token验证失败"),
     ERROR_NICKNAME_OR_PASSWORD(401,"用户名或密码错误"),
     ERROR_VERIFY_CODE(401,"验证码错误"),

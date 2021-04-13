@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 
 /**
  * @program: framework
@@ -53,6 +56,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(User user) {
-
+        List<User> users=userMapper.selectUserByNameOrMail(user.getUsername(),user.getMail());
+        if(users.size()!=0){
+            throw new DefinitionException(ErrorEnum.DUPLICATE_USERNAME_OR_MAIL);
+        }
+        user.setID(UUID.randomUUID().toString());
+        user.setPassword(encodeUtil.genCode(user.getPassword(),user.getMail()));
+        userMapper.register(user);
     }
 }
