@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import Home from "../components/Home"
 import index from '../components/index'
 import store from "../vuex";
+import MainPage from "../components/MainPage";
+import Upload from "../components/Upload";
+import List from "../components/List";
 
 Vue.use(Router)
 
@@ -45,6 +48,24 @@ const router = new Router({
       path: '/register',
       name: 'register',
       component: () => import("../components/Register")
+    },
+    {
+      path: '/MainPage',
+      name:'MainPage',
+      redirect:'/MainPage/Upload',
+      component:MainPage,
+      children:[
+        {
+          path:'Upload',
+          name:'Upload',
+          component:Upload,
+        },
+        {
+          path:'List',
+          name:'List',
+          component:List,
+        }
+      ]
     },
     {
       path: '/fileDemo',
