@@ -2,20 +2,44 @@
   <div class="login-wrapper">
     <div class="login-content">
       <div class="login-main">
-        <h2 class="login-main-title">管理员登录</h2>
-        <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="login()" status-icon>
-          <el-form-item prop="userName">
-            <el-input v-model="dataForm.userName" placeholder="帐号"></el-input>
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
-          </el-form-item>
-          <router-link to="/forget">忘记密码</router-link>
-          <router-link to="/register">注册账号</router-link>
-          <el-form-item>
-            <el-button class="login-btn-submit" type="primary" @click="login()">登录</el-button>
-          </el-form-item>
-        </el-form>
+        <el-tabs v-model="activeName" @tab-click="handleClick">
+          <el-tab-pane label="账号登录" name="first">
+            <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="login()" status-icon>
+              <el-form-item prop="userName">
+                <el-input v-model="dataForm.userName" placeholder="帐号"></el-input>
+              </el-form-item>
+              <el-form-item prop="password">
+                <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
+              </el-form-item>
+              <router-link to="/forget">忘记密码</router-link>
+              <router-link to="/register">注册账号</router-link>
+              <el-form-item>
+                <el-button class="login-btn-submit" type="primary" @click="login()">登录</el-button>
+              </el-form-item>
+            </el-form>
+          </el-tab-pane>
+
+          <el-tab-pane label="邮箱登录" name="second">
+            <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="login()" status-icon>
+
+              <el-form-item prop="email">
+                <el-input v-model="dataForm.userName" type="email" placeholder="邮箱"></el-input>
+              </el-form-item>
+
+              <el-form-item prop="emailCode" :inline="true" >
+                <el-input v-model="dataForm.password" placeholder="验证码" style="width:230px"></el-input>
+                <el-button :disabled="disabled" @click="sendcode" class="sendcode" style="width:125px">{{btntxt}}</el-button>
+              </el-form-item>
+
+              <el-form-item>
+                <el-button class="login-btn-submit" type="primary" @click="login()">登录</el-button>
+              </el-form-item>
+
+            </el-form>
+          </el-tab-pane>
+        </el-tabs>
+
+
       </div>
     </div>
   </div>
@@ -39,11 +63,26 @@ export default {
           required: true,
           message: '密码不能为空',
           trigger: 'blur'
-        }]
-      }
+        }],
+        email: [{
+          required: true,
+          message: '邮箱不能为空',
+          trigger: 'blur'
+        }],
+        emailCode: [{
+          required: true,
+          message: '验证码不能为空',
+          trigger: 'blur'
+        }],
+      },
+      activeName: 'first',
+      disabled:false,
+      time:5,
+      btntxt:"发送验证码",
     }
   },
   name: 'login',
+
   methods: {
     login() {
       this.$refs.dataForm.validate((valid) => {
@@ -69,7 +108,27 @@ export default {
           return false
         }
       })
-    }
+    },
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
+    sendcode(){
+      this.time=5
+      this.timer();
+    },
+    //发送手机验证码倒计时
+    timer() {
+      if (this.time > 0) {
+        this.disabled=true;
+        this.time--;
+        this.btntxt=this.time+"s后重新发送";
+        setTimeout(this.timer, 1000);
+      } else{
+        this.time=0;
+        this.btntxt="发送验证码";
+        this.disabled=false;
+      }
+    },
   }
 }
 </script>

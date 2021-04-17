@@ -2,7 +2,8 @@
   <div class="register-wrapper">
     <div class="register-content">
       <div class="register-main">
-        <h2 class="register-main-title">管理员注册</h2>
+        <router-link to="/login" style="float: right">返回登录</router-link>
+        <h2 class="register-main-title" align="left">注册</h2>
         <el-form :model="RegisterForm" :rules="RegisterRule" ref="RegisterForm" @keyup.enter.native="login()"
                  status-icon>
           <el-form-item prop="userName">
