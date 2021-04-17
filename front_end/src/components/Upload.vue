@@ -18,7 +18,17 @@
         <el-button size="small" type="primary">上传文件</el-button>
         <span slot="tip" class="text">请上传.pdf文件</span>
       </el-upload>
-
+      <div class="inputTag">
+        <child-page v-for="(item,index) in items"
+                    :key="index"
+                    :index="index"
+                    :items="items"
+                    @deleteIndex="del"
+                    @uploadData="getData">
+        </child-page>
+        <el-button type="primary" icon="el-icon-circle-plus" @click="add" round>添加</el-button>
+        <el-button type="success" icon="el-icon-success" round @click="send">提交</el-button>
+      </div>
     </el-col>
     <el-col :span="12">
       <iframe :src="pathUrl" width="100%" height="100%"></iframe>
@@ -28,13 +38,42 @@
 </template>
 
 <script>
+import ChildPage from "./ChildPage";
 export default {
   data () {
     return {
-      pathUrl:''
+      pathUrl:'',
+      items: [{}],
+      dataRec: []
     }
   },
+  components: {
+    ChildPage
+  },
   methods:{
+    //  add tag
+    add: function () {
+      this.items.push({text: ''})
+    },
+    // delete tag
+    del: function (index) {
+      //  至少有一个标签词
+      if (this.items.length !== 1) {
+        this.items.splice(index, 1)
+        console.log('deleted:', JSON.stringify(this.items))
+      }
+    },
+    //  get the data from child
+    getData: function (val) {
+      let index = val.index
+      this.items[index] = val.data
+      console.log('I got the data:', JSON.stringify(this.items))
+    },
+    send(){
+      // this.items[0].text是第一个关键词
+      alert(JSON.stringify(this.items));
+    },
+
     // 关于上传pdf部分 start
     handleSuccess (res, file) {  // 上传成功的钩子
       console.log(file,'成功文件')
@@ -107,3 +146,13 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.inputTag{
+  margin-top: 2rem;
+}
+.el-icon-circle-plus{
+  color: #6ba2db;
+  size: A3;
+}
+</style>
