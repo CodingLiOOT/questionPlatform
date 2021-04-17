@@ -6,6 +6,7 @@
     </el-header>
     <el-main>
       <router-link to="/login">Go to login</router-link>
+      <router-link to="/MainPage">可研报告编制单位</router-link>
     </el-main>
     <el-button type="primary" @click="test()">test</el-button>
   </el-container>
