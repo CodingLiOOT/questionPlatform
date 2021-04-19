@@ -97,6 +97,12 @@ export default {
     // 选中查看某一条
     handleClick(row) {
       console.log(row);
+      this.$router.push({
+        path: 'ReportDetail',
+        query: {
+          id: row.id,
+        }
+      });
     },
     filterTag(value, row) {
       for(let item in row.tag){

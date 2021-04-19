@@ -6,6 +6,7 @@ import store from "../vuex";
 import MainPage from "../components/MainPage";
 import Upload from "../components/Upload";
 import List from "../components/List";
+import ReportDetail from "../components/ReportDetail";
 
 Vue.use(Router)
 
@@ -64,6 +65,11 @@ const router = new Router({
           path:'List',
           name:'List',
           component:List,
+        },
+        {
+          path:'ReportDetail',
+          name:'ReportDetail',
+          component:ReportDetail,
         }
       ]
     },

@@ -2,7 +2,7 @@
   <div class="hello">
     <el-row>
       <el-col :span="6">
-        <p>标签词：{{index}}</p>
+        <p>标签词：{{index+1}}</p>
       </el-col>
       <el-col :span="14">
         <el-input v-model="tags.text" placeholder="请输入标签词"></el-input>
