@@ -23,12 +23,12 @@
             <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="login()" status-icon>
 
               <el-form-item prop="email">
-                <el-input v-model="dataForm.userName" type="email" placeholder="邮箱"></el-input>
+                <el-input v-model="dataForm.email" type="email" placeholder="邮箱"></el-input>
               </el-form-item>
 
               <el-form-item prop="emailCode" :inline="true" >
-                <el-input v-model="dataForm.password" placeholder="验证码" style="width:230px"></el-input>
-                <el-button :disabled="disabled" @click="sendcode" class="sendcode" style="width:125px">{{btntxt}}</el-button>
+                <el-input v-model="dataForm.emailCode" placeholder="验证码" style="width:230px"></el-input>
+                <el-button :disabled="disabled" @click="sendCode" class="sendcode" style="width:125px">{{btnTxt}}</el-button>
               </el-form-item>
 
               <el-form-item>
@@ -50,8 +50,10 @@ export default {
   data() {
     return {
       dataForm: {
-        username: '',
-        password: ''
+        userName: '',
+        password: '',
+        email: '',
+        emailCode: ''
       },
       dataRule: {
         userName: [{
@@ -77,55 +79,98 @@ export default {
       },
       activeName: 'first',
       disabled:false,
-      time:5,
-      btntxt:"发送验证码",
+      time:30,
+      btnTxt:"发送验证码",
+      type:0
     }
   },
   name: 'login',
 
   methods: {
     login() {
-      this.$refs.dataForm.validate((valid) => {
-        if (valid) {
+      if(this.type===0) {
+        //console.log(this.dataForm.userName);
+        //console.log(this.dataForm.password);
+        this.$refs.dataForm.validate((valid) => {
+          if (valid) {
 
-          this.$API.p_Login({
-            username: this.dataForm.userName,
-            password: this.dataForm.password,
-            loginType: 0
-          })
-            .then(
-              data => {
-                this.$store.commit('login', data);
-                //this.$router.replace('/index')
-                let redirect=decodeURIComponent(this.$route.query.redirect||'/index');
-                this.$router.push({path:redirect});
-              }
-            )
-            .catch(err => {
-
+            this.$API.p_Login({
+              username: this.dataForm.userName,
+              password: this.dataForm.password,
+              loginType: 0
             })
-        } else {
-          return false
-        }
-      })
+              .then(
+                data => {
+                  this.$store.commit('login', data);
+                  //this.$router.replace('/index')
+                  let redirect = decodeURIComponent(this.$route.query.redirect || '/index');
+                  this.$router.push({path: redirect});
+                }
+              )
+              .catch(err => {
+
+              })
+          } else {
+            return false
+          }
+        })
+      }
+      else
+      {
+        //console.log(this.dataForm.email);
+        //console.log(this.dataForm.emailCode);
+        this.$refs.dataForm.validate((valid) => {
+          if (valid) {
+
+            this.$API.p_Login({
+              mail: this.dataForm.email,
+              verifyCode: this.dataForm.emailCode,
+              loginType: 1
+            })
+              .then(
+                data => {
+                  this.$store.commit('login', data);
+                  //this.$router.replace('/index')
+                  let redirect = decodeURIComponent(this.$route.query.redirect || '/index');
+                  this.$router.push({path: redirect});
+                }
+              )
+              .catch(err => {
+
+              })
+          } else {
+            return false
+          }
+        })
+      }
     },
+    //切换不同登录方式
     handleClick(tab, event) {
-      console.log(tab, event);
+      this.type = tab.index;
+      //console.log("now is " + tab.index);
+      console.log(tab,event);
     },
-    sendcode(){
-      this.time=5
+    //发送邮箱验证码，30秒后重新发送
+    sendCode(){
+      this.time=30
       this.timer();
+      this.$API.p_SendCode({
+        mail: this.dataForm.email
+      })
+      .then(
+
+      )
     },
     //发送手机验证码倒计时
     timer() {
       if (this.time > 0) {
         this.disabled=true;
         this.time--;
-        this.btntxt=this.time+"s后重新发送";
+        this.btnTxt=this.time+"s后重新发送";
         setTimeout(this.timer, 1000);
       } else{
         this.time=0;
-        this.btntxt="发送验证码";
+        this.btnTxt="发送验证码";
         this.disabled=false;
       }
     },
