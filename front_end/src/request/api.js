@@ -26,7 +26,7 @@ export default class api {
 
   /**
    * 邮箱验证码接口，发送邮箱到后端
-   * @param {Object} p [发送的参数]
+   * @param {Object} p [发送的参数：邮箱验证码]
    * @returns {Promise<unknown>}
    */
   static p_SendCode=p=>post('/user/sendVerifyCode',p);
