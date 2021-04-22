@@ -1,6 +1,8 @@
 package com.bjtu.questionPlatform.utils.ahpAlgorithm;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @program: questionPlatform_back_end
@@ -11,13 +13,14 @@ import java.util.Arrays;
  *
  **/
 public class AhpUtil {
-     
+
     //参考:https://wenku.baidu.com/view/887355e6b90d6c85ed3ac63c.html
     private int numOfWeight;//权重个数
     private double[] weightList;
     private double[][] weightMatrix;
     private double[] ciList;//归一化权重列表
     private double[] finalWeightList;//最终权重结果
+    private List<Double> finalWeight;
 
 //    private static final AhpUtil acw = new AhpUtil();//单例模式
 
@@ -27,6 +30,7 @@ public class AhpUtil {
         this.weightMatrix=new double[numOfWeight][numOfWeight];
         this.ciList=new double[numOfWeight];
         this.finalWeightList=new double[numOfWeight];
+        this.finalWeight= new ArrayList<>(numOfWeight);
         for(int i=0;i<numOfWeight;i++){
             double temp=0.0;
             for(int j =0;j<numOfWeight;j++){
@@ -51,20 +55,26 @@ public class AhpUtil {
             }
         }
 
-        double a=0.0;
+        double temp=0.0;
         for(int i=0;i<numOfWeight;i++){
-            a+=finalWeightList[i];
+            temp+=finalWeightList[i];
         }
 
         for(int i=0;i<numOfWeight;i++){
-            finalWeightList[i]/=a;
+            finalWeightList[i]/=temp;
+        }
+
+        for (int i = numOfWeight-1; i >= 0; i--) {
+            finalWeight.add(finalWeightList[i]);
         }
     }
 
 
-    public double[] getWeight(){
-        return this.finalWeightList;
+    public List<Double> getWeight(){
+        return this.finalWeight;
     }
+
+
 
 
 
