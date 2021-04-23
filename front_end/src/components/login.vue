@@ -83,7 +83,7 @@ export default {
       disabled:false,
       time:30,
       btnTxt:"发送验证码",
-      type:0
+      type:'0'
     }
   },
   name: 'login',
