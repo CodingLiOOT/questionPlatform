@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String userLogin(User user) {
         if (user.getLoginType() == 1) {
+            user.setUsername(userMapper.selectUsernameByMail(user.getMail()));
             verifyCodeUtils.verifyCode(user.getMail(), user.getVerifyCode());
         } else {
             User userBean = userMapper.selectUserByUserName(user.getUsername());
