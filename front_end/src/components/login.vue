@@ -20,14 +20,14 @@
           </el-tab-pane>
 
           <el-tab-pane label="邮箱登录" name="second">
-            <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="login()" status-icon>
+            <el-form :model="emailDataForm" :rules="dataRule" ref="emailDataForm" @keyup.enter.native="login()" status-icon>
 
               <el-form-item prop="email">
-                <el-input v-model="dataForm.email" type="email" placeholder="邮箱"></el-input>
+                <el-input v-model="emailDataForm.email" type="email" placeholder="邮箱"></el-input>
               </el-form-item>
 
               <el-form-item prop="emailCode" :inline="true" >
-                <el-input v-model="dataForm.emailCode" placeholder="验证码" style="width:230px"></el-input>
+                <el-input v-model="emailDataForm.emailCode" placeholder="验证码" style="width:230px"></el-input>
                 <el-button :disabled="disabled" @click="sendCode" class="sendcode" style="width:125px">{{btnTxt}}</el-button>
               </el-form-item>
 
@@ -52,6 +52,8 @@ export default {
       dataForm: {
         userName: '',
         password: '',
+      },
+      emailDataForm: {
         email: '',
         emailCode: ''
       },
@@ -81,17 +83,17 @@ export default {
       disabled:false,
       time:30,
       btnTxt:"发送验证码",
-      type:0
+      type:'0'
     }
   },
   name: 'login',
 
   methods: {
     login() {
-      if(this.type===0) {
+      if(this.type==='0') {
         //console.log(this.dataForm.userName);
         //console.log(this.dataForm.password);
-        this.$refs.dataForm.validate((valid) => {
+        this.$refs["dataForm"].validate((valid) => {
           if (valid) {
 
             this.$API.p_Login({
@@ -119,12 +121,12 @@ export default {
       {
         //console.log(this.dataForm.email);
         //console.log(this.dataForm.emailCode);
-        this.$refs.dataForm.validate((valid) => {
+        this.$refs["emailDataForm"].validate((valid) => {
           if (valid) {
 
             this.$API.p_Login({
-              mail: this.dataForm.email,
-              verifyCode: this.dataForm.emailCode,
+              mail: this.emailDataForm.email,
+              verifyCode: this.emailDataForm.emailCode,
               loginType: 1
             })
               .then(
@@ -155,7 +157,7 @@ export default {
       this.time=30
       this.timer();
       this.$API.p_SendCode({
-        mail: this.dataForm.email
+        mail: this.emailDataForm.email
       })
       .then(
 
