@@ -155,10 +155,10 @@ export default {
             trigger: 'blur'
           }],
         emailCode: [{
-          required: true,
-          message: '请输入验证码',
-          trigger: 'blur'
-        }]
+            required: true,
+            message: '请输入验证码',
+            trigger: 'blur'
+          }]
       },
       disabled:false,
       time:30,
