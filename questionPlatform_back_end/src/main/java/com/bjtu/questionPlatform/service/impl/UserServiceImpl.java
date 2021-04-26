@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String userLogin(User user) {
         if (user.getLoginType() == 1) {
+            user.setUsername(userMapper.selectUsernameByMail(user.getMail()));
             verifyCodeUtils.verifyCode(user.getMail(), user.getVerifyCode());
         } else {
             User userBean = userMapper.selectUserByUserName(user.getUsername());
@@ -60,6 +61,7 @@ public class UserServiceImpl implements UserService {
         if(users.size()!=0){
             throw new DefinitionException(ErrorEnum.DUPLICATE_USERNAME_OR_MAIL);
         }
+        verifyCodeUtils.verifyCode(user.getMail(),user.getVerifyCode());
         user.setID(UUID.randomUUID().toString());
         user.setPassword(encodeUtil.genCode(user.getPassword(),user.getMail()));
         userMapper.register(user);
