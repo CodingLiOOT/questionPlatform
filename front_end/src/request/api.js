@@ -31,5 +31,12 @@ export default class api {
    */
   static p_SendCode=p=>post('/user/sendVerifyCode',p);
 
+  /**
+   * 获取报告详情接口，发送报告关键词，打分情况到前端
+   * @param {Object} p [发送的参数：报告编号]
+   * @returns {Promise<unknown>}
+   */
+  static p_getReportDetail=p=>post('/file/getReport',p);
+
   static p_testUpload=p=>uploadFile('/file/upload',p);
 }

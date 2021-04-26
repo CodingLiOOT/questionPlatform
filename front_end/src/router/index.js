@@ -7,6 +7,7 @@ import MainPage from "../components/MainPage";
 import Upload from "../components/Upload";
 import List from "../components/List";
 import ReportDetail from "../components/ReportDetail";
+import tryFile from "../components/tryFile";
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ if (sessionStorage.getItem('token')) {
 const router = new Router({
   mode: 'history',
   routes: [
+    // {
+    //   path: '/try',
+    //   name: 'Home',
+    //   component: tryFile
+    // },
     {
       path: '/',
       name: 'Home',
