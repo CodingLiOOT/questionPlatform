@@ -8,15 +8,20 @@
             action="http://127.0.0.1:8090/api/file/upload"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
+            :on-success="handleSuccess"
+            :on-change="changeFile"
             :before-remove="beforeRemove"
             multiple
             :limit="3"
             :on-exceed="handleExceed"
             :headers="myHeaders"
             :file-list="fileList">
-            <el-button size="small" type="primary">点击上传</el-button>
+            <el-button size="small" type="primary">选择文件</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="uploadFile">上传文件</el-button>
         </el-form-item>
         <el-form-item label="填写关键词">
           <div class="inputTag">
@@ -39,6 +44,7 @@
 <script>
 import ChildPage from "./ChildPage";
 import pdf from 'vue-pdf';
+import axios from "axios";
 export default {
   data () {
     return {
@@ -91,6 +97,44 @@ export default {
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${ file.name }？`);
     },
+    handleSuccess(res, file, fileList) {
+      this.$notify.success({
+        title: '成功',
+        message: `文件上传成功`
+      });
+    },
+    uploadFile(){
+      alert(this.fileList)
+      let formData=new FormData(this.fileList[0])
+      formData.append('file', this.fileList[0])
+      alert(formData);
+      this.$API.p_testUpload({
+        formData: formData
+      })
+      .then(
+        data => {
+          alert(data)
+        }
+      )
+        .catch(err => {
+
+        })
+    },
+    // changeFile(file){
+    //   let fd = new FormData()
+    //   fd.append('file', file)
+    //   fd.append('fileName', file.name)
+    //   let config = {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data'
+    //     }
+    //   }
+    //   axios.post('/file/upload', fd, config).then(data => {
+    //     if (data.code === 200) {
+    //       this.$message.info('成功上传')
+    //     }
+    //   })
+    // }
   },
 }
 </script>
