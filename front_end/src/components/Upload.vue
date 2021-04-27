@@ -1,27 +1,26 @@
 <template>
   <div>
-    <el-card shadow="hover">
+    <el-card shadow="hover" :mode="uploadForm">
       <el-form ref="form"  label-width="100px">
         <el-form-item label="上传报告">
           <el-upload
             class="upload-demo"
-            action="http://127.0.0.1:8090/api/file/upload"
+            action=""
             :on-preview="handlePreview"
             :on-remove="handleRemove"
             :on-success="handleSuccess"
-            :on-change="changeFile"
             :before-remove="beforeRemove"
             multiple
             :limit="3"
             :on-exceed="handleExceed"
             :headers="myHeaders"
-            :file-list="fileList">
+            :file-list="fileList"
+            :http-request="uploadOk">
             <el-button size="small" type="primary">选择文件</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
         </el-form-item>
         <el-form-item>
-          <el-button @click="uploadFile">上传文件</el-button>
         </el-form-item>
         <el-form-item label="填写关键词">
           <div class="inputTag">
@@ -48,6 +47,8 @@ import axios from "axios";
 export default {
   data () {
     return {
+      file:'',
+      filename:'',
       fileList: [],
       myHeaders:{
         'token':this.$store.state.token
@@ -64,7 +65,7 @@ export default {
   methods:{
     //  add tag
     add: function () {
-      this.items.push({text: ''})
+      this.items.push({word: ''})
     },
     // delete tag
     del: function (index) {
@@ -81,8 +82,22 @@ export default {
       console.log('I got the data:', JSON.stringify(this.items))
     },
     send(){
-      // this.items[0].text是第一个关键词
-      alert(JSON.stringify(this.items));
+      let fd = new FormData()
+      fd.append("username","Nancy")
+      fd.append('file', this.file)
+      fd.append('fileName', this.file.name)
+      fd.append("keyWord",JSON.stringify(this.items))
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      axios.post('/file/upload', fd, config).then(data => {
+        if (data.code === 200) {
+          this.$message.info('成功上传')
+        }
+      })
+
     },
     // upload pdf
     handleRemove(file, fileList) {
@@ -103,38 +118,10 @@ export default {
         message: `文件上传成功`
       });
     },
-    uploadFile(){
-      alert(this.fileList)
-      let formData=new FormData(this.fileList[0])
-      formData.append('file', this.fileList[0])
-      alert(formData);
-      this.$API.p_testUpload({
-        formData: formData
-      })
-      .then(
-        data => {
-          alert(data)
-        }
-      )
-        .catch(err => {
-
-        })
-    },
-    // changeFile(file){
-    //   let fd = new FormData()
-    //   fd.append('file', file)
-    //   fd.append('fileName', file.name)
-    //   let config = {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data'
-    //     }
-    //   }
-    //   axios.post('/file/upload', fd, config).then(data => {
-    //     if (data.code === 200) {
-    //       this.$message.info('成功上传')
-    //     }
-    //   })
-    // }
+    uploadOk(val){
+      this.file=val.file;
+      this.filename=val.file.name;
+    }
   },
 }
 </script>

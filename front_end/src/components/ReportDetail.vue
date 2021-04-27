@@ -66,7 +66,7 @@ export default {
   data(){
     return{
       id:'',
-      url:"http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
+      url: "http://localhost:8090/try.pdf",
       pageNum: 1,
       pageTotalNum: 1,
       pageRotate: 0,
@@ -89,6 +89,7 @@ export default {
       })
         .then(
           res=>{
+            this.url="http://localhost:8090/try.pdf";
             for(let i=0;i<res.keyWord.length;i++){
               this.keyWord.push(res.keyWord[i].word);
             }
