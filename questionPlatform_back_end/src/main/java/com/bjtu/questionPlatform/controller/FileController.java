@@ -1,10 +1,13 @@
 package com.bjtu.questionPlatform.controller;
 
+import com.bjtu.questionPlatform.entity.KeyWord;
 import com.bjtu.questionPlatform.entity.Report;
 
+import com.bjtu.questionPlatform.service.ReportService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import com.google.common.collect.ArrayListMultimap;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,9 +30,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/api/file")
 public class FileController{
+    @Autowired
+    private ReportService reportService;
 
 //    private final static String rootPath="D:\\Code\\questionPlatform\\questionPlatform\\questionPlatform_back_end\\src\\main\\resources\\files";
-     private final static String rootPath="C:\\Users\\王迪\\Documents\\temp\\country";
+//     private final static String rootPath="C:\\Users\\王迪\\Documents\\temp\\country";
+    private final static String rootPath=System.getProperty("user.dir")+"\\files";
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/upload")
@@ -62,11 +68,11 @@ public class FileController{
         List<HashMap<String, Object>> grades = new ArrayList<>();
         List<HashMap<String, Object>> judgement = new ArrayList<>();
 
-
-        String[] w = {"石油", "能源", "共享"};
-        for (int i = 0; i < 3; i++) {
+        List<KeyWord>w=reportService.selectKeyWordByReportId(report.getReportId());
+        for (int i = 0; i < w.size(); i++) {
             HashMap<String, Object> word = new HashMap<>();
-            word.put("word", w[i]);
+            System.out.println(w.get(i).getKeysContent());
+            word.put("word", w.get(i).getKeysContent());
             keyWord.add(word);
         }
 
