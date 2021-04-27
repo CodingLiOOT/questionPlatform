@@ -1,11 +1,12 @@
 package com.bjtu.questionPlatform.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -20,9 +21,12 @@ import java.util.List;
 public class Report implements Serializable {
     private String reportId;
     private String reportName;
-    private List<String> keyWord;
+    private String keyWord;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp reportTime;
+    private String username;
+    private MultipartFile file;
+    private String reportPath;
 
     public String getReportId() {
         return reportId;
@@ -40,12 +44,12 @@ public class Report implements Serializable {
         this.reportName = reportName;
     }
 
-    public List<String> getKeyWord() {
+    public String getKeyWord() {
         return keyWord;
     }
 
-    public void setKeyWord(List<String> keys) {
-        this.keyWord = keys;
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
     }
 
     public Timestamp getReportTime() {
@@ -54,5 +58,29 @@ public class Report implements Serializable {
 
     public void setReportTime(Timestamp reportTime) {
         this.reportTime = reportTime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    public String getReportPath() {
+        return reportPath;
+    }
+
+    public void setReportPath(String reportPath) {
+        this.reportPath = reportPath;
     }
 }

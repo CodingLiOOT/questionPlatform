@@ -1,22 +1,22 @@
 package com.bjtu.questionPlatform.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.bjtu.questionPlatform.entity.KeyWord;
 import com.bjtu.questionPlatform.entity.Report;
 
 import com.bjtu.questionPlatform.service.ReportService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
-import com.google.common.collect.ArrayListMultimap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.spring.web.json.Json;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -39,8 +39,10 @@ public class FileController{
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/upload")
-    public void uploadFile(MultipartFile file){
+    public void uploadFile(Report report){
+        MultipartFile file=report.getFile();
         System.out.println("文件上传后端测试");
+
         File fileDir = new File(rootPath);
         if(!fileDir.exists()&&!fileDir.isDirectory()){
             fileDir.mkdirs();
@@ -48,17 +50,68 @@ public class FileController{
         try{
             if(file!=null){
                 System.out.println("文件不空");
-                    String oldName = file.getOriginalFilename();
-                    System.out.println(oldName);
-                    String newName =  UUID.randomUUID().toString()+ (oldName != null ? oldName.substring(oldName.lastIndexOf(".")) : null);
-                    System.out.println(newName);
-                    file.transferTo(new File(rootPath,newName));
+                String oldName = file.getOriginalFilename();
+                System.out.println(oldName);
+                String newName =  UUID.randomUUID().toString()+ (oldName != null ? oldName.substring(oldName.lastIndexOf(".")) : null);
+                System.out.println(newName);
+                file.transferTo(new File(rootPath,newName));
 
+                // 为了获取关键词id
+                List<KeyWord>keyWords=reportService.getAllKeyWords();
+                int total=keyWords.size()+1;
+
+                // 为了获取报告id
+                List<Report>reports=reportService.getAllReports();
+                int reportId=reports.size()+1;
+
+                String k=report.getKeyWord();
+                JSONArray jsonArray = JSON.parseArray(k);
+
+                Report r=new Report();
+                    r.setReportPath(newName);
+                    r.setUsername(report.getUsername());
+                    r.setReportId(reportId+"");
+                    r.setReportName(oldName);
+                    reportService.createReport(r);
+
+                for(int i=0;i<jsonArray.size();i++){
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    KeyWord key=new KeyWord();
+                    key.setKeysContent(jsonObject.getString("word"));
+                    System.out.println("haha"+jsonObject.getString("word"));
+                    key.setKeysId(total+"");
+                    key.setReportId(reportId+"");
+                    System.out.println(reportId);
+                    reportService.createKey(key);
+                    total++;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+//
+//    @CrossOrigin
+//    @ResponseResultBody
+//    @PostMapping(value = "/createReport")
+//    public void createReport(@RequestBody Report report){
+//        System.out.println("创建新的报告后端测试");
+//        // 给word一个id
+//        List<KeyWord>keyWords=reportService.getAllKeyWords();
+//        int total=keyWords.size();
+//        total++; //从1开始
+//
+//        JSONObject[] keyWord=report.getKeyWord();
+//
+//        for(int i=0;i<keyWord.length;i++){
+//            KeyWord key=new KeyWord();
+//            key.setKeysContent(keyWord[i].getString("word"));
+//            key.setKeysId(total+"");
+//            key.setReportId(report.getReportId()+"");
+//            reportService.createKey(key);
+//            total++;
+//        }
+//    }
 
     @CrossOrigin
     @ResponseResultBody

@@ -24,4 +24,29 @@ public class ReportServiceImpl implements ReportService {
     public List<KeyWord> selectKeyWordByReportId(String reportId) {
         return reportMapper.selectKeyWordByReportId(reportId);
     }
+
+    @Override
+    public List<KeyWord> getAllKeyWords() {
+        return reportMapper.getAllKeyWords();
+    }
+
+    @Override
+    public void createKey(KeyWord keyWord) {
+       reportMapper.createKey(keyWord);
+    }
+
+    @Override
+    public Report selectReportByUsername(String username) {
+        return reportMapper.selectReportByUsername(username);
+    }
+
+    @Override
+    public List<Report> getAllReports() {
+        return reportMapper.getAllReports();
+    }
+
+    @Override
+    public void createReport(Report report) {
+        reportMapper.createReport(report);
+    }
 }
