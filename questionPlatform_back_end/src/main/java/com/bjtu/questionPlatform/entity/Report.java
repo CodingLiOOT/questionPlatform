@@ -22,7 +22,7 @@ public class Report implements Serializable {
     private String reportName;
     private List<String> keyWord;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Timestamp createdTime;
+    private Timestamp reportTime;
 
     public String getReportId() {
         return reportId;
@@ -48,11 +48,11 @@ public class Report implements Serializable {
         this.keyWord = keys;
     }
 
-    public Timestamp getCreatedTime() {
-        return createdTime;
+    public Timestamp getReportTime() {
+        return reportTime;
     }
 
-    public void setCreatedTime(Timestamp createdTime) {
-        this.createdTime = createdTime;
+    public void setReportTime(Timestamp reportTime) {
+        this.reportTime = reportTime;
     }
 }
