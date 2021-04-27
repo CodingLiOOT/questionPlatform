@@ -1,7 +1,6 @@
 package com.bjtu.questionPlatform.controller;
 
-import com.bjtu.questionPlatform.entity.KeyWord;
-import com.bjtu.questionPlatform.entity.Report;
+import com.bjtu.questionPlatform.entity.*;
 
 import com.bjtu.questionPlatform.service.ReportService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
@@ -71,36 +70,30 @@ public class FileController{
         List<KeyWord>w=reportService.selectKeyWordByReportId(report.getReportId());
         for (int i = 0; i < w.size(); i++) {
             HashMap<String, Object> word = new HashMap<>();
-            System.out.println(w.get(i).getKeysContent());
+            //System.out.println(w.get(i).getKeysContent());
             word.put("word", w.get(i).getKeysContent());
             keyWord.add(word);
         }
 
 
-        String[] e = {"lily", "ted", "robin"};
-        int[] t = {90, 80, 89};
-        String[] s = {"aa", "bb", "cc"};
-        for (int i = 0; i < 3; i++) {
+        List<Grade> g=reportService.selectGradesByReportId(report.getReportId());
+        for (int i = 0; i <g.size() ; i++) {
             HashMap<String, Object> item = new HashMap<>();
-            item.put("expertName", e[i]);
-            item.put("totalScore", t[i]);
-            item.put("suggestion", s[i]);
+            item.put("expertName", g.get(i).getExpertName());
+            item.put("totalScore", g.get(i).getTotalScore());
+            item.put("suggestion", g.get(i).getSuggestion());
             grades.add(item);
         }
 
-        String[] a = {"lily", "ted", "robin"};
-        String[] b = {"a", "b", "c"};
-        String[] c = {"aa", "bb", "cc"};
-        float[] d = {1, 2, 3};
-        for(int j=0;j<3;j++){
-            for (int i = 0; i < 3; i++) {
-                HashMap<String, Object> item = new HashMap<>();
-                item.put("expertName", a[j]);
-                item.put("judgementName", b[i]);
-                item.put("judgementContent", c[i]);
-                item.put("score", d[i]);
-                judgement.add(item);
-            }
+        List<Score> s=reportService.selectScoreByReportId(report.getReportId());
+        for(int i=0;i<s.size();i++){
+            List<Judgement> j=reportService.selectJudgementByJudgementId(s.get(i).getJudgementid());
+            HashMap<String, Object> item = new HashMap<>();
+            item.put("expertName", s.get(i).getExpertname());
+            item.put("judgementName", j.get(0).getJudgementname());
+            item.put("judgementContent", j.get(0).getJudgementcontent());
+            item.put("score", s.get(i).getScore());
+            judgement.add(item);
         }
 
 

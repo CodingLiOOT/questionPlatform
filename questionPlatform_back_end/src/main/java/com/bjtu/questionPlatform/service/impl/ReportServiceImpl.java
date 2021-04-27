@@ -1,7 +1,6 @@
 package com.bjtu.questionPlatform.service.impl;
 
-import com.bjtu.questionPlatform.entity.KeyWord;
-import com.bjtu.questionPlatform.entity.Report;
+import com.bjtu.questionPlatform.entity.*;
 import com.bjtu.questionPlatform.mapper.ReportMapper;
 import com.bjtu.questionPlatform.mapper.UserMapper;
 import com.bjtu.questionPlatform.service.ReportService;
@@ -23,5 +22,17 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<KeyWord> selectKeyWordByReportId(String reportId) {
         return reportMapper.selectKeyWordByReportId(reportId);
+    }
+    @Override
+    public List<Grade> selectGradesByReportId(String reportId){
+        return reportMapper.selectGradesByReportId(reportId);
+    }
+    @Override
+    public List<Score> selectScoreByReportId(String reportId){
+        return reportMapper.selectScoreByReportId(reportId);
+    }
+    @Override
+    public List<Judgement> selectJudgementByJudgementId(String judgementid){
+        return reportMapper.selectJudgementByJudgementId(judgementid);
     }
 }
