@@ -33,7 +33,7 @@ public class FileController{
     @Autowired
     private ReportService reportService;
 
-//    private final static String rootPath="D:\\Code\\questionPlatform\\questionPlatform\\questionPlatform_back_end\\src\\main\\resources\\files";
+    //    private final static String rootPath="D:\\Code\\questionPlatform\\questionPlatform\\questionPlatform_back_end\\src\\main\\resources\\files";
 //     private final static String rootPath="C:\\Users\\王迪\\Documents\\temp\\country";
     private final static String rootPath=System.getProperty("user.dir")+"\\files";
     @CrossOrigin
@@ -68,11 +68,11 @@ public class FileController{
                 JSONArray jsonArray = JSON.parseArray(k);
 
                 Report r=new Report();
-                    r.setReportPath(newName);
-                    r.setUsername(report.getUsername());
-                    r.setReportId(reportId+"");
-                    r.setReportName(oldName);
-                    reportService.createReport(r);
+                r.setReportPath(newName);
+                r.setUsername(report.getUsername());
+                r.setReportId(reportId+"");
+                r.setReportName(oldName);
+                reportService.createReport(r);
 
                 for(int i=0;i<jsonArray.size();i++){
                     JSONObject jsonObject = jsonArray.getJSONObject(i);

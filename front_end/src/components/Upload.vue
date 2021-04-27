@@ -119,8 +119,8 @@ export default {
       });
     },
     uploadOk(val){
-        this.file=val.file;
-        this.filename=val.file.name;
+      this.file=val.file;
+      this.filename=val.file.name;
     }
   },
 }

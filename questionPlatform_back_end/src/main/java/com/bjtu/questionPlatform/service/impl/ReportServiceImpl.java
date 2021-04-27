@@ -32,7 +32,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void createKey(KeyWord keyWord) {
-       reportMapper.createKey(keyWord);
+        reportMapper.createKey(keyWord);
     }
 
     @Override
