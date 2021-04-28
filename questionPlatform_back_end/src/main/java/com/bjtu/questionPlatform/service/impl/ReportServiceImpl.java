@@ -36,8 +36,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<Report> selectReportByUsername(String username) {
-        return reportMapper.selectReportByUsername(username);
+    public List<Report> selectReportByUserId(String userId) {
+        return reportMapper.selectReportByUserId(userId);
     }
 
     @Override

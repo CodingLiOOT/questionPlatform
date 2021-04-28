@@ -121,7 +121,7 @@ public class FileController{
         List<HashMap<String, Object>> reports = new ArrayList<>();
         List<HashMap<String, Object>> keyWords = new ArrayList<>();
 
-        List<Report> reportlist=reportService.selectReportByUsername(user.getUsername());
+        List<Report> reportlist=reportService.selectReportByUserId(user.getID());
         for (int i = 0; i <reportlist.size() ; i++) {
             HashMap<String, Object> item = new HashMap<>();
             String ReportId;

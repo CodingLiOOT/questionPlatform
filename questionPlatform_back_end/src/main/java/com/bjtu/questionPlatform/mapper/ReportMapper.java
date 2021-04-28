@@ -17,7 +17,7 @@ public interface ReportMapper {
     Report selectReportById(String reportId);
 
     @Select("select * from report where username = #{username}")
-    List<Report> selectReportByUsername(String username);
+    List<Report> selectReportByUserId(String userId);
 
     @Select("select * from report")
     List<Report> getAllReports();
