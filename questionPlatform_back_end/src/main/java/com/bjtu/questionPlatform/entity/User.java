@@ -2,6 +2,7 @@ package com.bjtu.questionPlatform.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -39,4 +40,5 @@ public class User implements Serializable {
     private Integer state;
 
     private List<Role> roles;
+
 }

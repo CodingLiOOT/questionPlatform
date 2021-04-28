@@ -18,10 +18,6 @@
           <el-form-item prop="email">
             <el-input v-model="RegisterForm.email" placeholder="邮箱"></el-input>
           </el-form-item>
-          <el-form-item prop="emailCode" :inline="true" >
-            <el-input v-model="RegisterForm.emailCode" placeholder="验证码" style="width:230px"></el-input>
-            <el-button :disabled="disabled" @click="sendCode" class="sendcode" style="width:125px">{{btnTxt}}</el-button>
-          </el-form-item>
           <el-form-item>
             <el-button class="register-btn-submit" type="primary" @click="register()">注册</el-button>
           </el-form-item>
@@ -114,8 +110,7 @@ export default {
         userName: '',
         password: '',
         confirmPassword: '',
-        email: '',
-        emailCode: ''
+        email: ''
       },
       RegisterRule: {
         userName: [{
@@ -153,65 +148,33 @@ export default {
             required: true,
             message: '请输入邮箱',
             trigger: 'blur'
-          }],
-        emailCode: [{
-            required: true,
-            message: '请输入验证码',
-            trigger: 'blur'
           }]
-      },
-      disabled:false,
-      time:30,
-      btnTxt:"发送验证码",
+      }
     }
   },
   name: 'Register',
-
   methods: {
     register() {
       this.$refs.RegisterForm.validate((valid) => {
         if (valid) {
           this.$API.p_Register({
-            username:this.RegisterForm.userName,
+            userName:this.RegisterForm.userName,
             password:this.RegisterForm.password,
-            mail:this.RegisterForm.email,
-            verifyCode:this.RegisterForm.emailCode
+            email:this.RegisterForm.email,
           })
           .then(
             res=>{
               this.$router.replace('/login');
             }
           )
+          .catch({
+
+          })
         } else {
           return false
         }
       })
-    },
-
-    //发送邮箱验证码，30秒后重新发送
-    sendCode(){
-      this.time=30
-      this.timer();
-      this.$API.p_SendCode({
-        mail: this.RegisterForm.email
-      })
-        .then(
-
-        )
-    },
-    //发送邮箱验证码倒计时
-    timer() {
-      if (this.time > 0) {
-        this.disabled=true;
-        this.time--;
-        this.btnTxt=this.time+"s后重新发送";
-        setTimeout(this.timer, 1000);
-      } else{
-        this.time=0;
-        this.btnTxt="发送验证码";
-        this.disabled=false;
-      }
-    },
+    }
   }
 }
 </script>
@@ -235,7 +198,7 @@ export default {
   bottom: 0;
   left: 0;
   margin: auto;
-  height: 460px;
+  height: 400px;
   width: 400px;
   background-color: #112234;
   opacity: .8;
@@ -267,7 +230,7 @@ a:hover {
 }
 
 .register-btn-submit {
-  margin-top: 0;
+  margin-top: 10px;
 }
 
 </style>
