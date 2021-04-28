@@ -32,4 +32,11 @@ export default class api {
   static p_SendCode=p=>post('/user/sendVerifyCode',p);
 
   static p_testUpload=p=>uploadFile('/file/upload',p);
+
+  /**
+   * 邀请码接口，发送专家邀请码到后端
+   * @param {Object} p [发送的参数]
+   * @returns {Promise<unknown>}
+   */
+  static p_Invitation=p=>post('/user/invitation',p);
 }
