@@ -66,4 +66,5 @@ export default class api {
    * @returns {Promise<unknown>}
    */
   static p_getOneJudgement=p=>post('judgement/getOneJudgement',p);
+
 }
