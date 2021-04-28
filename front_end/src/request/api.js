@@ -31,5 +31,12 @@ export default class api {
    */
   static p_SendCode=p=>post('/user/sendVerifyCode',p);
 
+  /**
+   * 查看列表接口，发送当前用户名，返回列表报告
+   * @param {Object} p [发送的参数：当前用户名]
+   * @returns {Promise<unknown>}
+   */
+  static p_getList=p=>post('/api/file/getList',p);
+
   static p_testUpload=p=>uploadFile('/file/upload',p);
 }
