@@ -137,7 +137,8 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         List<HashMap<String, Object>> reports = new ArrayList<>();
         List<HashMap<String, Object>> keyWords = new ArrayList<>();
 
-        List<Report> reportlist=reportService.selectReportByUserId(user.getID());
+        User u=userService.selectUserByUserName(user.getUsername());
+        List<Report> reportlist=reportService.selectReportByUserId(u.getID());
         for (int i = 0; i <reportlist.size() ; i++) {
             HashMap<String, Object> item = new HashMap<>();
             String ReportId;

@@ -21,7 +21,7 @@ public interface ReportService {
     void createKey(KeyWord keyWord);
 
 
-    List<Report> selectReportByUserId(StringID);
+    List<Report> selectReportByUserId(String ID);
 
     List<Report> selectReportByUsername(String username);
 

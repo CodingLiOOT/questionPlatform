@@ -50,9 +50,6 @@ public interface ReportMapper {
     List<KeyWord> getAllKeyWords();
 
 
-    @Select("select * from KeyWord where reportId=#{reportId}")
-    List<KeyWord> selectKeyWordByReportId(String reportId);
-
     @Insert("insert into report (reportId,ID,reportPath,reportTime,reportName) "+
             "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName})")
     void createReport(Report report);
