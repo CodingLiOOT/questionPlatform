@@ -53,4 +53,5 @@ export default class api {
    * @returns {Promise<unknown>}
    */
   static p_Invitation=p=>post('/user/invitation',p);
+
 }
