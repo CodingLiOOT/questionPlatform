@@ -42,10 +42,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public String userLogin(User user) {
         if (user.getLoginType() == 1) {
+            user.setUsername(userMapper.selectUsernameByMail(user.getMail()));
             verifyCodeUtils.verifyCode(user.getMail(), user.getVerifyCode());
         } else {
             User userBean = userMapper.selectUserByUserName(user.getUsername());
-            if (userBean == null||!encodeUtil.verifyEncode(user.getPassword(), userBean.getMail(), userBean.getPassword())) {
+            if (userBean == null || !encodeUtil.verifyEncode(user.getPassword(), userBean.getMail(), userBean.getPassword())) {
                 throw new DefinitionException(ErrorEnum.ERROR_NICKNAME_OR_PASSWORD);
             }
         }
@@ -56,12 +57,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(User user) {
-        List<User> users=userMapper.selectUserByNameOrMail(user.getUsername(),user.getMail());
-        if(users.size()!=0){
+        List<User> users = userMapper.selectUserByNameOrMail(user.getUsername(), user.getMail());
+        if (users.size() != 0) {
             throw new DefinitionException(ErrorEnum.DUPLICATE_USERNAME_OR_MAIL);
         }
+        verifyCodeUtils.verifyCode(user.getMail(), user.getVerifyCode());
         user.setID(UUID.randomUUID().toString());
-        user.setPassword(encodeUtil.genCode(user.getPassword(),user.getMail()));
+        user.setPassword(encodeUtil.genCode(user.getPassword(), user.getMail()));
         userMapper.register(user);
+    }
+
+    @Override
+    public User selectUserByUserName(String username) {
+        return userMapper.selectUserByUserName(username);
     }
 }
