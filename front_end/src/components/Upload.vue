@@ -83,13 +83,13 @@ export default {
     },
     send(){
       let fd = new FormData()
-      fd.append("username","Nancy")
+      fd.append("username",this.$store.state.user.username)
       fd.append('file', this.file)
       fd.append('fileName', this.file.name)
       fd.append("keyWord",JSON.stringify(this.items))
       let config = {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
         }
       }
       axios.post('/file/upload', fd, config).then(data => {
