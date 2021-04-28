@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bjtu.questionPlatform.entity.*;
 
 import com.bjtu.questionPlatform.service.ReportService;
+import com.bjtu.questionPlatform.service.UserService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class FileController{
 
     @Autowired
     private ReportService reportService;
+
+    @Autowired
+    private UserService userService;
 
 //    private final static String rootPath="D:\\Code\\questionPlatform\\questionPlatform\\questionPlatform_back_end\\src\\main\\resources\\files";
 //     private final static String rootPath="C:\\Users\\王迪\\Documents\\temp\\country";
@@ -75,8 +79,9 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
                 JSONArray jsonArray = JSON.parseArray(k);
 
                 Report r=new Report();
+                User u=userService.selectUserByUserName(report.getUsername());
                 r.setReportPath(newName);
-                r.setUsername(report.getUsername());
+                r.setID(u.getID());
                 r.setReportId(reportId+"");
                 r.setReportName(oldName);
                 reportService.createReport(r);
@@ -104,6 +109,8 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         List<HashMap<String, Object>> keyWord = new ArrayList<>();
         List<HashMap<String, Object>> grades = new ArrayList<>();
         List<HashMap<String, Object>> judgement = new ArrayList<>();
+
+        System.out.println("获取某一报告"+report.getReportId());
 
         List<KeyWord>w=reportService.selectKeyWordByReportId(report.getReportId());
         for (int i = 0; i < w.size(); i++) {
@@ -133,8 +140,10 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
             judgement.add(item);
 
         }
-        URL url = new URL("file:///C:/Users/%E7%8E%8B%E8%BF%AA/Documents/temp/country/questionPlatform/questionPlatform_back_end/files/a78b4509-ae8b-4a7f-9499-d4a14bce8437.pdf");
-        System.out.println(url);
+
+        Report rpt= reportService.selectReportById(report.getReportId());
+
+        String url="localhost:8090/"+rpt.getReportPath();
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("keyWord", keyWord);

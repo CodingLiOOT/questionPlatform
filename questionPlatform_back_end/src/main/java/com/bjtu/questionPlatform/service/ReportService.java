@@ -16,6 +16,8 @@ public interface ReportService {
 
     List<Judgement> selectJudgementByJudgementId(String judgementid);
 
+    Report selectReportById(String reportId);
+
     List<KeyWord> getAllKeyWords();
 
     void createKey(KeyWord keyWord);

@@ -37,6 +37,11 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public Report selectReportById(String reportId) {
+        return reportMapper.selectReportById(reportId);
+    }
+
+    @Override
     public List<KeyWord> getAllKeyWords() {
         return reportMapper.getAllKeyWords();
     }

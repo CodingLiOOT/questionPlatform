@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 public class Report implements Serializable {
     private String reportId;
     private String reportName;
+    private String ID;
     private String keyWord;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp reportTime;
@@ -82,5 +83,13 @@ public class Report implements Serializable {
 
     public void setReportPath(String reportPath) {
         this.reportPath = reportPath;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 }

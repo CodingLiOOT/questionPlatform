@@ -85,7 +85,7 @@ export default {
   methods:{
     showDetail(){
       this.$API.p_getReportDetail({
-        reportId:1
+        reportId:this.$route.query.reportId
       })
         .then(
           res=>{

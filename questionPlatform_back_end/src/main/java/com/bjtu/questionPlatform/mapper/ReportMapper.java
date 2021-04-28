@@ -24,7 +24,7 @@ public interface ReportMapper {
     @Select("select * from KeyWord")
     List<KeyWord> getAllKeyWords();
 
-    @Select("select * from KeyWord")
+    @Select("select * from KeyWord where reportId=#{reportId}")
     List<KeyWord> selectKeyWordByReportId(String reportId);
 
     @Select("select * from totalscore where reportId = #{reportId}")
@@ -36,8 +36,8 @@ public interface ReportMapper {
     @Select("select * from judgement where judgementid = #{judgementid}")
     List<Judgement> selectJudgementByJudgementId(String judgementid);
 
-    @Insert("insert into report (reportId,username,reportPath,reportTime,reportName) "+
-            "values (#{reportId},#{username},#{reportPath},NOW(),#{reportName})")
+    @Insert("insert into report (reportId,ID,reportPath,reportTime,reportName) "+
+            "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName})")
     void createReport(Report report);
 
     @Insert("insert into keyWord (keysId,reportId,keysContent,keysTime) "+

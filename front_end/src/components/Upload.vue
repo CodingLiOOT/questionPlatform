@@ -83,7 +83,7 @@ export default {
     },
     send(){
       let fd = new FormData()
-      fd.append("username","Nancy")
+      fd.append("username",this.$store.state.user.username)
       fd.append('file', this.file)
       fd.append('fileName', this.file.name)
       fd.append("keyWord",JSON.stringify(this.items))

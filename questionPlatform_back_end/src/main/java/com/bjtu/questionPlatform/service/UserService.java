@@ -7,4 +7,6 @@ public interface UserService {
     String userLogin(User user);
 
     void register(User user);
+
+    User selectUserByUserName(String username);
 }
