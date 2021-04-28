@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bjtu.questionPlatform.entity.Report;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.spring.web.json.Json;
@@ -20,12 +19,14 @@ import springfox.documentation.spring.web.json.Json;
 import java.io.File;
 import java.io.IOException;
 
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+
 
 
 
@@ -105,10 +106,74 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
             e.printStackTrace();
         }
     }
+
+//
+//    @CrossOrigin
+//    @ResponseResultBody
+//    @PostMapping(value = "/createReport")
+//    public void createReport(@RequestBody Report report){
+//        System.out.println("创建新的报告后端测试");
+//        // 给word一个id
+//        List<KeyWord>keyWords=reportService.getAllKeyWords();
+//        int total=keyWords.size();
+//        total++; //从1开始
+//
+//        JSONObject[] keyWord=report.getKeyWord();
+//
+//        for(int i=0;i<keyWord.length;i++){
+//            KeyWord key=new KeyWord();
+//            key.setKeysContent(keyWord[i].getString("word"));
+//            key.setKeysId(total+"");
+//            key.setReportId(report.getReportId()+"");
+//            reportService.createKey(key);
+//            total++;
+//        }
+//    }
+
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/getList")
+    public HashMap<String, Object> getList(@RequestBody User user) {
+        List<HashMap<String, Object>> reports = new ArrayList<>();
+        List<HashMap<String, Object>> keyWords = new ArrayList<>();
+
+        List<Report> reportlist=reportService.selectReportByUserId(user.getID());
+        for (int i = 0; i <reportlist.size() ; i++) {
+            HashMap<String, Object> item = new HashMap<>();
+            String ReportId;
+            ReportId = reportlist.get(i).getReportId();
+            item.put("reportId", ReportId);
+            item.put("reportName", reportlist.get(i).getReportName());
+            item.put("createTime", reportlist.get(i).getReportTime());
+
+            List<KeyWord>w=reportService.selectKeyWordByReportId(reportlist.get(i).getReportId());
+            List<HashMap<String, Object>> keyWordsOfTheReport = new ArrayList<>();
+            for (int j = 0; j < w.size(); j++) {
+                HashMap<String, Object> wordOfTheReport = new HashMap<>();
+                wordOfTheReport.put("word", w.get(j).getKeysContent());
+                keyWordsOfTheReport.add(wordOfTheReport);
+
+                HashMap<String, Object> word = new HashMap<>();
+                word.put("reportId", ReportId);
+                word.put("word", w.get(j).getKeysContent());
+                keyWords.add(word);
+
+            }
+            item.put("keyWord", keyWordsOfTheReport);
+            reports.add(item);
+        }
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("reports", reports);
+        data.put("keyWords", keyWords);
+        return data;
+
+    }
+
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/getReport")
-    public HashMap<String, Object> getReport(@RequestBody Report report) throws MalformedURLException {
+    public HashMap<String, Object> getReport(@RequestBody Report report) {
         List<HashMap<String, Object>> keyWord = new ArrayList<>();
         List<HashMap<String, Object>> grades = new ArrayList<>();
         List<HashMap<String, Object>> judgement = new ArrayList<>();
@@ -147,12 +212,13 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         Report rpt= reportService.selectReportById(report.getReportId());
         String url="localhost:8090/"+rpt.getReportPath();
 
-
         HashMap<String, Object> data = new HashMap<>();
         data.put("keyWord", keyWord);
         data.put("grades", grades);
         data.put("judgement", judgement);
+
         data.put("file",url);
+
         return data;
     }
 }

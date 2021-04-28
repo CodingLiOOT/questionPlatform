@@ -40,4 +40,5 @@ public class User implements Serializable {
     private Integer state;
 
     private List<Role> roles;
+
 }

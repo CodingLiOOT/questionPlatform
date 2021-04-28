@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 public class Report implements Serializable {
     private String reportId;
     private String reportName;
+
     private String ID;
 
     private String keyWord;
@@ -86,6 +87,7 @@ public class Report implements Serializable {
         this.reportPath = reportPath;
     }
 
+
     public String getID() {
         return ID;
     }
@@ -93,4 +95,5 @@ public class Report implements Serializable {
     public void setID(String ID) {
         this.ID = ID;
     }
+
 }

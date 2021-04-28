@@ -20,11 +20,16 @@ public interface ReportService {
 
     void createKey(KeyWord keyWord);
 
+
+    List<Report> selectReportByUserId(StringID);
+
     List<Report> selectReportByUsername(String username);
+
 
     List<Report> getAllReports();
 
     void createReport(Report report);
+
 
     Report selectReportById(String reportId);
 

@@ -177,11 +177,14 @@ export default {
             mail:this.RegisterForm.email,
             verifyCode:this.RegisterForm.emailCode
           })
-            .then(
-              res=>{
-                this.$router.replace('/login');
-              }
-            )
+          .then(
+            res=>{
+              this.$router.replace('/login');
+            }
+          )
+          .catch({
+
+          })
         } else {
           return false
         }
