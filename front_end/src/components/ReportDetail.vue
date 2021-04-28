@@ -89,6 +89,7 @@ export default {
       })
         .then(
           res=>{
+            this.url=res.url
             for(let i=0;i<res.keyWord.length;i++){
               this.keyWord.push(res.keyWord[i].word);
             }

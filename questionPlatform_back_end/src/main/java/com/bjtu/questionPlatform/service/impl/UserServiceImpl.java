@@ -66,4 +66,9 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encodeUtil.genCode(user.getPassword(),user.getMail()));
         userMapper.register(user);
     }
+
+    @Override
+    public User selectUserByUserName(String username) {
+        return userMapper.selectUserByUserName(username);
+    }
 }

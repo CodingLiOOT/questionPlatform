@@ -27,6 +27,7 @@ public class Report implements Serializable {
     private String username;
     private MultipartFile file;
     private String reportPath;
+    private String ID;
 
     public String getReportId() {
         return reportId;
@@ -82,5 +83,13 @@ public class Report implements Serializable {
 
     public void setReportPath(String reportPath) {
         this.reportPath = reportPath;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 }

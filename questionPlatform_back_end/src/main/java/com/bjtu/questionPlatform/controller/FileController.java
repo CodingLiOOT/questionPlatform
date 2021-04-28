@@ -3,10 +3,10 @@ package com.bjtu.questionPlatform.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.bjtu.questionPlatform.entity.KeyWord;
-import com.bjtu.questionPlatform.entity.Report;
+import com.bjtu.questionPlatform.entity.*;
 
 import com.bjtu.questionPlatform.service.ReportService;
+import com.bjtu.questionPlatform.service.UserService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,8 @@ import java.util.*;
 public class FileController{
     @Autowired
     private ReportService reportService;
+    @Autowired
+    private UserService userService;
 
     //    private final static String rootPath="D:\\Code\\questionPlatform\\questionPlatform\\questionPlatform_back_end\\src\\main\\resources\\files";
 //     private final static String rootPath="C:\\Users\\王迪\\Documents\\temp\\country";
@@ -68,8 +70,9 @@ public class FileController{
                 JSONArray jsonArray = JSON.parseArray(k);
 
                 Report r=new Report();
+                User u=userService.selectUserByUserName(report.getUsername());
                 r.setReportPath(newName);
-                r.setUsername(report.getUsername());
+                r.setID(u.getID());
                 r.setReportId(reportId+"");
                 r.setReportName(oldName);
                 reportService.createReport(r);
@@ -90,28 +93,6 @@ public class FileController{
             e.printStackTrace();
         }
     }
-//
-//    @CrossOrigin
-//    @ResponseResultBody
-//    @PostMapping(value = "/createReport")
-//    public void createReport(@RequestBody Report report){
-//        System.out.println("创建新的报告后端测试");
-//        // 给word一个id
-//        List<KeyWord>keyWords=reportService.getAllKeyWords();
-//        int total=keyWords.size();
-//        total++; //从1开始
-//
-//        JSONObject[] keyWord=report.getKeyWord();
-//
-//        for(int i=0;i<keyWord.length;i++){
-//            KeyWord key=new KeyWord();
-//            key.setKeysContent(keyWord[i].getString("word"));
-//            key.setKeysId(total+"");
-//            key.setReportId(report.getReportId()+"");
-//            reportService.createKey(key);
-//            total++;
-//        }
-//    }
 
     @CrossOrigin
     @ResponseResultBody
@@ -124,43 +105,40 @@ public class FileController{
         List<KeyWord>w=reportService.selectKeyWordByReportId(report.getReportId());
         for (int i = 0; i < w.size(); i++) {
             HashMap<String, Object> word = new HashMap<>();
-            System.out.println(w.get(i).getKeysContent());
+            //System.out.println(w.get(i).getKeysContent());
             word.put("word", w.get(i).getKeysContent());
             keyWord.add(word);
         }
 
 
-        String[] e = {"lily", "ted", "robin"};
-        int[] t = {90, 80, 89};
-        String[] s = {"aa", "bb", "cc"};
-        for (int i = 0; i < 3; i++) {
+        List<Grade> g=reportService.selectGradesByReportId(report.getReportId());
+        for (int i = 0; i <g.size() ; i++) {
             HashMap<String, Object> item = new HashMap<>();
-            item.put("expertName", e[i]);
-            item.put("totalScore", t[i]);
-            item.put("suggestion", s[i]);
+            item.put("expertName", g.get(i).getExpertName());
+            item.put("totalScore", g.get(i).getTotalScore());
+            item.put("suggestion", g.get(i).getSuggestion());
             grades.add(item);
         }
 
-        String[] a = {"lily", "ted", "robin"};
-        String[] b = {"a", "b", "c"};
-        String[] c = {"aa", "bb", "cc"};
-        float[] d = {1, 2, 3};
-        for(int j=0;j<3;j++){
-            for (int i = 0; i < 3; i++) {
-                HashMap<String, Object> item = new HashMap<>();
-                item.put("expertName", a[j]);
-                item.put("judgementName", b[i]);
-                item.put("judgementContent", c[i]);
-                item.put("score", d[i]);
-                judgement.add(item);
-            }
+        List<Score> s=reportService.selectScoreByReportId(report.getReportId());
+        for(int i=0;i<s.size();i++){
+            List<Judgement> j=reportService.selectJudgementByJudgementId(s.get(i).getJudgementid());
+            HashMap<String, Object> item = new HashMap<>();
+            item.put("expertName", s.get(i).getExpertname());
+            item.put("judgementName", j.get(0).getJudgementname());
+            item.put("judgementContent", j.get(0).getJudgementcontent());
+            item.put("score", s.get(i).getScore());
+            judgement.add(item);
         }
 
+        Report r=reportService.selectReportById(report.getReportId());
+        String url="localhost:8090/"+r.getReportPath();
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("keyWord", keyWord);
         data.put("grades", grades);
         data.put("judgement", judgement);
+        data.put("url",url);
         return data;
     }
 }
