@@ -137,6 +137,7 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         List<HashMap<String, Object>> reports = new ArrayList<>();
         List<HashMap<String, Object>> keyWords = new ArrayList<>();
 
+        System.out.println(user.getUsername());
         User u=userService.selectUserByUserName(user.getUsername());
         List<Report> reportlist=reportService.selectReportByUserId(u.getID());
         for (int i = 0; i <reportlist.size() ; i++) {
@@ -144,7 +145,12 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
             String ReportId;
             ReportId = reportlist.get(i).getReportId();
             item.put("reportId", ReportId);
-            item.put("reportName", reportlist.get(i).getReportName());
+            String n=reportlist.get(i).getReportName();
+            int dot = n.lastIndexOf('.');
+            if ((dot >-1) && (dot < (n.length()))) {
+                n=n.substring(0, dot);
+            }
+            item.put("reportName", n);
             item.put("createTime", reportlist.get(i).getReportTime());
 
             List<KeyWord>w=reportService.selectKeyWordByReportId(reportlist.get(i).getReportId());

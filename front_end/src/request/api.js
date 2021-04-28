@@ -48,6 +48,12 @@ export default class api {
    */
   static p_getReportDetail=p=>post('/file/getReport',p);
 
+  /**
+   * 查看列表接口，发送当前用户名，返回列表报告
+   * @param {Object} p [发送的参数：当前用户名]
+   * @returns {Promise<unknown>}
+   */
+  static p_getList=p=>post('/file/getList',p);
 
   static p_testUpload=p=>post('/file/upload',p);
 }
