@@ -27,12 +27,19 @@ public class UserController {
     @Autowired
     private MailService mailService;
 
+//    @CrossOrigin
+//    @ResponseResultBody
+//    @PostMapping(value = "/login")
+//    public Pair<String, String> login(@RequestBody User user) {
+//        return Pair.of("token", userService.userLogin(user));
+//    }
+
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/login")
     public HashMap<String, Object> login(@RequestBody User user) {
         HashMap<String, Object> data = new HashMap<>();
-        data.put("token",userService.userLogin(user));
+        data.put("token", userService.userLogin(user));
         data.put("user",userService.selectUserByUserName(user.getUsername()));
         return data;
     }

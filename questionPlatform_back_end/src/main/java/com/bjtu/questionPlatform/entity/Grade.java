@@ -38,3 +38,4 @@ public class Grade {
         this.suggestion = suggestion;
     }
 }
+

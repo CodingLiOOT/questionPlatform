@@ -66,7 +66,7 @@ export default {
   data(){
     return{
       id:'',
-      url:"http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
+      url: "http://localhost:8090/try.pdf",
       pageNum: 1,
       pageTotalNum: 1,
       pageRotate: 0,
@@ -85,11 +85,11 @@ export default {
   methods:{
     showDetail(){
       this.$API.p_getReportDetail({
-        reportId:1
+        reportId:this.$route.query.reportId
       })
         .then(
           res=>{
-            this.url=res.url
+            this.url=res.file
             for(let i=0;i<res.keyWord.length;i++){
               this.keyWord.push(res.keyWord[i].word);
             }

@@ -10,13 +10,23 @@ import com.bjtu.questionPlatform.service.UserService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.bjtu.questionPlatform.entity.Report;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.spring.web.json.Json;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 
 
 /**
@@ -30,14 +40,16 @@ import java.util.*;
 @RestController
 @RequestMapping(value = "/api/file")
 public class FileController{
+
     @Autowired
     private ReportService reportService;
     @Autowired
     private UserService userService;
 
-    //    private final static String rootPath="D:\\Code\\questionPlatform\\questionPlatform\\questionPlatform_back_end\\src\\main\\resources\\files";
+
+//    private final static String rootPath="D:\\Code\\questionPlatform\\questionPlatform\\questionPlatform_back_end\\src\\main\\resources\\files";
 //     private final static String rootPath="C:\\Users\\王迪\\Documents\\temp\\country";
-    private final static String rootPath=System.getProperty("user.dir")+"\\files";
+private final static String rootPath=System.getProperty("user.dir")+"\\src\\main\\resources\\static\\";
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/upload")
@@ -93,14 +105,15 @@ public class FileController{
             e.printStackTrace();
         }
     }
-
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/getReport")
-    public HashMap<String, Object> getReport(@RequestBody Report report) {
+    public HashMap<String, Object> getReport(@RequestBody Report report) throws MalformedURLException {
         List<HashMap<String, Object>> keyWord = new ArrayList<>();
         List<HashMap<String, Object>> grades = new ArrayList<>();
         List<HashMap<String, Object>> judgement = new ArrayList<>();
+
+        System.out.println("获取某一报告"+report.getReportId());
 
         List<KeyWord>w=reportService.selectKeyWordByReportId(report.getReportId());
         for (int i = 0; i < w.size(); i++) {
@@ -109,7 +122,6 @@ public class FileController{
             word.put("word", w.get(i).getKeysContent());
             keyWord.add(word);
         }
-
 
         List<Grade> g=reportService.selectGradesByReportId(report.getReportId());
         for (int i = 0; i <g.size() ; i++) {
@@ -129,16 +141,18 @@ public class FileController{
             item.put("judgementContent", j.get(0).getJudgementcontent());
             item.put("score", s.get(i).getScore());
             judgement.add(item);
+
         }
 
-        Report r=reportService.selectReportById(report.getReportId());
-        String url="localhost:8090/"+r.getReportPath();
+        Report rpt= reportService.selectReportById(report.getReportId());
+        String url="localhost:8090/"+rpt.getReportPath();
+
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("keyWord", keyWord);
         data.put("grades", grades);
         data.put("judgement", judgement);
-        data.put("url",url);
+        data.put("file",url);
         return data;
     }
 }

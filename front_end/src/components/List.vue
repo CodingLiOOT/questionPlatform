@@ -100,7 +100,7 @@ export default {
       this.$router.push({
         path: 'ReportDetail',
         query: {
-          id: row.id,
+          reportId: row.id,
         }
       });
     },

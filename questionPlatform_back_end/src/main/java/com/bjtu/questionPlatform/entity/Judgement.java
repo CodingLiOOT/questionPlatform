@@ -47,3 +47,4 @@ public class Judgement {
         this.judgementname = judgementname;
     }
 }
+
