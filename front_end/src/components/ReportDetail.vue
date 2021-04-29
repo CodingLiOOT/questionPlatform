@@ -45,7 +45,7 @@
           <div class="page">{{pageNum}}/{{pageTotalNum}} </div>
         </div>
         <pdf ref="pdf"
-             :src="url"
+             :src="src"
              :page="pageNum"
              :rotate="pageRotate"
              @progress="loadedRatio = $event"
@@ -59,14 +59,26 @@
   </div>
 </template>
 
+
 <script>
 import pdf from "vue-pdf";
+
 export default {
   name: "ReportDetail",
+//   let loadingTask = pdf.createLoadingTask({
+//   url: 'http://localhost:8090/try.pdf',
+//   httpHeaders: this.$store.state.token
+// })
   data(){
     return{
       id:'',
-      url: "http://localhost:8090/try.pdf",
+      // src: "http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
+      src:pdf.createLoadingTask({
+        url: 'http://localhost:8090/try.pdf',
+        httpHeaders: {
+          token:this.$store.state.token
+        },
+      }),
       pageNum: 1,
       pageTotalNum: 1,
       pageRotate: 0,
@@ -89,7 +101,7 @@ export default {
       })
         .then(
           res=>{
-            this.url=res.file
+            // this.url=res.file
             for(let i=0;i<res.keyWord.length;i++){
               this.keyWord.push(res.keyWord[i].word);
             }
