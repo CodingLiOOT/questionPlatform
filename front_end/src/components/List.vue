@@ -54,37 +54,13 @@
 
 <script>
 import {unique} from "webpack-merge";
-
 export default {
   name: "List",
   data() {
     return {
       currentPage: 1,
       filters:[],
-      tableData: [{
-        id: 1,
-        name: '中石油探井信息资源共享',
-        time: '2016-05-03',
-        tag:['石油','井'],
-      },
-        {
-          id: 2,
-          name: '中石化可研报告',
-          time: '2016-05-03',
-          tag:['石油','国家能源'],
-        },
-        {
-          id: 3,
-          name: '电力信息资源共享',
-          time: '2016-05-03',
-          tag:['电','安全'],
-        },
-        {
-          id: 4,
-          name: '煤矿信息资源共享',
-          time: '2016-05-03',
-          tag:['煤矿'],
-        },]
+      tableData: []
     }
   },
   methods: {
@@ -100,7 +76,7 @@ export default {
       this.$router.push({
         path: 'ReportDetail',
         query: {
-          id: row.id,
+          reportId: row.id,
         }
       });
     },
@@ -135,13 +111,44 @@ export default {
       }
       this.filters=array;
     },
+    getList(){
+      this.$API.p_getList({
+        username: this.$store.state.user.username
+      })
+        .then(
+          data=>{
+            for(let i=0;i<data.reports.length;i++){
+              let temp={
+                id: '',
+                name: '',
+                time: '',
+                tag:[],
+              };
+              temp.id=data.reports[i].reportId;
+              temp.name=data.reports[i].reportName;
+              temp.time=data.reports[i].createTime;
+              for(let j=0;j<data.reports[i].keyWord.length;j++){
+                let k=data.reports[i].keyWord[j].word;
+                temp.tag.push(k);
+              }
+              // if(temp.id===data.reports[i].keyWords.reportId)
+              //   temp.tag=data.reports[i].keyWords.word;
+              this.tableData.push(temp);
+            }
+          }
+        )
+        .catch(
+          error=>{
+          }
+        )
+    }
   },
   mounted() {
     this.getFilters();
+    this.getList();
   }
 }
 </script>
 
 <style scoped>
-
 </style>

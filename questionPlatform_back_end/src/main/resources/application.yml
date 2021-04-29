@@ -1,6 +1,8 @@
 server:
   port: 8090
 spring:
+  mvc:
+    static-path-pattern: /static/**
   mail:
     host: smtp.sina.com
     username: gk2018bingo@sina.com
@@ -11,8 +13,9 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     #输入自己的账户密码
-    password: ljz123hhh
+    password: 78089091
     driver-class-name: com.mysql.cj.jdbc.Driver
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.bjtu.questionPlatform.entity

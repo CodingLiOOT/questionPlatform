@@ -8,14 +8,33 @@
               标签词：
             </el-col>
             <el-col :span="20">
-              <el-tag v-for="o in 4" :key="o" class="text item">标签{{o}}</el-tag>
+              <el-tag v-for="item in keyWord" :key="item" class="text item">{{item}}</el-tag>
             </el-col>
           </el-row>
           <el-row>
             <el-divider content-position="right"></el-divider>
           </el-row>
           <el-row class="el-row">
-            专家打分情况
+            <el-card shadow="hover" v-for="item in grades" :key="item" class="item">
+              <el-row class="expertName">
+                <el-col :span="6">
+                  专家:{{item.expertName}}打分情况
+                </el-col>
+              </el-row>
+              <el-row>
+                总体打分：{{item.totalScore}}
+              </el-row>
+              <el-row>
+                指标打分：
+              </el-row>
+              <el-row v-for="j in item.judgement" :key="j" >
+                指标名称: {{j.judgementName}}
+                分数: {{j.score}}
+              </el-row>
+              <el-row>
+                专家建议: {{item.suggestion}}
+              </el-row>
+            </el-card>
           </el-row>
         </el-card>
       </el-col>
@@ -47,22 +66,73 @@ export default {
   data(){
     return{
       id:'',
-      url:"http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
+      url: "http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
       pageNum: 1,
       pageTotalNum: 1,
       pageRotate: 0,
       // 加载进度
       loadedRatio: 0,
       curPageNum: 0,
+      // 标签词
+      keyWord:[],
+      // 专家
+      grades:[
+      ],
+      judgement:[
+      ],
     }
   },
-  components:{
-    pdf,
-  },
-  created: function() {
-    this.id = this.$route.params.id;
-  },
   methods:{
+    showDetail(){
+      this.$API.p_getReportDetail({
+        reportId:this.$route.query.reportId
+      })
+        .then(
+          res=>{
+            // this.url=res.file
+            for(let i=0;i<res.keyWord.length;i++){
+              this.keyWord.push(res.keyWord[i].word);
+            }
+            for(let i=0;i<res.grades.length;i++){
+              let grade={
+                expertName:'',
+                totalScore:'',
+                suggestion:'',
+                judgement: [],
+              };
+              grade.expertName=res.grades[i].expertName;
+              grade.totalScore=res.grades[i].totalScore;
+              grade.suggestion=res.grades[i].suggestion;
+              this.grades.push(grade);
+            }
+            for(let i=0;i<res.judgement.length;i++){
+              let j={
+                expertName:'',
+                judgementName:'',
+                judgementContent:'',
+                score:'',
+              };
+              j.expertName=res.judgement[i].expertName;
+              j.judgementName=res.judgement[i].judgementName;
+              j.judgementContent=res.judgement[i].judgementContent;
+              j.score=res.judgement[i].score;
+              this.judgement.push(j);
+            }
+            for(let i=0;i<this.grades.length;i++){
+              for(let j=0;j<this.judgement.length;j++){
+                if(this.grades[i].expertName===this.judgement[j].expertName){
+                  this.grades[i].judgement.push(this.judgement[j])
+                }
+              }
+            }
+
+          }
+        )
+        .catch({
+
+        })
+    },
+
     // show pdf
     // 上一页函数，
     prePage() {
@@ -84,6 +154,16 @@ export default {
     pdfError(error) {
       console.error(error)
     },
+  },
+  components:{
+    pdf,
+  },
+  created: function() {
+    this.id = this.$route.params.id;
+  },
+
+  mounted() {
+    this.showDetail();
   }
 }
 </script>
@@ -95,8 +175,12 @@ export default {
 
 .item {
   margin-left: 1.5rem;
+  margin-top: 1rem;
 }
 .el-row{
   margin-bottom: 1rem;
+}
+.expertName{
+  margin-left:0
 }
 </style>
