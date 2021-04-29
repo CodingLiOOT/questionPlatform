@@ -7,6 +7,10 @@ import MainPage from "../components/MainPage";
 import Upload from "../components/Upload";
 import List from "../components/List";
 import ReportDetail from "../components/ReportDetail";
+import Company from "../components/Company";
+import Evaluate from "../components/Evaluate";
+import ExpertsList from "../components/ExpertsList";
+import Edit from "../components/Edit";
 
 Vue.use(Router)
 
@@ -70,6 +74,29 @@ const router = new Router({
           path:'ReportDetail',
           name:'ReportDetail',
           component:ReportDetail,
+        }
+      ]
+    },
+    {
+      path: '/Company',
+      name:'Company',
+      redirect:'/Company/Evaluate',
+      component:Company,
+      children:[
+        {
+          path:'Evaluate',
+          name:'Evaluate',
+          component:Evaluate,
+        },
+        {
+          path:'ExpertsList',
+          name:'ExpertsList',
+          component:ExpertsList,
+        },
+        {
+          path:'Edit',
+          name:'Edit',
+          component:Edit,
         }
       ]
     },
