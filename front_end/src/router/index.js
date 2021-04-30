@@ -18,19 +18,24 @@ Vue.use(Router)
  * 刷新页面时，重新赋值token
  */
 if (sessionStorage.getItem('token')) {
-  store.commit('login',{
-    user:sessionStorage.getItem('user'),
-    token:sessionStorage.getItem('token')
+  store.commit('login', {
+    user: sessionStorage.getItem('user'),
+    token: sessionStorage.getItem('token')
   });
 }
 
 const router = new Router({
   mode: 'history',
   routes: [
+    // {
+    //   path: '/try',
+    //   name: 'Home',
+    //   component: tryFile
+    // },
     {
       path: '/',
-      name: 'Home',
-      component: () => import("../components/Home")
+      name: 'Login',
+      component: () => import("../components/login")
     },
     {
       path: '/home',
@@ -56,24 +61,24 @@ const router = new Router({
     },
     {
       path: '/MainPage',
-      name:'MainPage',
-      redirect:'/MainPage/Upload',
-      component:MainPage,
-      children:[
+      name: 'MainPage',
+      redirect: '/MainPage/Upload',
+      component: MainPage,
+      children: [
         {
-          path:'Upload',
-          name:'Upload',
-          component:Upload,
+          path: 'Upload',
+          name: 'Upload',
+          component: Upload,
         },
         {
-          path:'List',
-          name:'List',
-          component:List,
+          path: 'List',
+          name: 'List',
+          component: List,
         },
         {
-          path:'ReportDetail',
-          name:'ReportDetail',
-          component:ReportDetail,
+          path: 'ReportDetail',
+          name: 'ReportDetail',
+          component: ReportDetail,
         }
       ]
     },
@@ -102,9 +107,37 @@ const router = new Router({
     },
     {
       path: '/fileDemo',
-      name:'fileDemo',
-      component:()=>import("../components/FileDemo")
-    }
+      name: 'fileDemo',
+      component: () => import("../components/FileDemo")
+    },
+    {
+      path: '/ExpertInvitation',
+      name: 'ExpertInvitation',
+      component: () => import("../components/expert/ExpertInvitation")
+    },
+    {
+      path: '/ExpertMainPage',
+      name: 'ExpertMainPage',
+      redirect: '/ExpertMainPage/ExpertRating',
+      component: () => import("../components/expert/ExpertMainPage"),
+      children: [
+        {
+          path: 'ExpertRating',
+          name: 'ExpertRating',
+          component: () => import("../components/expert/ExpertRating"),
+        },
+        {
+          path: 'ExpertRated',
+          name: 'ExpertRated',
+          component: () => import("../components/expert/ExpertRated"),
+        },
+        {
+          path: 'ExpertHome',
+          name: 'ExpertHome',
+          component: () => import("../components/expert/ExpertHome"),
+        }
+      ]
+    },
   ],
 })
 router.beforeEach((to, from, next) => {
