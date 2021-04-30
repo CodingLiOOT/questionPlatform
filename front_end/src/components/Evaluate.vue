@@ -9,11 +9,13 @@
         label="报告编号"
         width="100">
       </el-table-column>
+
       <el-table-column
         prop="name"
         label="报告名称"
         width="300">
       </el-table-column>
+
       <el-table-column
         prop="tag"
         label="标签"
@@ -27,19 +29,21 @@
             :key="scope.row">{{item}}</el-tag>
         </template>
       </el-table-column>
+
       <el-table-column
         prop="time"
         label="创建时间">
       </el-table-column>
+
       <el-table-column
         fixed="right"
         label="操作"
         width="100">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small" style="color: red">编辑</el-button>
+          <el-button @click="handleClick(scope.row)" type="text" size="small">制定指标</el-button>
         </template>
       </el-table-column>
+
     </el-table>
     <el-pagination
       @size-change="handleSizeChange"
@@ -54,13 +58,37 @@
 
 <script>
 import {unique} from "webpack-merge";
+
 export default {
   name: "List",
   data() {
     return {
       currentPage: 1,
       filters:[],
-      tableData: []
+      tableData: [{
+        id: 1,
+        name: '中石油探井信息资源共享',
+        time: '2016-05-03',
+        tag:['石油','井'],
+      },
+        {
+          id: 2,
+          name: '中石化可研报告',
+          time: '2016-05-03',
+          tag:['石油','国家能源'],
+        },
+        {
+          id: 3,
+          name: '电力信息资源共享',
+          time: '2016-05-03',
+          tag:['电','安全'],
+        },
+        {
+          id: 4,
+          name: '煤矿信息资源共享',
+          time: '2016-05-03',
+          tag:['煤矿'],
+        },]
     }
   },
   methods: {
@@ -74,9 +102,9 @@ export default {
     handleClick(row) {
       console.log(row);
       this.$router.push({
-        path: 'ReportDetail',
+        path: 'Edit',
         query: {
-          reportId: row.id,
+          id: row.id,
         }
       });
     },
@@ -111,44 +139,13 @@ export default {
       }
       this.filters=array;
     },
-    getList(){
-      this.$API.p_getList({
-        username: this.$store.state.user.username
-      })
-        .then(
-          data=>{
-            for(let i=0;i<data.reports.length;i++){
-              let temp={
-                id: '',
-                name: '',
-                time: '',
-                tag:[],
-              };
-              temp.id=data.reports[i].reportId;
-              temp.name=data.reports[i].reportName;
-              temp.time=data.reports[i].createTime;
-              for(let j=0;j<data.reports[i].keyWord.length;j++){
-                let k=data.reports[i].keyWord[j].word;
-                temp.tag.push(k);
-              }
-              // if(temp.id===data.reports[i].keyWords.reportId)
-              //   temp.tag=data.reports[i].keyWords.word;
-              this.tableData.push(temp);
-            }
-          }
-        )
-        .catch(
-          error=>{
-          }
-        )
-    }
   },
   mounted() {
     this.getFilters();
-    this.getList();
   }
 }
 </script>
 
 <style scoped>
+
 </style>
