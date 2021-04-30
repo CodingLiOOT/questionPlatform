@@ -65,16 +65,12 @@ import pdf from "vue-pdf";
 
 export default {
   name: "ReportDetail",
-//   let loadingTask = pdf.createLoadingTask({
-//   url: 'http://localhost:8090/try.pdf',
-//   httpHeaders: this.$store.state.token
 // })
   data(){
     return{
       id:'',
-      // src: "http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
       src:pdf.createLoadingTask({
-        url: 'http://localhost:8090/try.pdf',
+        url: 'http://localhost:8090/static/try.pdf',
         httpHeaders: {
           token:this.$store.state.token
         },
@@ -101,7 +97,12 @@ export default {
       })
         .then(
           res=>{
-            // this.url=res.file
+            this.src=pdf.createLoadingTask({
+              url: res.file,
+              httpHeaders: {
+                token:this.$store.state.token
+              },
+            })
             for(let i=0;i<res.keyWord.length;i++){
               this.keyWord.push(res.keyWord[i].word);
             }
