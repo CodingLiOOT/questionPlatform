@@ -1,103 +1,169 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="12">
-        <el-form
-          ref="form"
-          :inline="true"
-          label-width="80px"
-        >
-          <el-row class="el-row">
-            <el-input placeholder="评估指标描述"
-                      style="width: 350px;margin-right: 10px">
-            </el-input>
-          </el-row>
-        </el-form>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/Company/Evaluate' }">报告列表</el-breadcrumb-item>
+      <el-breadcrumb-item>分配指标</el-breadcrumb-item>
+    </el-breadcrumb>
+    <br/>
+    <el-table
+      :data="judgeListData"
+      border
+      style="width: 100%;height: 100%">
+      <el-table-column
+        prop="id"
+        label="指标编号"
+        width="100">
+      </el-table-column>
 
-        <el-row class="el-row">
-          <el-button @click="addItem">增加</el-button>
-        </el-row>
+      <el-table-column
+        prop="name"
+        label="指标名称"
+        width="200">
+      </el-table-column>
 
+      <el-table-column
+        prop="content"
+        label="指标内容"
+        width="350">
+      </el-table-column>
 
+      <el-table-column
+        prop="proportion"
+        label="指标权重"
+        width="100">
+      </el-table-column>
 
-      </el-col>
-      <el-col :span="12">
-        <div class="tools">
-          <el-button :theme="'default'" type="submit" :title="'基础按钮'" @click.stop="prePage" class="mr10"> 上一页</el-button>
-          <el-button :theme="'default'" type="submit" :title="'基础按钮'" @click.stop="nextPage" class="mr10"> 下一页</el-button>
-          <div class="page">{{pageNum}}/{{pageTotalNum}} </div>
-        </div>
-        <pdf ref="pdf"
-             :src="url"
-             :page="pageNum"
-             :rotate="pageRotate"
-             @progress="loadedRatio = $event"
-             @page-loaded="pageLoaded($event)"
-             @num-pages="pageTotalNum=$event"
-             @error="pdfError($event)"
-             @link-clicked="page = $event">
-        </pdf>
-      </el-col>
-    </el-row>
+      <el-table-column
+        prop="managerId"
+        label="管理者编号"
+        width="120">
+      </el-table-column>
+
+      <el-table-column
+        prop="action"
+        label="操作">
+        <template slot-scope="scope">
+          <el-button @click="allocate(scope.row)" type="primary">分配</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage"
+      :page-size="10"
+      layout="prev, pager, next, jumper"
+      :total="10">
+    </el-pagination>
   </div>
 </template>
 
 <script>
-import pdf from "vue-pdf";
 export default {
-  name: "ReportDetail",
-  data(){
-    return{
-      id:'',
-      url:"http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
-      pageNum: 1,
-      pageTotalNum: 1,
-      pageRotate: 0,
-      // 加载进度
-      loadedRatio: 0,
-      curPageNum: 0,
+  name: "Edit",
+  data() {
+    return {
+      currentPage: 1,
+      filters: [],
+      judgeListData: [{
+        id: 1,
+        name: '架构模式',
+        content: '评价该项目的架构模式，由差到好划分为1~5分',
+        proportion: 3,
+        managerId: 9791
+      },
+        {
+          id: 2,
+          name: '设计模式',
+          content: '评价该项目的架构模式，由差到好划分为1~5分',
+          proportion: 2,
+          managerId: 2871
+        },
+        {
+          id: 3,
+          name: '算法的选择',
+          content: '评价该项目的架构模式，由差到好划分为1~5分',
+          proportion: 5,
+          managerId: 7890
+        }],
+      form: {
+        name: '',
+        content: '',
+        proportion: '',
+        managerId: ''
+      },
+      activeName: 'show'
     }
   },
-  components:{
-    pdf,
-  },
-  created: function() {
-    this.id = this.$route.params.id;
-  },
-  methods:{
-    // show pdf
-    // 上一页函数，
-    prePage() {
-      let page = this.pageNum
-      page = page > 1 ? page - 1 : this.pageTotalNum
-      this.pageNum = page
+  methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
     },
-    // 下一页函数
-    nextPage() {
-      let page = this.pageNum
-      page = page < this.pageTotalNum ? page + 1 : 1
-      this.pageNum = page
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
     },
-    // 页面加载回调函数，其中e为当前页数
-    pageLoaded(e) {
-      this.curPageNum = e
+    filterTag(value, row) {
+      for (let item in row.tag) {
+        if (row.tag[item] === value) {
+          return true;
+        }
+      }
+      return false;
     },
-    // 其他的一些回调函数。
-    pdfError(error) {
-      console.error(error)
+    getFilters() {
+      for (let item in this.tableData) {
+        for (let tag in this.tableData[item].tag) {
+          let temp = {text: '', value: '',}
+          temp.text = this.tableData[item].tag[tag];
+          temp.value = this.tableData[item].tag[tag];
+          this.filters.push(temp);
+        }
+      }
+      let array = [];
+      for (let i = 0; i < this.filters.length; i++) {
+        let f = true;
+        for (let j = 0; j < array.length; j++) {
+          if (this.filters[i].value === array[j].value) {
+            f = false;
+          }
+        }
+        if (f) {
+          array.push(this.filters[i]);
+        }
+      }
+      this.filters = array;
     },
+    mounted() {
+      this.getFilters();
+    },
+    onSubmit() {
+      console.log("send judgement");
+    },
+    allocate(row) {
+      let reportId = this.UrlSearch();
+      this.$API.p_allocateJudgement({
+        reportId: reportId,
+        judgementId: row.id,
+      })
+        .then(
+
+        )
+        .catch(
+          error => {
+          }
+        )
+    },
+    UrlSearch() {
+      let str = location.href; //获取到整个地址
+      let num = str.indexOf("?")
+      str = str.substr(num + 1); //取得num+1后所有参数，这里的num+1是下标 str.substr(start [, length ]
+      str = str.substring(3,str.length);
+      return str;
+    }
   }
 }
 </script>
 
 <style scoped>
-.text {
-  font-size: 14px;
-}
-.item {
-  margin-left: 1.5rem;
-}
-.el-row{
-  margin-bottom: 1rem;
-}
 </style>
