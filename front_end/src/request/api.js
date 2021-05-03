@@ -66,11 +66,4 @@ export default class api {
    * @returns {Promise<unknown>}
    */
   static p_newJudgement=p=>post('file/newJudgement',p);
-
-  /**
-   * 分配指标接口，发送报告id和指标id，返回刷新后的报告列表
-   * @param {Object} p [发送的参数]
-   * @returns {Promise<unknown>}
-   */
-  static p_allocateJudgement=p=>post('file/p_allocateJudgement',p);
 }
