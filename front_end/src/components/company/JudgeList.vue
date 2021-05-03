@@ -26,6 +26,7 @@
             label="管理者编号"
             width="200">
           </el-table-column>
+        </el-table>
           <el-table-column
             fixed="right"
             label="操作"
@@ -34,7 +35,6 @@
               <el-button @click="handleClick(scope.row)" type="text" size="small">查看指标</el-button>
             </template>
           </el-table-column>
-        </el-table>
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
