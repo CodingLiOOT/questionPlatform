@@ -31,15 +31,15 @@
             label="管理者编号"
             width="200">
           </el-table-column>
-          <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page.sync="currentPage"
-            :page-size="10"
-            layout="prev, pager, next, jumper"
-            :total="10">
-          </el-pagination>
         </el-table>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="10"
+          layout="prev, pager, next, jumper"
+          :total="10">
+        </el-pagination>
       </el-tab-pane>
 
       <el-tab-pane label="添加指标" name="add">
@@ -62,6 +62,7 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
+
     </el-tabs>
   </div>
 </template>
@@ -99,6 +100,28 @@ export default {
         content: '',
         proportion: '',
         managerId: ''
+      },
+      dataRules: {
+        name: [{
+          required: true,
+          message: '指标名称不能为空',
+          trigger: 'blur'
+        }],
+        content: [{
+          required: true,
+          message: '指标内容不能为空',
+          trigger: 'blur'
+        }],
+        proportion: [{
+          required: true,
+          message: '权重不能为空',
+          trigger: 'blur'
+        }],
+        managerId: [{
+          required: true,
+          message: '管理者编号不能为空',
+          trigger: 'blur'
+        }]
       },
       activeName: 'show'
     }
@@ -141,14 +164,76 @@ export default {
       }
       this.filters=array;
     },
+    //从后端获取指标列表放在界面上
+    getList() {
+      this.$API.g_getJudgementList({})
+      .then(
+        data => {
+          for(let i=0;i<data.judgement.length();i++){
+            let temp={
+              id: '',
+              name: '',
+              content: '',
+              proportion: '',
+              managerId: ''
+            };
+            temp.id = data.judgement[i].judgementId;
+            temp.name = data.judgement[i].judgementName;
+            temp.content = data.judgement[i].judgementContent;
+            temp.proportion = data.judgement[i].judgementProportion;
+            temp.managerId = data.judgement[i].managerId;
+
+            this.judgeListData.push(temp);
+          }
+        }
+      )
+      .catch(
+        error => {
+          console.log(error);
+        }
+      )
+    },
     mounted(){
       this.getFilters();
+      this.getList();
     },
     handleClick(tab, event) {
       console.log(tab,event);
     },
+    //点击“创建”按钮将指标数据发送给后端
     onSubmit() {
-      console.log("send judgement");
+      //console.log(this.form.name);
+      this.$refs.form.validate((valid) => {
+        if(valid){
+          this.$API.p_newJudgement({
+            judgementName: this.form.name,
+            judgementContent: this.form.content,
+            judgementProportion: this.form.proportion,
+            managerId: this.form.managerId
+          })
+          .then(
+            data => {
+              let status = data.status;
+              if(status==='1'){
+                alert("成功创建指标");
+              }
+              else {
+                alert("创建指标失败，请重试");
+              }
+            }
+          )
+          .catch(
+            error => {
+              console.log(error);
+            }
+          )
+        }
+      })
+
+      this.form.name = '';
+      this.form.content = '';
+      this.form.proportion = '';
+      this.form.managerId = '';
     }
   }
 }
