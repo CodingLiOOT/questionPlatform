@@ -3,7 +3,9 @@
     <el-header class="header">
       <p style="float: left;color: #ffffff">国家能源集团信息化项目信息资源共享评估平台</p>
       <div class="header-main">
-        <div><router-link to="/home" style="float: right">退出</router-link></div>
+        <div>
+          <router-link to="/home" style="float: right">退出</router-link>
+        </div>
         <div style="float: right;padding-right: 20px;">工程公司</div>
       </div>
     </el-header>
@@ -17,11 +19,11 @@
           <el-menu-item index="/Company/Evaluate">
             <span slot="title">报告列表</span>
           </el-menu-item>
-          <el-menu-item index="/Company/ExpertsList">
-            <template slot="title">专家列表</template>
-          </el-menu-item>
           <el-menu-item index="/Company/JudgeList">
             <span slot="title">指标列表</span>
+          </el-menu-item>
+          <el-menu-item index="/Company/ExpertsList">
+            <template slot="title">专家列表</template>
           </el-menu-item>
         </el-menu>
       </aside>
@@ -44,18 +46,21 @@ export default {
 </script>
 
 <style scoped>
-.el-container{
-  height:100%;
-  width:100%;
-  top:0;
-  bottom:0;
+.el-container {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  bottom: 0;
 }
-.header{
+
+.header {
   background-color: #6ba2db;
 }
-.el-menu-vertical{
+
+.el-menu-vertical {
   background-color: #7798c6;
 }
+
 .header-main {
   color: beige;
   padding: 20px 20px 10px 20px;
