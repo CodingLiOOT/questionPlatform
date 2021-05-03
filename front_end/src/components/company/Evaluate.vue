@@ -1,5 +1,9 @@
 <template>
   <div>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/Company/Evaluate' }">报告列表</el-breadcrumb-item>
+    </el-breadcrumb>
+    <br/>
     <el-table
       :data="tableData"
       border
@@ -13,34 +17,41 @@
       <el-table-column
         prop="name"
         label="报告名称"
-        width="300">
+        width="250">
       </el-table-column>
 
       <el-table-column
         prop="tag"
         label="标签"
-        width="300"
+        width="200"
         :filters=this.filters
         :filter-method="filterTag"
         filter-placement="bottom-end">
         <template slot-scope="scope">
           <el-tag
             v-for="item in scope.row.tag"
-            :key="scope.row">{{item}}</el-tag>
+            :key="scope.row">{{ item }}
+          </el-tag>
         </template>
       </el-table-column>
 
       <el-table-column
         prop="time"
-        label="创建时间">
+        label="创建时间"
+        width="120">
+      </el-table-column>
+
+      <el-table-column
+        prop="information"
+        label="指标">
       </el-table-column>
 
       <el-table-column
         fixed="right"
         label="操作"
-        width="100">
+        width="120">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">制定指标</el-button>
+          <el-button @click="handleClick(scope.row)" type="text" size="small">分配指标</el-button>
         </template>
       </el-table-column>
 
@@ -60,34 +71,38 @@
 import {unique} from "webpack-merge";
 
 export default {
-  name: "List",
+  name: "Evaluate",
   data() {
     return {
       currentPage: 1,
-      filters:[],
+      filters: [],
       tableData: [{
         id: 1,
         name: '中石油探井信息资源共享',
         time: '2016-05-03',
-        tag:['石油','井'],
+        tag: ['石油', '井'],
+        information: '未分配',
       },
         {
           id: 2,
           name: '中石化可研报告',
           time: '2016-05-03',
-          tag:['石油','国家能源'],
+          tag: ['石油', '国家能源'],
+          information: '未分配',
         },
         {
           id: 3,
           name: '电力信息资源共享',
           time: '2016-05-03',
-          tag:['电','安全'],
+          tag: ['电', '安全'],
+          information: '未分配',
         },
         {
           id: 4,
           name: '煤矿信息资源共享',
           time: '2016-05-03',
-          tag:['煤矿'],
+          tag: ['煤矿'],
+          information: '未分配',
         },]
     }
   },
@@ -109,35 +124,35 @@ export default {
       });
     },
     filterTag(value, row) {
-      for(let item in row.tag){
-        if(row.tag[item]===value){
+      for (let item in row.tag) {
+        if (row.tag[item] === value) {
           return true;
         }
       }
       return false;
     },
-    getFilters(){
-      for(let item in this.tableData){
-        for(let tag in this.tableData[item].tag){
-          let temp={text:'',value:'',}
-          temp.text=this.tableData[item].tag[tag];
-          temp.value=this.tableData[item].tag[tag];
+    getFilters() {
+      for (let item in this.tableData) {
+        for (let tag in this.tableData[item].tag) {
+          let temp = {text: '', value: '',}
+          temp.text = this.tableData[item].tag[tag];
+          temp.value = this.tableData[item].tag[tag];
           this.filters.push(temp);
         }
       }
-      let array =[];
-      for(let i = 0; i < this.filters.length; i++) {
-        let f=true;
-        for(let j=0;j<array.length;j++){
-          if(this.filters[i].value===array[j].value){
-            f=false;
+      let array = [];
+      for (let i = 0; i < this.filters.length; i++) {
+        let f = true;
+        for (let j = 0; j < array.length; j++) {
+          if (this.filters[i].value === array[j].value) {
+            f = false;
           }
         }
-        if(f){
+        if (f) {
           array.push(this.filters[i]);
         }
       }
-      this.filters=array;
+      this.filters = array;
     },
   },
   mounted() {
