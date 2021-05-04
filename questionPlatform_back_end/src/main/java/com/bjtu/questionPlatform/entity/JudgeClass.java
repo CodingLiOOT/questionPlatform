@@ -9,6 +9,7 @@ public class JudgeClass {
     private String JClassName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp JClassTime;
+    private String judgement;
     private String managerId;
 
     public String getJClassId() {
@@ -41,5 +42,13 @@ public class JudgeClass {
 
     public void setManagerId(String managerId) {
         this.managerId = managerId;
+    }
+
+    public String getJudgement() {
+        return judgement;
+    }
+
+    public void setJudgement(String judgement) {
+        this.judgement = judgement;
     }
 }
