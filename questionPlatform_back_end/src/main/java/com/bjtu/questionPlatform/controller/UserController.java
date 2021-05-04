@@ -9,6 +9,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 /**
  * @program: framework
  * @description: user controller
@@ -25,11 +27,21 @@ public class UserController {
     @Autowired
     private MailService mailService;
 
+//    @CrossOrigin
+//    @ResponseResultBody
+//    @PostMapping(value = "/login")
+//    public Pair<String, String> login(@RequestBody User user) {
+//        return Pair.of("token", userService.userLogin(user));
+//    }
+
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/login")
-    public Pair<String, String> login(@RequestBody User user) {
-        return Pair.of("token", userService.userLogin(user));
+    public HashMap<String, Object> login(@RequestBody User user) {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("token", userService.userLogin(user));
+        data.put("user",userService.selectUserByUserName(user.getUsername()));
+        return data;
     }
 
     @CrossOrigin
