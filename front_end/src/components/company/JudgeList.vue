@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs v-model="activeName" @tab-click="handleChangeTab">
       <el-tab-pane label="指标列表" name="show">
         <el-table
           :data="judgeListData"
@@ -8,28 +8,31 @@
           style="width: 100%;height: 100%">
           <el-table-column
             prop="id"
-            label="指标编号"
+            label="指标类编号"
             width="100">
           </el-table-column>
           <el-table-column
             prop="name"
-            label="指标名称"
+            label="指标类名称"
             width="300">
           </el-table-column>
           <el-table-column
-            prop="content"
-            label="指标内容"
-            width="320">
-          </el-table-column>
-          <el-table-column
-            prop="proportion"
-            label="指标权重"
-            width="100">
+            prop="time"
+            label="创建时间"
+            width="300">
           </el-table-column>
           <el-table-column
             prop="managerId"
             label="管理者编号"
             width="200">
+          </el-table-column>
+          <el-table-column
+            fixed="right"
+            label="操作"
+            width="100">
+            <template slot-scope="scope">
+              <el-button @click="handleClick(scope.row)" type="text" size="small">查看指标</el-button>
+            </template>
           </el-table-column>
         </el-table>
         <el-pagination
@@ -77,22 +80,19 @@ export default {
       judgeListData: [{
         id: 1,
         name: '架构模式',
-        content: '评价该项目的架构模式，由差到好划分为1~5分',
-        proportion: 3,
+        time: '2021.05.04',
         managerId: 9791
       },
         {
           id: 2,
           name: '设计模式',
-          content: '评价该项目的架构模式，由差到好划分为1~5分',
-          proportion: 2,
+          time: '2021.05.04',
           managerId: 2871
         },
         {
           id: 3,
           name: '算法的选择',
-          content: '评价该项目的架构模式，由差到好划分为1~5分',
-          proportion: 5,
+          time: '2021.05.04',
           managerId: 7890
         }],
       form: {
@@ -166,22 +166,20 @@ export default {
     },
     //从后端获取指标列表放在界面上
     getList() {
-      this.$API.g_getJudgementList({})
+      this.$API.g_getJClassList({})
       .then(
         data => {
-          for(let i=0;i<data.judgement.length();i++){
+          for(let i=0;i<data.JClass.length();i++){
             let temp={
               id: '',
               name: '',
-              content: '',
-              proportion: '',
+              time: '',
               managerId: ''
             };
-            temp.id = data.judgement[i].judgementId;
-            temp.name = data.judgement[i].judgementName;
-            temp.content = data.judgement[i].judgementContent;
-            temp.proportion = data.judgement[i].judgementProportion;
-            temp.managerId = data.judgement[i].managerId;
+            temp.id = data.JClass[i].JClassId;
+            temp.name = data.JClass[i].JClassName;
+            temp.time = data.JClass[i].JClassTime;
+            temp.managerId = data.JClass[i].managerId;
 
             this.judgeListData.push(temp);
           }
@@ -193,11 +191,21 @@ export default {
         }
       )
     },
+    // 选中查看某一条
+    handleClick(row) {
+      console.log(row);
+      this.$router.push({
+        path: 'ShowJudgement',
+        query: {
+          id: row.id,
+        }
+      });
+    },
     mounted(){
       this.getFilters();
       this.getList();
     },
-    handleClick(tab, event) {
+    handleChangeTab(tab, event) {
       console.log(tab,event);
     },
     //点击“创建”按钮将指标数据发送给后端
