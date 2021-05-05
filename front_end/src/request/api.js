@@ -58,12 +58,12 @@ export default class api {
    * 指标列表接口，获取所有指标
    * @returns {Promise<unknown>}
    */
-  static g_getJudgementList=p=>get('file/getJudgementList',p);
+  static g_getJClassList=p=>get('judgement/getJClassList',p);
 
   /**
    * 添加指标接口，将前端的新指标数据发送到后端
    * @param {Object} p [发送的参数]
    * @returns {Promise<unknown>}
    */
-  static p_newJudgement=p=>post('file/newJudgement',p);
+  static p_getOneJudgement=p=>post('judgement/getOneJudgement',p);
 }
