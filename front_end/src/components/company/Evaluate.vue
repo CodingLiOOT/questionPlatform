@@ -43,7 +43,7 @@
 
       <el-table-column
         prop="information"
-        label="指标">
+        label="指标类">
       </el-table-column>
 
       <el-table-column
@@ -51,7 +51,7 @@
         label="操作"
         width="120">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">分配指标</el-button>
+          <el-button @click="handleClick(scope.row)" type="text" size="small">分配指标类</el-button>
         </template>
       </el-table-column>
 
