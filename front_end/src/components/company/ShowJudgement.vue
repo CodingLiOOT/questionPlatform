@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/Company/JudgeList' }">指标列表</el-breadcrumb-item>
-      <el-breadcrumb-item>查看指标</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/Company/JudgeList' }">指标类列表</el-breadcrumb-item>
+      <el-breadcrumb-item>查看指标类</el-breadcrumb-item>
     </el-breadcrumb>
     <br/>
     <el-table
@@ -71,14 +71,14 @@ export default {
           name: '架构模式B',
           content: '评价该项目的架构模式，由差到好划分为1~5分',
           proportion: 2,
-          managerId: 2871
+          managerId: 9791
         },
         {
           id: 3,
           name: '架构模式C',
           content: '评价该项目的架构模式，由差到好划分为1~5分',
           proportion: 5,
-          managerId: 7890
+          managerId: 9791
         }]
     }
   },
