@@ -90,7 +90,7 @@
               <template slot-scope="scope">
                 <el-button type="primary" v-if="scope.row.id!==editId" @click="changeClick(scope.row)" size="small">编辑
                 </el-button>
-                <el-button type="danger" v-if="scope.row.id!==editId" @click="delClick(scope.row)" size="small">删除
+                <el-button type="danger" v-if="scope.row.id!==editId" @click="delClick(scope.$index, scope.row)" size="small">删除
                 </el-button>
                 <el-button type="success" v-if="scope.row.id===editId" @click="saveClick(scope.row)" size="small">保存
                 </el-button>
@@ -111,8 +111,10 @@
 </template>
 
 <script>
+let maxID = 0;
 export default {
   name: "JudgeList",
+  maxID,
   data() {
     return {
       currentPage: 1,
@@ -173,23 +175,7 @@ export default {
       activeName: 'show',
       editData: [],  //编辑行初始数据
       editId: '',  //判断编辑的是哪一行
-      judgementData: [{
-        id: '1',
-        name: '架构模式A',
-        content: '评价该项目的架构模式，由差到好划分为1~5分',
-        proportion: 3,
-      }, {
-        id: '2',
-        name: '架构模式B',
-        content: '评价该项目的架构模式，由差到好划分为1~5分',
-        proportion: 2,
-      }, {
-        id: '3',
-        name: '架构模式C',
-        content: '评价该项目的架构模式，由差到好划分为1~5分',
-        proportion: 5,
-      },
-      ]
+      judgementData: []
     }
   },
   methods: {
@@ -274,6 +260,11 @@ export default {
     handleChangeTab(tab, event) {
       console.log(tab, event);
     },
+    checkMaxId(id) {
+      if(id > maxID) {
+        maxID = id;
+      }
+    },
     // 编辑指标接口
     changeClick(row) {
       if (this.judgementData.some((item) => {
@@ -287,10 +278,14 @@ export default {
       }
       this.editData = JSON.parse(JSON.stringify(row));    //把当前行数据存一份，取消的时候行数据还原
       this.editId = row.id;
+      this.checkMaxId(parseInt(this.editId));
+      //alert(this.editId);
     },
     // 删除指标接口，成功以后 this.editId = ''
-    delClick(row) {
-
+    delClick(index) {
+      --maxID;
+      this.judgementData.splice(index,1);
+      this.editId = '';
     },
     // 取消操作接口
     cancelClick(row) {
@@ -309,7 +304,7 @@ export default {
     },
     // 保存指标接口，成功以后 this.editId = ''
     saveClick(row) {
-
+      this.editId = '';
     },
     // 添加指标接口
     addClick() {
@@ -320,6 +315,9 @@ export default {
         });
         return;
       }
+      //获取当前指标编号
+      maxID++;
+      let currentId = maxID;
       if (this.judgementData.some((item) => {
         return item.id === '';
       })) {
@@ -331,7 +329,7 @@ export default {
       }
       this.judgementData.push(
         {
-          id: '',
+          id: currentId,
           name: '',
           content: '',
           proportion: '',
