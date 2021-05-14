@@ -53,4 +53,31 @@ export default class api {
    * @returns {Promise<unknown>}
    */
   static p_Invitation=p=>post('/user/invitation',p);
+
+  /**
+   * 指标类列表接口，获取所有指标类
+   * @returns {Promise<unknown>}
+   */
+  static g_getJClassList=p=>get('judgement/getJClassList',p);
+
+  /**
+   * 查看某一指标类接口，查看一个指标类
+   * @param {Object} p [发送的参数]
+   * @returns {Promise<unknown>}
+   */
+  static p_getOneJudgement=p=>post('judgement/getOneJudgement',p);
+
+  /**
+   * 添加指标类接口，将前端的新指标类数据发送到后端
+   * @param {Object} p [发送的参数]
+   * @returns {Promise<unknown>}
+   */
+  static p_newJudgement=p=>post('judgement/newJudgement',p);
+
+  /**
+   * 分配指标接口，发送报告id和指标id，返回刷新后的报告列表
+   * @param {Object} p [发送的参数]
+   * @returns {Promise<unknown>}
+   */
+  static p_allocateJudgement=p=>post('judgement/p_allocateJudgement',p);
 }
