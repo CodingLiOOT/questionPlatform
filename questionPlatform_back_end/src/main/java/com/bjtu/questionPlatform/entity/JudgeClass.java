@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 public class JudgeClass {
     private String JClassId;
-    private String JClassName;
+    private String jClassName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp JClassTime;
     private String judgement;
@@ -20,15 +20,15 @@ public class JudgeClass {
         this.JClassId = JClassId;
     }
 
-    public String getJClassName() {
-        return JClassName;
+    public String getjClassName() {
+        return jClassName;
     }
 
-    public void setJClassName(String JClassName) {
-        this.JClassName = JClassName;
+    public void setjClassName(String jClassName) {
+        this.jClassName = jClassName;
     }
 
-    public Timestamp getJClassTime() {
+    public Timestamp getjClassTime() {
         return JClassTime;
     }
 

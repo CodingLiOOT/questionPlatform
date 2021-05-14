@@ -14,11 +14,11 @@ import java.util.List;
 @Repository
 public interface JudgementMapper {
     @Insert("insert into JudgeClass (JClassId,JClassName,JClassTime,managerId) "+
-            "values (#{JClassId},#{JClassName},NOW(),#{managerId})")
+            "values (#{JClassId},#{jClassName},NOW(),#{managerId})")
     void createJClass(JudgeClass judgeClass);
 
-    @Insert("insert into judgement (judgementId,judgementContent,managerId,judgementProportion,judgementName,JClassId) "+
-            "values (#{judgementId},#{judgementContent},#{managerId},#{judgementProportion},#{judgementName},#{JClassId})")
+    @Insert("insert into judgement (judgementId,judgementContent,managerId,judgementProportion,judgementName,JClassId,judgementtype) "+
+            "values (#{judgementid},#{judgementcontent},#{managerid},#{judgementproportion},#{judgementname},#{jClassId},1)")
     void createJudgement(Judgement judgement);
 
     @Select("select * from JudgeClass")

@@ -6,7 +6,7 @@ public class Judgement {
     String managerid;
     String judgementproportion;
     String judgementname;
-    String JClassId;
+    String jClassId;
 
     public String getJudgementid() {
         return judgementid;
@@ -48,12 +48,12 @@ public class Judgement {
         this.judgementname = judgementname;
     }
 
-    public String getJClassId() {
-        return JClassId;
+    public String getjClassId() {
+        return jClassId;
     }
 
-    public void setJClassId(String JClassId) {
-        this.JClassId = JClassId;
+    public void setjClassId(String jClassId) {
+        this.jClassId = jClassId;
     }
 }
 

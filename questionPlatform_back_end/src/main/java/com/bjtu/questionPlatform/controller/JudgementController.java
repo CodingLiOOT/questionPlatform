@@ -11,7 +11,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,12 +37,15 @@ public class JudgementController {
         int num=js.size()+1;
         JudgeClass jc=new JudgeClass();
         jc.setJClassId(num+"");
-        jc.setJClassName(j.getJClassName());
+        System.out.println("classname:"+j.getjClassName());
+        System.out.println("managerId:"+j.getManagerId());
+        jc.setjClassName(j.getjClassName());
         jc.setManagerId(j.getManagerId());
         judgementService.createJClass(jc);
 
         // 插入每个judgement
         String judgement=j.getJudgement();
+        System.out.println("judgement"+judgement);
         JSONArray jsonArray = JSON.parseArray(judgement);
 
         List<Judgement>jgts=judgementService.getAllJudgements();
@@ -53,10 +55,10 @@ public class JudgementController {
             JSONObject jsonObject = jsonArray.getJSONObject(i);
             Judgement judge=new Judgement();
             // 插入judgement相关数据
-            judge.setJudgementcontent(jsonObject.getString("judgementContent"));
-            judge.setJClassId(num+"");
-            judge.setJudgementname(jsonObject.getString("judgementName"));
-            judge.setJudgementproportion(jsonObject.getString("judgementProportion"));
+            judge.setJudgementcontent(jsonObject.getString("judgementcontent"));
+            judge.setjClassId(num+"");
+            judge.setJudgementname(jsonObject.getString("judgementname"));
+            judge.setJudgementproportion(jsonObject.getString("judgementproportion"));
             judge.setManagerid(j.getManagerId());
             judge.setJudgementid(total+"");
             judgementService.createJudgement(judge);
