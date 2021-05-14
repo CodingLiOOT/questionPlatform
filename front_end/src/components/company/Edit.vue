@@ -63,16 +63,7 @@
           <el-button @click="allocate(scope.row)" type="primary">分配</el-button>
         </template>
       </el-table-column>
-    </el-table>
 
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage"
-      :page-size="10"
-      layout="prev, pager, next, jumper"
-      :total="10">
-    </el-pagination>
   </div>
 </template>
 
