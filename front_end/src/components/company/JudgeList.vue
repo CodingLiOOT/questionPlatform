@@ -290,9 +290,9 @@ export default {
     saveClick(row) {
       let element = {
         id: row.id,
-        name: row.name,
-        content: row.content,
-        proportion: row.proportion
+        judgementname: row.name,
+        judgementcontent: row.content,
+        judgementproportion: row.proportion
       };
       listSize = judgeList.push(element);
       this.editId = '';
@@ -340,18 +340,18 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.$API.p_newJudgement({
-            JClassName: this.JClassForm.JClassName,
+            jClassName: this.JClassForm.JClassName,
             managerId: this.JClassForm.managerId,
-            judgement: judgeList
+            judgement: JSON.stringify(judgeList)
           })
             .then(
               data => {
-                let status = data.status;
-                if (status === '1') {
-                  alert("成功创建指标");
-                } else {
-                  alert("创建指标失败，请重试");
-                }
+                // let status = data.status;
+                // if (status === '1') {
+                //   alert("成功创建指标");
+                // } else {
+                //   alert("创建指标失败，请重试");
+                // }
               }
             )
             .catch(

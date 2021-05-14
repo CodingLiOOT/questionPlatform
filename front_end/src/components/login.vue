@@ -105,7 +105,7 @@ export default {
                 data => {
                   this.$store.commit('login', data);
                   //this.$router.replace('/index')
-                  let redirect = decodeURIComponent(this.$route.query.redirect || '/MainPage');
+                  let redirect = decodeURIComponent(this.$route.query.redirect || '/home');
                   this.$router.push({path: redirect});
                 }
               )

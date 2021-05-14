@@ -1,7 +1,11 @@
 package com.bjtu.questionPlatform.service.impl;
 
+
 import com.bjtu.questionPlatform.entity.Judgement;
 import com.bjtu.questionPlatform.entity.Report;
+
+import com.bjtu.questionPlatform.entity.JudgeClass;
+
 import com.bjtu.questionPlatform.mapper.JudgementMapper;
 import com.bjtu.questionPlatform.service.JudgementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ public class JudgementServiceImpl implements JudgementService {
     private JudgementMapper judgementMapper;
 
     @Override
+
     public void allocateJudge(Report report) {
         judgementMapper.allocateJudge(report);
     }
@@ -22,5 +27,25 @@ public class JudgementServiceImpl implements JudgementService {
     @Override
     public List<Judgement> selectJudgementByJClassId(String jClassId) {
         return judgementMapper.selectJudgementByJClassId(jClassId);
+    }
+
+    public void createJClass(JudgeClass judgeClass) {
+        judgementMapper.createJClass(judgeClass);
+    }
+
+    @Override
+    public List<JudgeClass> getAllJClasses() {
+        return judgementMapper.getAllJClasses();
+    }
+
+    @Override
+    public List<Judgement> getAllJudgements() {
+        return judgementMapper.getAllJudgements();
+    }
+
+    @Override
+    public void createJudgement(Judgement judgement) {
+        judgementMapper.createJudgement(judgement);
+
     }
 }
