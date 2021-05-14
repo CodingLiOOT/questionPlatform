@@ -79,5 +79,5 @@ export default class api {
    * @param {Object} p [发送的参数]
    * @returns {Promise<unknown>}
    */
-  static p_allocateJudgement=p=>post('judgement/p_allocateJudgement',p);
+  static p_allocateJudgement=p=>post('judgement/allocateJudgement',p);
 }
