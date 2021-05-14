@@ -1,11 +1,15 @@
 package com.bjtu.questionPlatform.mapper;
 
+
+import org.apache.ibatis.annotations.Update;
+
 import com.bjtu.questionPlatform.entity.JudgeClass;
 import com.bjtu.questionPlatform.entity.Judgement;
 import com.bjtu.questionPlatform.entity.Report;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,6 +17,13 @@ import java.util.List;
 @Mapper
 @Repository
 public interface JudgementMapper {
+
+    @Update("update report set jClassId=#{jClassId} where reportId=#{reportId}")
+    void allocateJudge(Report report);
+
+    @Select("select * from Judgement where jClassId = #{jClassId}")
+    List<Judgement> selectJudgementByJClassId(String jClassId);
+
     @Insert("insert into JudgeClass (JClassId,JClassName,JClassTime,managerId) "+
             "values (#{JClassId},#{jClassName},NOW(),#{managerId})")
     void createJClass(JudgeClass judgeClass);
@@ -26,4 +37,5 @@ public interface JudgementMapper {
 
     @Select("select * from judgement")
     List<Judgement> getAllJudgements();
+
 }

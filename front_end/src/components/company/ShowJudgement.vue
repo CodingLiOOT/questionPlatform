@@ -59,28 +59,13 @@ export default {
     return {
       currentPage: 1,
       filters:[],
-      judgementData: [{
-        id: 1,
-        name: '架构模式A',
-        content: '评价该项目的架构模式，由差到好划分为1~5分',
-        proportion: 3,
-        managerId: 9791
-      },
-        {
-          id: 2,
-          name: '架构模式B',
-          content: '评价该项目的架构模式，由差到好划分为1~5分',
-          proportion: 2,
-          managerId: 9791
-        },
-        {
-          id: 3,
-          name: '架构模式C',
-          content: '评价该项目的架构模式，由差到好划分为1~5分',
-          proportion: 5,
-          managerId: 9791
-        }]
+      judgementData: []
     }
+  },
+  mounted() {
+    this.getOneJudgement();
+    this.getFilters();
+
   },
   methods: {
     handleSizeChange(val) {
@@ -124,11 +109,11 @@ export default {
     getOneJudgement(){
       let str = this.UrlSearch();
       this.$API.p_getOneJudgement({
-        JClassId: str
+        jClassId: str
       })
         .then(
           data => {
-            for (let i=0; i<data.judgement.length(); i++){
+            for (let i=0; i<data.judgement.length; i++){
               let temp={
                 id: '',
                 name: '',
@@ -150,9 +135,7 @@ export default {
             console.log(error);
         })
     },
-    mounted() {
-      this.getFilters();
-    },
+
     UrlSearch() {
       let str = location.href; //获取到整个地址
       let num = str.indexOf("?")
@@ -160,7 +143,9 @@ export default {
       str = str.substring(3,str.length); //获取id的值
       return str;
     }
-  }
+  },
+
+
 }
 </script>
 
