@@ -155,8 +155,44 @@ export default {
       this.filters = array;
     },
   },
+  getList(){
+    this.$API.p_getAllReportList({
+    })
+      .then(
+        data=>{
+          for(let i=0;i<data.reports.length;i++){
+            let temp={
+              id: '',
+              name: '',
+              time: '',
+              tag:[],
+              information: '',
+            };
+            temp.id=data.reports[i].reportId;
+            temp.name=data.reports[i].reportName;
+            temp.time=data.reports[i].createTime;
+            temp.information=data.reports[i].JClassName;
+            if(temp.information==='') {
+              temp.information='未分配';
+            }
+            for(let j=0;j<data.reports[i].keyWord.length;j++){
+              let k=data.reports[i].keyWord[j].word;
+              temp.tag.push(k);
+            }
+            // if(temp.id===data.reports[i].keyWords.reportId)
+            //   temp.tag=data.reports[i].keyWords.word;
+            this.tableData.push(temp);
+          }
+        }
+      )
+      .catch(
+        error=>{
+        }
+      )
+  },
   mounted() {
     this.getFilters();
+    this.getList();
   }
 }
 </script>
