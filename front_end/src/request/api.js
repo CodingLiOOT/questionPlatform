@@ -76,10 +76,9 @@ export default class api {
 
   /**
    * 获取所有报告列表接口，返回报告列表
-   * @param {Object} p [发送的参数]
    * @returns {Promise<unknown>}
    */
-  static p_getAllReportList=p=>post('judgement/getAllReportList',p);
+  static p_getAllReportList= ()=>post('judgement/getAllReportList',null);
 
   /**
    * 分配指标接口，发送报告id和指标id，返回刷新后的报告列表
