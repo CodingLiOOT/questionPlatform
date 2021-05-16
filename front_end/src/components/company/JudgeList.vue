@@ -205,7 +205,7 @@ export default {
       this.$API.g_getJClassList({})
         .then(
           data => {
-            for (let i = 0; i < data.JClass.length(); i++) {
+            for (let i = 0; i < data.JClass.length; i++) {
               let temp = {
                 id: '',
                 name: '',
