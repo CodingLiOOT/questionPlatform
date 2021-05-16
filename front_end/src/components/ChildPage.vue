@@ -5,7 +5,7 @@
         <p>标签词：{{index+1}}</p>
       </el-col>
       <el-col :span="14">
-        <el-input v-model="tags.text" placeholder="请输入标签词"></el-input>
+        <el-input v-model="tags.word" placeholder="请输入标签词"></el-input>
       </el-col>
       <el-col :span="4">
         <el-button type="danger" icon="el-icon-delete" circle @click="deleteTag"></el-button>
@@ -29,14 +29,14 @@ export default {
   data () {
     return {
       tags:{
-        text:'',
+        word:'',
       }
     }
   },
   watch: {
     tags: {
       handler (newV, oldV) {
-        if (newV.text.length === 0) {
+        if (newV.word.length === 0) {
           return false
         }
         this.$emit('uploadData', {index: this.index, data: newV})

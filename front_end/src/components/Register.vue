@@ -182,6 +182,9 @@ export default {
               this.$router.replace('/login');
             }
           )
+          .catch({
+
+          })
         } else {
           return false
         }
