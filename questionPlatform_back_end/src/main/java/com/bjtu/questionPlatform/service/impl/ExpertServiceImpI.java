@@ -52,7 +52,7 @@ public class ExpertServiceImpI implements ExpertService {
         message.setFrom(from);
         message.setTo(to);
         message.setSubject(subject);
-        message.setText("您的邀请链接为：" + link +"\n"+sendMessage);
+        message.setText("您的邀请链接为：" + link +"\n"+"您的邀请信息(邀请码)为"+sendMessage);
         try {
             mailSender.send(message);
         } catch (Exception ignored) {
