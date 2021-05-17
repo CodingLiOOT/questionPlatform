@@ -72,4 +72,9 @@ public class UserServiceImpl implements UserService {
     public User selectUserByUserName(String username) {
         return userMapper.selectUserByUserName(username);
     }
+
+    @Override
+    public String selectTypeByUserName(String username) {
+        return userMapper.selectTypeByUserName(username);
+    }
 }
