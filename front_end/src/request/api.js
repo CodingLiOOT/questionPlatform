@@ -85,7 +85,6 @@ export default class api {
    * @param {Object} p [发送的参数]
    * @returns {Promise<unknown>}
    */
-<<<<<<< HEAD
   static p_allocateJudgement=p=>post('judgement/p_allocateJudgement',p);
 
   /**
@@ -101,7 +100,4 @@ export default class api {
    */
   static p_createExpert=p=>post('Company/createExpert',p);
 
-=======
-  static p_allocateJudgement=p=>post('judgement/allocateJudgement',p);
->>>>>>> dev-back-end
 }
