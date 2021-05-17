@@ -9,4 +9,6 @@ public interface UserService {
     void register(User user);
 
     User selectUserByUserName(String username);
+
+    String selectTypeByUserName(String username);
 }
