@@ -67,20 +67,6 @@ export default class api {
    */
   static p_getOneJudgement=p=>post('judgement/getOneJudgement',p);
 
-
-  /**
-   * 指标列表接口，获取所有指标
-   * @returns {Promise<unknown>}
-   */
-  static g_getJudgementList=p=>get('file/getJudgementList',p);
-
-  /**
-   * 添加指标接口，将前端的新指标数据发送到后端
-   * @param {Object} p [发送的参数]
-   * @returns {Promise<unknown>}
-   */
-  static p_newJudgement=p=>post('file/newJudgement',p);
-
   /**
    * 添加指标类接口，将前端的新指标类数据发送到后端
    * @param {Object} p [发送的参数]
@@ -89,10 +75,17 @@ export default class api {
   static p_newJudgement=p=>post('judgement/newJudgement',p);
 
   /**
+   * 获取所有报告列表接口，返回报告列表
+   * @returns {Promise<unknown>}
+   */
+  static p_getAllReportList= ()=>post('judgement/getAllReportList',null);
+
+  /**
    * 分配指标接口，发送报告id和指标id，返回刷新后的报告列表
    * @param {Object} p [发送的参数]
    * @returns {Promise<unknown>}
    */
+<<<<<<< HEAD
   static p_allocateJudgement=p=>post('judgement/p_allocateJudgement',p);
 
   /**
@@ -108,4 +101,7 @@ export default class api {
    */
   static p_createExpert=p=>post('Company/createExpert',p);
 
+=======
+  static p_allocateJudgement=p=>post('judgement/allocateJudgement',p);
+>>>>>>> dev-back-end
 }

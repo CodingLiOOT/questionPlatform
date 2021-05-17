@@ -130,6 +130,38 @@ export default {
       }
       return false;
     },
+    getAllReportList() {
+      this.$API.p_getAllReportList()
+        .then(
+          data => {
+            for (let i = 0; i < data.reports.length; i++) {
+              let temp = {
+                id: '',
+                name: '',
+                time: '',
+                tag: [],
+                information: '',
+              };
+              temp.id = data.reports[i].reportId;
+              temp.name = data.reports[i].reportName;
+              temp.time = data.reports[i].createTime;
+              temp.information = data.reports[i].JClassName;
+              if (temp.information === '') {
+                temp.information = '未分配';
+              }
+              for (let j = 0; j < data.reports[i].keyWord.length; j++) {
+                let k = data.reports[i].keyWord[j].word;
+                temp.tag.push(k);
+              }
+              this.tableData.push(temp);
+            }
+          }
+        )
+        .catch(
+          error => {
+          }
+        )
+    },
     getFilters() {
       for (let item in this.tableData) {
         for (let tag in this.tableData[item].tag) {
@@ -155,6 +187,7 @@ export default {
     },
   },
   mounted() {
+    this.getAllReportList();
     this.getFilters();
   }
 }
