@@ -205,7 +205,7 @@ export default {
       this.$API.g_getJClassList({})
         .then(
           data => {
-            for (let i = 0; i < data.JClass.length; i++) {
+            for (let i = 0; i < data.JClass.length(); i++) {
               let temp = {
                 id: '',
                 name: '',
@@ -236,6 +236,10 @@ export default {
           id: row.id,
         }
       });
+    },
+    mounted() {
+      this.getFilters();
+      this.getList();
     },
     handleChangeTab(tab, event) {
       console.log(tab, event);
@@ -366,11 +370,6 @@ export default {
       judgeList = [];
       listSize = 0;
     },
-  },
-  mounted() {
-    this.getList();
-    this.getFilters();
-
   }
 }
 </script>

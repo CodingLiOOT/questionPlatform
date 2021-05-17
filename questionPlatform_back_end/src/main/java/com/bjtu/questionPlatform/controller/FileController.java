@@ -41,11 +41,15 @@ import java.util.UUID;
 @RestController
 @RequestMapping(value = "/api/file")
 public class FileController{
+
     @Autowired
     private ReportService reportService;
     @Autowired
     private UserService userService;
 
+
+//    private final static String rootPath="D:\\Code\\questionPlatform\\questionPlatform\\questionPlatform_back_end\\src\\main\\resources\\files";
+//     private final static String rootPath="C:\\Users\\王迪\\Documents\\temp\\country";
 private final static String rootPath=System.getProperty("user.dir")+"\\src\\main\\resources\\static\\";
     @CrossOrigin
     @ResponseResultBody
@@ -85,6 +89,7 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
                 r.setReportId(reportId+"");
                 r.setReportName(oldName);
                 reportService.createReport(r);
+
                 for(int i=0;i<jsonArray.size();i++){
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     KeyWord key=new KeyWord();
