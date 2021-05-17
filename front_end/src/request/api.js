@@ -58,7 +58,7 @@ export default class api {
    * 指标类列表接口，获取所有指标类
    * @returns {Promise<unknown>}
    */
-  static g_getJClassList=p=>get('judgement/getJClassList',p);
+  static g_getJClassList=p=>post('judgement/getJClassList',p);
 
   /**
    * 查看某一指标类接口，查看一个指标类
@@ -85,7 +85,7 @@ export default class api {
    * @param {Object} p [发送的参数]
    * @returns {Promise<unknown>}
    */
-  static p_allocateJudgement=p=>post('judgement/p_allocateJudgement',p);
+  static p_allocateJudgement=p=>post('judgement/allocateJudgement',p);
 
   /**
    * 专家列表接口，获取专家列表
