@@ -56,13 +56,13 @@
       layout="prev, pager, next, jumper"
       :total="10">
     </el-pagination>
-      <el-table-column
-        prop="action"
-        label="操作">
-        <template slot-scope="scope">
-          <el-button @click="allocate(scope.row)" type="primary">分配</el-button>
-        </template>
-      </el-table-column>
+    <el-table-column
+      prop="action"
+      label="操作">
+      <template slot-scope="scope">
+        <el-button @click="allocate(scope.row)" type="primary">分配</el-button>
+      </template>
+    </el-table-column>
 
   </div>
 </template>
@@ -155,7 +155,6 @@ export default {
         judgementId: row.id,
       })
         .then(
-
         )
         .catch(
           error => {

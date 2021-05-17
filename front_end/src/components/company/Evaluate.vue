@@ -69,7 +69,6 @@
 
 <script>
 import {unique} from "webpack-merge";
-
 export default {
   name: "Evaluate",
   data() {
@@ -162,5 +161,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
