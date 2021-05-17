@@ -3,7 +3,9 @@ package com.bjtu.questionPlatform.controller;
 
 import com.bjtu.questionPlatform.entity.*;
 import com.bjtu.questionPlatform.service.JudgementService;
+
 import com.bjtu.questionPlatform.service.ReportService;
+
 import com.bjtu.questionPlatform.service.UserService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 
@@ -39,8 +41,10 @@ import java.util.List;
 public class JudgementController {
     @Autowired
     private JudgementService judgementService;
+
     @Autowired
     private ReportService reportService;
+
 
     @CrossOrigin
     @ResponseResultBody
@@ -122,6 +126,7 @@ public class JudgementController {
         return Pair.of("Status",1);
 
     }
+
 
     @CrossOrigin
     @ResponseResultBody

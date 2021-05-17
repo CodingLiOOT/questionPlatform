@@ -2,6 +2,7 @@ package com.bjtu.questionPlatform.service.impl;
 
 
 import com.bjtu.questionPlatform.entity.Expert;
+
 import com.bjtu.questionPlatform.entity.Judgement;
 import com.bjtu.questionPlatform.entity.Report;
 
@@ -30,7 +31,6 @@ public class JudgementServiceImpl implements JudgementService {
     }
 
     @Override
-
     public void allocateJudge(Report report) {
         judgementMapper.allocateJudge(report);
     }
