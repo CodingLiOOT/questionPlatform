@@ -25,7 +25,7 @@ public class ExpertController {
     @ResponseResultBody
     @PostMapping(value = "/sendCode")
     public void sendVerifyCode(@RequestBody Expert expert) {
-        expertService.invite(expert,"123456.com","Hello");
+        expertService.invite(expert,"","诚邀您的评价，这是信息");
 //        mailService.sendMail(expert.getMail());
     }
 
