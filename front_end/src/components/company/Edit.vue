@@ -135,7 +135,7 @@ export default {
       let reportId = this.UrlSearch();
       this.$API.p_allocateJudgement({
         reportId: reportId,
-        JClassId: row.id+"",
+        jClassId: row.id+"",
       })
         .then(
 
