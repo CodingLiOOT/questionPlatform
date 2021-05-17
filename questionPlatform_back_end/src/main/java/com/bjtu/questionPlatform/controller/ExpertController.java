@@ -18,15 +18,32 @@ import java.util.HashMap;
 public class ExpertController {
     @Autowired
     private ExpertService expertService;
-//    @Autowired
-//    private MailService mailService;
+    @Autowired
+    private MailService mailService;
+
+//    @CrossOrigin
+//    @ResponseResultBody
+//    @PostMapping(value = "/login")
+//    public Pair<String, String> login(@RequestBody User user) {
+//        return Pair.of("token", userService.userLogin(user));
+//    }
+
+//    @CrossOrigin
+//    @ResponseResultBody
+//    @PostMapping(value = "/login")
+//    public HashMap<String, Object> login(@RequestBody User user) {
+//
+//        HashMap<String, Object> data = new HashMap<>();
+//        data.put("token", userService.userLogin(user));
+//        data.put("user", userService.selectUserByUserName(user.getUsername()));
+//        return data;
+//    }
 
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/sendCode")
     public void sendVerifyCode(@RequestBody Expert expert) {
-        expertService.invite(expert,"","诚邀您的评价，这是信息");
-//        mailService.sendMail(expert.getMail());
+        expertService.invite(expert,"123,com","Hell0");
     }
 
     @CrossOrigin
