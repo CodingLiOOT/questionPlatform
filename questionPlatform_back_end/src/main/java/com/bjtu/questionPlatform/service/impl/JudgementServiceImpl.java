@@ -1,6 +1,8 @@
 package com.bjtu.questionPlatform.service.impl;
 
 
+import com.bjtu.questionPlatform.entity.Expert;
+
 import com.bjtu.questionPlatform.entity.Judgement;
 import com.bjtu.questionPlatform.entity.Report;
 
@@ -19,7 +21,16 @@ public class JudgementServiceImpl implements JudgementService {
     private JudgementMapper judgementMapper;
 
     @Override
+    public List<Expert> getAllExperts() {
+        return judgementMapper.getAllExperts();
+    }
 
+    @Override
+    public List<JudgeClass> getAllJudgeClass() {
+        return judgementMapper.getAllJudgeClass();
+    }
+
+    @Override
     public void allocateJudge(Report report) {
         judgementMapper.allocateJudge(report);
     }
