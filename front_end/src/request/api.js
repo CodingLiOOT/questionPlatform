@@ -106,6 +106,6 @@ export default class api {
    * @param {Object} p [发送的参数：报告编号、关键词、名称、创建日期]
    * @returns {Promise<unknown>}
    */
-  static p_allocateExpert=p=>post('judgement/allocateExpert',p);
+  static p_createExpert=p=>post('Company/createExpert',p);
 
 }

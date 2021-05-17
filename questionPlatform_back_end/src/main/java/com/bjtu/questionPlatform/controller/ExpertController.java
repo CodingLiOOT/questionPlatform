@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/api/expert")
+@RequestMapping(value = "/api/Company")
 public class ExpertController {
     @Autowired
     private ExpertService expertService;

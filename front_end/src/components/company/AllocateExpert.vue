@@ -24,7 +24,11 @@
     </el-form-item>
 
     <el-form-item label="邮箱：">
-      <el-input v-model="form.expertEmail" placeholder=""></el-input>
+      <el-input v-model="form.mail" placeholder=""></el-input>
+    </el-form-item>
+
+    <el-form-item label="手机号：">
+      <el-input v-model="form.phone" placeholder=""></el-input>
     </el-form-item>
 
     <el-form-item>
@@ -44,53 +48,53 @@ export default {
         keysId: '',
         expertType: '',
         expertUnit: '',
-        expertInformation:'',
-        expertEmail:'',
+        expertInformation: '',
+        mail: '',
+        phone: '',
       },
-
-      //点击“新建”按钮发送专家信息
-      onSubmit() {
-        //console.log(this.form.name);
-        this.$refs.form.validate((valid) => {
-          if(valid){
-            this.$API.p_allocateExpert({
-              expertName: this.form.expertName,
-              keysId: this.form.keysId,
-              expertType: this.form.expertType,
-              expertUnit: this.form.expertUnit,
-              expertInformation: this.form.expertInformation,
-            })
-              .then(
-                data=>{
-                  for(let i=0;i<data.report.length;i++){
-                    let temp={
-                      expertName: '',
-                      keysId: '',
-                      expertType: '',
-                      expertUnit:'',
-                      expertInformation: '',
-                      expertEmail:'',
-                    };
-                    temp.expertName=data.experts[i].expertName;
-                    temp.keysId=data.experts[i].keysId;
-                    temp.expertType=data.experts[i].expertType;
-                    temp.expertUnit=data.experts[i].expertUnit;
-                    temp.expertInformation=data.experts[i].expertInformation;
-                    temp.expertEmail=data.experts[i].expertEmail;
-                  }
-                }
-              )
-              .catch(
-                error => {
-                  console.log(error);
-                }
-              )
-          }
-        })
-
-      }
     }
-  }
+  },
+  methods:{
+    onSubmit() {
+      this.$API.p_createExpert({
+        expertName: this.form.expertName,
+        keysId: this.form.keysId,
+        expertType: this.form.expertType,
+        expertUnit: this.form.expertUnit,
+        expertInformation: this.form.expertInformation,
+        mail: this.form.mail,
+        phone: this.form.phone
+      })
+        .then(
+          data=>{
+            for(let i=0;i<data.experts.length;i++){
+              let temp={
+                expertName: '',
+                keysId: '',
+                expertType: '',
+                expertUnit:'',
+                expertInformation: '',
+                mail:'',
+                phone:'',
+              };
+              temp.expertName=data.experts[i].expertName;
+              temp.keysId=data.experts[i].keysId;
+              temp.expertType=data.experts[i].expertType;
+              temp.expertUnit=data.experts[i].expertUnit;
+              temp.expertInformation=data.experts[i].expertInformation;
+              temp.mail=data.experts[i].mail;
+              temp.phone=data.experts[i].phone;
+            }
+          }
+        )
+        .catch(
+          error => {
+            console.log(error);
+          }
+        )
+
+    }
+  },
 }
 </script>
 

@@ -20,8 +20,8 @@ public interface ExpertMapper {
     Expert selectExpertByUserName(String expertName);
     @Select("select * from expert where keysId = #{keysId}")
     List<User> selectExpertByKeysId(String keysId);
-    @Insert("insert into expert (expertName,keysId,password,expertType,mail,phone) "+
-            "values (#{expertName},#{keysId},#{password},1,#{mail},#{phone})")
+    @Insert("insert into expert (expertName,keysId,expertType,mail,phone,expertUnit,expertInformation) "+
+            "values (#{expertName},1,1,#{mail},#{phone},#{expertUnit},#{expertInformation})")
     //插入的专家类型暂时没想好咋写
     void createExpert(Expert expert);
 
