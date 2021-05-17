@@ -60,7 +60,30 @@ export default {
     return {
       currentPage: 1,
       filters:[],
-      tableData: []
+      tableData: [{
+        id: 1,
+        name: '中石油探井信息资源共享',
+        time: '2016-05-03',
+        tag:['石油','井'],
+      },
+        {
+          id: 2,
+          name: '中石化可研报告',
+          time: '2016-05-03',
+          tag:['石油','国家能源'],
+        },
+        {
+          id: 3,
+          name: '电力信息资源共享',
+          time: '2016-05-03',
+          tag:['电','安全'],
+        },
+        {
+          id: 4,
+          name: '煤矿信息资源共享',
+          time: '2016-05-03',
+          tag:['煤矿'],
+        },]
     }
   },
   methods: {

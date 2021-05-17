@@ -155,17 +155,10 @@ export default {
             trigger: 'blur'
           }],
         emailCode: [{
-<<<<<<<<< Temporary merge branch 1
-            required: true,
-            message: '请输入验证码',
-            trigger: 'blur'
-          }]
-=========
           required: true,
           message: '请输入验证码',
           trigger: 'blur'
         }]
->>>>>>>>> Temporary merge branch 2
       },
       disabled:false,
       time:30,

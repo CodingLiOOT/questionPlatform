@@ -30,6 +30,7 @@ public class Report implements Serializable {
     private String username;
     private MultipartFile file;
     private String reportPath;
+    private String jClassId;
 
     public String getReportId() {
         return reportId;
@@ -90,6 +91,14 @@ public class Report implements Serializable {
 
     public String getID() {
         return ID;
+    }
+
+    public String getjClassId() {
+        return jClassId;
+    }
+
+    public void setjClassId(String jClassId) {
+        this.jClassId = jClassId;
     }
 
     public void setID(String ID) {

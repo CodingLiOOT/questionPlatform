@@ -2,6 +2,10 @@
   <div>
     <el-header class="header">
       <p style="float: left;color: #ffffff">国家能源集团信息化项目信息资源共享评估平台</p>
+      <div class="header-main">
+        <div><router-link to="/home" style="float: right">退出</router-link></div>
+        <div style="float: right;padding-right: 20px;">可研报告编制单位</div>
+      </div>
     </el-header>
     <el-container class="el-container">
       <aside width="200px">
@@ -45,6 +49,10 @@ name: "MainPage",
 }
 .header{
   background-color: #6ba2db;
+}
+.header-main {
+  color: beige;
+  padding: 20px 20px 10px 20px;
 }
 .el-menu-vertical{
   background-color: #7798c6;

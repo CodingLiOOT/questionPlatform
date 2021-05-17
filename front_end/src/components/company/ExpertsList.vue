@@ -17,7 +17,7 @@
         <el-row>
           <el-col span="4">
             <div class="left">
-              <img src="../assets/icon.jpg" alt="" style="width:100px; height:100px">
+              <img src="../../assets/icon.jpg" alt="" style="width:100px; height:100px">
             </div>
           </el-col>
           <el-col span="10">
@@ -38,7 +38,7 @@
         <el-row>
           <el-col span="4">
             <div class="left">
-              <img src="../assets/icon.jpg" alt="" style="width:100px; height:100px">
+              <img src="../../assets/icon.jpg" alt="" style="width:100px; height:100px">
             </div>
           </el-col>
           <el-col span="10">
@@ -59,7 +59,7 @@
         <el-row>
           <el-col span="4">
             <div class="left">
-              <img src="../assets/icon.jpg" alt="" style="width:100px; height:100px">
+              <img src="../../assets/icon.jpg" alt="" style="width:100px; height:100px">
             </div>
           </el-col>
           <el-col span="10">
