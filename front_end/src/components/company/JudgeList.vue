@@ -45,12 +45,12 @@
       </el-tab-pane>
 
       <el-tab-pane label="添加指标类" name="add">
-        <el-form ref="form" :model="JClassForm.judgement" label-width="100px">
+        <el-form ref="form" :model="JClassForm" label-width="100px">
           <el-form-item label="指标类名称">
-            <el-input v-model="JClassForm.judgement.name" placeholder="请填写指标类名称"></el-input>
+            <el-input v-model="JClassForm.JClassName" placeholder="请填写指标类名称"></el-input>
           </el-form-item>
           <el-form-item label="管理者编号">
-            <el-input v-model="JClassForm.judgement.managerId" placeholder="请填写管理者编号"></el-input>
+            <el-input v-model="JClassForm.managerId" placeholder="请填写管理者编号"></el-input>
           </el-form-item>
           <el-table
             :data="judgementData"
@@ -71,6 +71,7 @@
             </el-table-column>
             <el-table-column
               label="指标内容"
+              prop="content"
               width="350">
               <template slot-scope="scope">
                 <el-input v-if="scope.row.id===editId" v-model="scope.row.content"></el-input>
@@ -78,7 +79,8 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="指标权重">
+              label="指标权重"
+              prop="proportion">
               <template slot-scope="scope">
                 <el-input v-if="scope.row.id===editId" v-model="scope.row.proportion"></el-input>
                 <span v-else>{{ scope.row.proportion }}</span>
@@ -90,7 +92,7 @@
               <template slot-scope="scope">
                 <el-button type="primary" v-if="scope.row.id!==editId" @click="changeClick(scope.row)" size="small">编辑
                 </el-button>
-                <el-button type="danger" v-if="scope.row.id!==editId" @click="delClick(scope.row)" size="small">删除
+                <el-button type="danger" v-if="scope.row.id!==editId" @click="delClick(scope.$index, scope.row)" size="small">删除
                 </el-button>
                 <el-button type="success" v-if="scope.row.id===editId" @click="saveClick(scope.row)" size="small">保存
                 </el-button>
@@ -111,8 +113,14 @@
 </template>
 
 <script>
+let maxID = 0;
+let judgeList = new Array(0);
+let listSize = 0;
 export default {
   name: "JudgeList",
+  maxID,
+  judgeList,
+  listSize,
   data() {
     return {
       currentPage: 1,
@@ -148,48 +156,10 @@ export default {
         }],
         managerId: '',
       },
-      dataRules: {
-        name: [{
-          required: true,
-          message: '指标名称不能为空',
-          trigger: 'blur'
-        }],
-        content: [{
-          required: true,
-          message: '指标内容不能为空',
-          trigger: 'blur'
-        }],
-        proportion: [{
-          required: true,
-          message: '权重不能为空',
-          trigger: 'blur'
-        }],
-        managerId: [{
-          required: true,
-          message: '管理者编号不能为空',
-          trigger: 'blur'
-        }]
-      },
       activeName: 'show',
       editData: [],  //编辑行初始数据
       editId: '',  //判断编辑的是哪一行
-      judgementData: [{
-        id: '1',
-        name: '架构模式A',
-        content: '评价该项目的架构模式，由差到好划分为1~5分',
-        proportion: 3,
-      }, {
-        id: '2',
-        name: '架构模式B',
-        content: '评价该项目的架构模式，由差到好划分为1~5分',
-        proportion: 2,
-      }, {
-        id: '3',
-        name: '架构模式C',
-        content: '评价该项目的架构模式，由差到好划分为1~5分',
-        proportion: 5,
-      },
-      ]
+      judgementData: []
     }
   },
   methods: {
@@ -274,6 +244,11 @@ export default {
     handleChangeTab(tab, event) {
       console.log(tab, event);
     },
+     checkMaxId(id) {
+       if(id > maxID) {
+         maxID = id;
+       }
+     },
     // 编辑指标接口
     changeClick(row) {
       if (this.judgementData.some((item) => {
@@ -287,10 +262,14 @@ export default {
       }
       this.editData = JSON.parse(JSON.stringify(row));    //把当前行数据存一份，取消的时候行数据还原
       this.editId = row.id;
+      this.checkMaxId(parseInt(this.editId));
+      //alert(this.editId);
     },
     // 删除指标接口，成功以后 this.editId = ''
-    delClick(row) {
-
+    delClick(index,row) {
+      --maxID;
+      this.judgementData.splice(index,1);
+      this.editId = '';
     },
     // 取消操作接口
     cancelClick(row) {
@@ -309,7 +288,14 @@ export default {
     },
     // 保存指标接口，成功以后 this.editId = ''
     saveClick(row) {
-
+      let element = {
+        id: row.id,
+        judgementname: row.name,
+        judgementcontent: row.content,
+        judgementproportion: row.proportion
+      };
+      listSize = judgeList.push(element);
+      this.editId = '';
     },
     // 添加指标接口
     addClick() {
@@ -320,6 +306,9 @@ export default {
         });
         return;
       }
+      //获取当前指标编号
+      maxID++;
+      let currentId = maxID;
       if (this.judgementData.some((item) => {
         return item.id === '';
       })) {
@@ -331,7 +320,7 @@ export default {
       }
       this.judgementData.push(
         {
-          id: '',
+          id: currentId,
           name: '',
           content: '',
           proportion: '',
@@ -340,25 +329,29 @@ export default {
     },
     //点击“创建指标类”按钮将指标类数据发送给后端
     onSubmit() {
-      //console.log(this.form.name);
+      /*
+      console.log(this.JClassForm.JClassName);
+      console.log(this.JClassForm.managerId);
+      console.log(listSize);
+      for(let i=0; i<listSize; i++){
+        console.log(judgeList[i].name);
+      }*/
+
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.$API.p_newJudgement({
-            JClassId: this.JClassForm.JClassId,
-            JClassName: this.JClassForm.JClassName,
-            judgementName: this.JClassForm.judgement.name,
-            judgementContent: this.JClassForm.judgement.content,
-            judgementProportion: this.JClassForm.judgement.proportion,
-            managerId: this.JClassForm.judgement.managerId,
+            jClassName: this.JClassForm.JClassName,
+            managerId: this.JClassForm.managerId,
+            judgement: JSON.stringify(judgeList)
           })
             .then(
               data => {
-                let status = data.status;
-                if (status === '1') {
-                  alert("成功创建指标");
-                } else {
-                  alert("创建指标失败，请重试");
-                }
+                // let status = data.status;
+                // if (status === '1') {
+                //   alert("成功创建指标");
+                // } else {
+                //   alert("创建指标失败，请重试");
+                // }
               }
             )
             .catch(
@@ -374,6 +367,8 @@ export default {
       this.JClassForm.judgement.content = '';
       this.JClassForm.judgement.proportion = '';
       this.JClassForm.judgement.managerId = '';
+      judgeList = [];
+      listSize = 0;
     },
   }
 }

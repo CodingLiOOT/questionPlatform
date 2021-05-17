@@ -107,29 +107,6 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         }
     }
 
-//
-//    @CrossOrigin
-//    @ResponseResultBody
-//    @PostMapping(value = "/createReport")
-//    public void createReport(@RequestBody Report report){
-//        System.out.println("创建新的报告后端测试");
-//        // 给word一个id
-//        List<KeyWord>keyWords=reportService.getAllKeyWords();
-//        int total=keyWords.size();
-//        total++; //从1开始
-//
-//        JSONObject[] keyWord=report.getKeyWord();
-//
-//        for(int i=0;i<keyWord.length;i++){
-//            KeyWord key=new KeyWord();
-//            key.setKeysContent(keyWord[i].getString("word"));
-//            key.setKeysId(total+"");
-//            key.setReportId(report.getReportId()+"");
-//            reportService.createKey(key);
-//            total++;
-//        }
-//    }
-
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/getList")
@@ -217,7 +194,7 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         }
 
         Report rpt= reportService.selectReportById(report.getReportId());
-        String url="localhost:8090/"+rpt.getReportPath();
+        String url="localhost:8090/static/"+rpt.getReportPath();
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("keyWord", keyWord);
