@@ -11,13 +11,18 @@
     </el-input>
     <el-button icon="el-icon-search" type="primary" @click="search">搜索</el-button>
     <router-link to="/Company/AllocateExpert">
-      <el-button icon="el-icon-plus" @click="invite">邀请专家</el-button>
+      <el-button icon="el-icon-plus" @click="add">新建专家</el-button>
     </router-link>
 
     <el-table
       :data="tableData"
       border
       style="width: 100%;height: 100%">
+      <el-table-column
+        prop="id"
+        label="序号"
+        width="50">
+      </el-table-column>
       <el-table-column
         prop="name"
         label="专家姓名"
@@ -26,12 +31,12 @@
       <el-table-column
         prop="keysId"
         label="专家关键词"
-        width="300">
+        width="250">
       </el-table-column>
       <el-table-column
         prop="type"
         label="专家类型"
-        width="320">
+        width="300">
       </el-table-column>
       <el-table-column
         prop="unit"
@@ -43,6 +48,16 @@
         label="专家简介"
         width="200">
       </el-table-column>
+
+      <el-table-column
+        fixed="right"
+        label="操作"
+        width="100">
+        <template slot-scope="scope">
+          <el-button @click="handleClick(scope.row)" type="text" size="small">邀请</el-button>
+        </template>
+      </el-table-column>
+
     </el-table>
     <el-pagination
       @size-change="handleSizeChange"
@@ -65,6 +80,7 @@ export default {
       filters:[],
       input: '',
       tableData: [{
+        id:"1",
         name: '张三',
         keysId: '石油',
         type: '......',
@@ -72,6 +88,7 @@ export default {
         information: '......'
       },
         {
+          id:"2",
           name: '李四',
           keysId: '教育',
           type: '......',
@@ -79,6 +96,7 @@ export default {
           information: '......'
         },
         {
+          id:"3",
           name: '王五',
           keysId: '生物',
           type: '......',
@@ -123,6 +141,15 @@ export default {
     }
   },
   methods: {
+    handleClick(row) {
+      console.log(row);
+      this.$router.push({
+        path: 'Invite',
+        query: {
+          id: row.id,
+        }
+      });
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
