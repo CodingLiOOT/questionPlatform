@@ -11,7 +11,11 @@ import com.bjtu.questionPlatform.utils.token.JWTUtils;
 import com.bjtu.questionPlatform.utils.token.JwtUser;
 import com.bjtu.questionPlatform.utils.verifyCodeUtils.VerifyCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,22 +32,45 @@ public class ExpertServiceImpI implements ExpertService {
     @Autowired
     private ExpertMapper expertMapper;
 
+
+    @Value("${mail.fromMail.addr}")
+    private String from;
+
+    @Value("${mail.fromMail.subject}")
+    private String subject;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+
+    private void send(String to, String link,String sendMessage) {
+        Context context = new Context();
+        context.setVariable("message", link);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setFrom(from);
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText("您的邀请链接为：" + link +"\n"+"您的邀请信息(邀请码)为"+sendMessage);
+        try {
+            mailSender.send(message);
+        } catch (Exception ignored) {
+            System.out.println("发送失败");
+        }
+    }
+
     @Override
-    public String invite(Expert expert,String link,String message) {
-        String mail=expert.getMail();
-        verifyCodeUtils.verifyCode(expert.getMail(), link+"\n"+message);
-        JwtUser userDetails = (JwtUser) jwtUserService.loadUserByUsername(expert.getExpertName());
-        return jwtUtils.generateToken(userDetails);
+    public void invite(Expert expert,String link,String message) {
+
+        send(expert.getMail(), link,message);
     }
 
 
     @Override
-    public String invite(String expertName,String link,String message) {
+    public void invite(String expertName,String link,String message) {
         Expert expert= expertMapper.selectExpertByUserName(expertName);
-        String mail=expert.getMail();
-        verifyCodeUtils.verifyCode(expert.getMail(), link+"\n"+message);
-        JwtUser userDetails = (JwtUser) jwtUserService.loadUserByUsername(expert.getExpertName());
-        return jwtUtils.generateToken(userDetails);
+        send(expert.getMail(), link,message);
     }
 
     @Override

@@ -43,7 +43,7 @@ public class ExpertController {
     @ResponseResultBody
     @PostMapping(value = "/sendCode")
     public void sendVerifyCode(@RequestBody Expert expert) {
-        mailService.sendMail(expert.getMail());
+        expertService.invite(expert,"123,com","Hell0");
     }
 
     @CrossOrigin
