@@ -78,7 +78,7 @@ export default class api {
    * 专家列表接口，获取专家列表
    * @returns {Promise<unknown>}
    */
-  static g_getExpertList=p=>post('file/getExpertList',p);
+  static g_getExpertList=()=>post('judgement/getExpertList',null);
 
   /**
    * 专家分配接口，发送报告关键词，获取分配专家

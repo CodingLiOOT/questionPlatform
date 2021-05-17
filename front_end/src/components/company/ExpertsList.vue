@@ -15,7 +15,7 @@
     </router-link>
 
     <el-table
-      :data="expertsListData"
+      :data="tableData"
       border
       style="width: 100%;height: 100%">
       <el-table-column
@@ -64,7 +64,7 @@ export default {
       currentPage: 1,
       filters:[],
       input: '',
-      expertsListData: [{
+      tableData: [{
         name: '张三',
         keysId: '石油',
         type: '......',
@@ -85,7 +85,7 @@ export default {
           unit: 'xxx公司',
           information: '......'
         }],
-      form: {
+      /*form: {
         name: '',
         keysId: '',
         type: '',
@@ -119,7 +119,7 @@ export default {
           message: '专家简介不能为空',
           trigger: 'blur'
         }]
-      }
+      }*/
     }
   },
   methods: {
@@ -136,6 +136,36 @@ export default {
         }
       }
       return false;
+    },
+    //从后端获取专家列表放在界面上
+    getList() {
+      this.$API.g_getExpertList({})
+        .then(
+          data => {
+            console.log(data);
+            for(let i=0;i<data.experts.length;i++){
+              let temp={
+                name: '',
+                keysId: '',
+                type: '',
+                unit: '',
+                information: ''
+              };
+              temp.name = data.experts[i].expertName;
+              temp.keysId = data.experts[i].keysId;
+              temp.type = data.experts[i].expertType;
+              temp.unit = data.experts[i].expertUnit;
+              temp.information = data.experts[i].expertInformation;
+
+              this.tableData.push(temp);
+            }
+          }
+        )
+        .catch(
+          error => {
+            console.log(error);
+          }
+        )
     },
     getFilters(){
       for(let item in this.tableData){
@@ -160,39 +190,10 @@ export default {
       }
       this.filters=array;
     },
-    //从后端获取专家列表放在界面上
-    getList() {
-      this.$API.g_getExpertList({})
-        .then(
-          data => {
-            for(let i=0;i<data.experts.length();i++){
-              let temp={
-                name: '',
-                keysId: '',
-                type: '',
-                unit: '',
-                information: ''
-              };
-              temp.name = data.expert[i].expertName;
-              temp.keysId = data.expert[i].keysId;
-              temp.type = data.expert[i].expertType;
-              temp.unit = data.expert[i].expertUnit;
-              temp.information = data.expert[i].expertInformation;
-
-              this.expertsListData.push(temp);
-            }
-          }
-        )
-        .catch(
-          error => {
-            console.log(error);
-          }
-        )
-    },
-    mounted(){
-      this.getFilters();
-      this.getList();
-    },
+  },
+  mounted(){
+    this.getFilters();
+    this.getList();
   }
 }
 </script>

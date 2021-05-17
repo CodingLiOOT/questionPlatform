@@ -38,7 +38,7 @@ export default {
         createTime: ''
       },
 
-      //点击“创建”按钮将指标数据发送给后端
+      //点击“创建”按钮将报告数据发送给后端
       onSubmit() {
         //console.log(this.form.name);
         this.$refs.form.validate((valid) => {
@@ -83,7 +83,5 @@ export default {
 }
 </script>
 
-<style>
-
-
+<style scoped>
 </style>
