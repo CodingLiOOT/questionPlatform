@@ -111,6 +111,12 @@ const router = new Router({
           component: () => import("../components/company/JudgeList")
         },
         {
+
+          path: 'JudgeList',
+          name: 'JudgeList',
+          component: () => import("../components/company/JudgeList")
+        },
+        {
           path:'AllocateExpert',
           name:'AllocateExpert',
           component:AllocateExpert,
@@ -119,6 +125,11 @@ const router = new Router({
           path: 'ShowJudgement',
           name: 'ShowJudgement',
           component: () => import("../components/company/ShowJudgement")
+        },
+        {
+          path:'AllocateExpert',
+          name:'AllocateExpert',
+          component:AllocateExpert,
         }
       ]
     },

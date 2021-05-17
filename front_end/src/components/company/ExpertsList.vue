@@ -89,7 +89,6 @@
 
 <script>
 import {unique} from "webpack-merge";
-
 export default {
   name: "List",
   props: {

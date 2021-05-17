@@ -85,5 +85,19 @@ export default class api {
    * @param {Object} p [发送的参数]
    * @returns {Promise<unknown>}
    */
-  static p_allocateJudgement=p=>post('judgement/allocateJudgement',p);
+  static p_allocateJudgement=p=>post('judgement/p_allocateJudgement',p);
+
+  /**
+   * 专家列表接口，获取专家列表
+   * @returns {Promise<unknown>}
+   */
+  static g_getExpertList=()=>post('judgement/getExpertList',null);
+
+  /**
+   * 专家分配接口，发送报告关键词，获取分配专家
+   * @param {Object} p [发送的参数：报告编号、关键词、名称、创建日期]
+   * @returns {Promise<unknown>}
+   */
+  static p_createExpert=p=>post('Company/createExpert',p);
+
 }

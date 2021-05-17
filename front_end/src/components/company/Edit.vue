@@ -138,7 +138,6 @@ export default {
         jClassId: row.id+"",
       })
         .then(
-
         )
         .catch(
           error => {
