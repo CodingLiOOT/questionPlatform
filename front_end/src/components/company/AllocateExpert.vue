@@ -1,41 +1,55 @@
 <template>
-  <el-form ref="form" :model="form" label-width="100px">
+  <div>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/Company/ExpertsList' }">专家列表</el-breadcrumb-item>
+      <el-breadcrumb-item>新建专家</el-breadcrumb-item>
+    </el-breadcrumb>
+    <br/>
+    <el-form ref="form" :model="form" label-width="100px">
 
-    <el-form-item label="专家列表>新建专家" label-width="150px"></el-form-item>
 
-    <el-form-item label="姓名：">
-      <el-input v-model="form.expertName" placeholder=""></el-input>
-    </el-form-item>
+      <el-form-item label="姓名：">
+        <el-input v-model="form.expertName" placeholder=""></el-input>
+      </el-form-item>
 
-    <el-form-item label="关键词：">
-      <el-input v-model="form.keysId" placeholder=""></el-input>
-    </el-form-item>
+      <el-form-item label="关键词：">
+        <el-input v-model="form.keysId" placeholder="">
+          <el-select v-model="form.keysId" slot="prepend" placeholder="请选择">
+          <el-option label="石油" value="石油"></el-option>
+          <el-option label="井" value="井"></el-option>
+          <el-option label="国家能源" value="国家能源"></el-option>
+          <el-option label="电" value="电"></el-option>
+          <el-option label="安全" value="安全"></el-option>
+          <el-option label="煤矿" value="煤矿"></el-option>
+        </el-select>
+        </el-input>
+      </el-form-item>
 
-    <el-form-item label="类型：">
-      <el-input v-model="form.expertType" placeholder=""></el-input>
-    </el-form-item>
+      <el-form-item label="类型：">
+        <el-input v-model="form.expertType" placeholder=""></el-input>
+      </el-form-item>
 
-    <el-form-item label="所属单位：">
-      <el-input v-model="form.expertUnit" placeholder=""></el-input>
-    </el-form-item>
+      <el-form-item label="所属单位：">
+        <el-input v-model="form.expertUnit" placeholder=""></el-input>
+      </el-form-item>
 
-    <el-form-item label="专家简介：">
-      <el-input v-model="form.expertInformation" placeholder=""></el-input>
-    </el-form-item>
+      <el-form-item label="专家简介：">
+        <el-input v-model="form.expertInformation" placeholder=""></el-input>
+      </el-form-item>
 
-    <el-form-item label="邮箱：">
-      <el-input v-model="form.mail" placeholder=""></el-input>
-    </el-form-item>
+      <el-form-item label="邮箱：">
+        <el-input v-model="form.mail" placeholder=""></el-input>
+      </el-form-item>
 
-    <el-form-item label="手机号：">
-      <el-input v-model="form.phone" placeholder=""></el-input>
-    </el-form-item>
+      <el-form-item label="手机号：">
+        <el-input v-model="form.phone" placeholder=""></el-input>
+      </el-form-item>
 
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit">新建</el-button>
-      <el-button>取消</el-button>
-    </el-form-item>
-  </el-form>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">新建</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
