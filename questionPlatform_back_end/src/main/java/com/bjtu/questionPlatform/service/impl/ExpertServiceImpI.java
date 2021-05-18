@@ -5,11 +5,13 @@ import com.bjtu.questionPlatform.entity.User;
 import com.bjtu.questionPlatform.mapper.ExpertMapper;
 import com.bjtu.questionPlatform.mapper.UserMapper;
 import com.bjtu.questionPlatform.service.ExpertService;
+import com.bjtu.questionPlatform.utils.InviteCodeUtils.InviteCodeUtils;
 import com.bjtu.questionPlatform.utils.exceptionHandler.exception.DefinitionException;
 import com.bjtu.questionPlatform.utils.exceptionHandler.exception.ErrorEnum;
 import com.bjtu.questionPlatform.utils.token.JWTUtils;
 import com.bjtu.questionPlatform.utils.token.JwtUser;
 import com.bjtu.questionPlatform.utils.verifyCodeUtils.VerifyCodeUtils;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -24,11 +26,9 @@ public class ExpertServiceImpI implements ExpertService {
 
 
     @Autowired
-    private JWTUtils jwtUtils;
-    @Autowired
-    private JwtUserServiceImpl jwtUserService;
-    @Autowired
-    private VerifyCodeUtils verifyCodeUtils;
+    private InviteCodeUtils inviteCodeUtils;
+
+
     @Autowired
     private ExpertMapper expertMapper;
 
@@ -62,14 +62,13 @@ public class ExpertServiceImpI implements ExpertService {
 
     @Override
     public void invite(Expert expert,String link,String message) {
-
         send(expert.getMail(), link,message);
     }
 
 
     @Override
     public void invite(String expertName,String link,String message) {
-        Expert expert= expertMapper.selectExpertByUserName(expertName);
+        Expert expert= expertMapper.selectExpertByExpertName(expertName);
         send(expert.getMail(), link,message);
     }
 
@@ -82,6 +81,28 @@ public class ExpertServiceImpI implements ExpertService {
 
     @Override
     public Expert selectExpertByExpertName(String expertName) {
-        return expertMapper.selectExpertByUserName(expertName);
+        return expertMapper.selectExpertByExpertName(expertName);
     }
+
+
+    @Override
+    public void expertLogin(String expertName,String code) {
+        Expert expert=expertMapper.selectExpertByExpertName(expertName);
+        if (expert==null||inviteCodeUtils.verifyCode(expertName,code)){
+            throw new DefinitionException(ErrorEnum.ERROR_NICKNAME_OR_PASSWORD);
+        }
+    }
+
+//    @Override
+//    public String expertLpgin(Expert expert) {
+//
+//            User userBean = userMapper.selectUserByUserName(user.getUsername());
+//            if (userBean == null || !encodeUtil.verifyEncode(user.getPassword(), userBean.getMail(), userBean.getPassword())) {
+//                throw new DefinitionException(ErrorEnum.ERROR_NICKNAME_OR_PASSWORD);
+//            }
+//        }
+//        JwtUser userDetails = (JwtUser) jwtUserService.loadUserByUsername(user.getUsername());
+//        return jwtUtils.generateToken(userDetails);
+//
+//    }
 }
