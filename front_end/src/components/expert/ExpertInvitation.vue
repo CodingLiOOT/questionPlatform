@@ -13,8 +13,7 @@
             <el-input v-model="InvitationForm.email" type="email" placeholder="邮箱"></el-input>
           </el-form-item>
           <el-form-item prop="code" :inline="true" >
-            <el-input v-model="InvitationForm.code" placeholder="邀请码" style="width:230px"></el-input>
-            <el-button :disabled="disabled" @click="sendCode" class="sendcode" style="width:125px">{{btnTxt}}</el-button>
+            <el-input v-model="InvitationForm.code" placeholder="邀请码"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button class="invitation-btn-submit" type="primary" @click="submit()">确认</el-button>

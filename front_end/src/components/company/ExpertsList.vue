@@ -1,81 +1,48 @@
 <template>
   <div>
-    <el-input
-      v-model="input"
-      :placeholder="placeholder"
-      prefix-icon="el-icon-search"
-      style="width: 350px;margin-right: 10px"
-      clearable
-      @clear="search"
-      @keydown.enter.native="search">
-    </el-input>
-    <el-button icon="el-icon-search" type="primary" @click="search">搜索</el-button>
-    <el-button icon="el-icon-plus" @click="invite">邀请专家</el-button>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/Company/ExpertsList' }">专家列表</el-breadcrumb-item>
+    </el-breadcrumb>
 
-    <el-card shadow="hover" style="margin-top:40px">
-      <el-form ref="form"  label-width="200px">
-        <el-row>
-          <el-col span="4">
-            <div class="left">
-              <img src="../../assets/icon.jpg" alt="" style="width:100px; height:100px">
-            </div>
-          </el-col>
-          <el-col span="10">
-            <el-form-item label="专家姓名：张三"></el-form-item>
-            <el-form-item label="关键词：石油"></el-form-item>
-          </el-col>
-          <el-col span="10">
-            <el-form-item label="所属单位：XX公司"></el-form-item>
-            <el-form-item label="专家简介：......"></el-form-item>
-          </el-col>
-        </el-row>
+    <router-link to="/Company/AllocateExpert">
+      <el-button icon="el-icon-plus" type="primary" @click="invite" class="right">新建专家</el-button>
+    </router-link>
 
-
-      </el-form>
-    </el-card>
-    <el-card shadow="hover">
-      <el-form ref="form"  label-width="200px">
-        <el-row>
-          <el-col span="4">
-            <div class="left">
-              <img src="../../assets/icon.jpg" alt="" style="width:100px; height:100px">
-            </div>
-          </el-col>
-          <el-col span="10">
-            <el-form-item label="专家姓名：李四"></el-form-item>
-            <el-form-item label="关键词：教育"></el-form-item>
-          </el-col>
-          <el-col span="10">
-            <el-form-item label="所属单位：XX公司"></el-form-item>
-            <el-form-item label="专家简介：......"></el-form-item>
-          </el-col>
-        </el-row>
-
-
-      </el-form>
-    </el-card>
-    <el-card shadow="hover">
-      <el-form ref="form"  label-width="200px">
-        <el-row>
-          <el-col span="4">
-            <div class="left">
-              <img src="../../assets/icon.jpg" alt="" style="width:100px; height:100px">
-            </div>
-          </el-col>
-          <el-col span="10">
-            <el-form-item label="专家姓名：王五"></el-form-item>
-            <el-form-item label="关键词：生物"></el-form-item>
-          </el-col>
-          <el-col span="10">
-            <el-form-item label="所属单位：XX公司"></el-form-item>
-            <el-form-item label="专家简介：......"></el-form-item>
-          </el-col>
-        </el-row>
-
-
-      </el-form>
-    </el-card>
-
+    <el-table :data="tableData" border style="width: 100%;height: 100%" class="table">
+      <el-table-column
+        prop="name"
+        label="专家姓名"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="keysId"
+        label="专家关键词"
+        width="250">
+      </el-table-column>
+      <el-table-column
+        prop="type"
+        label="专家类型"
+        width="300">
+      </el-table-column>
+      <el-table-column
+        prop="unit"
+        label="所属单位"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="information"
+        label="专家简介"
+        width="200">
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        label="操作"
+        width="120">
+        <template slot-scope="scope">
+          <el-button @click="invite(scope.row)" type="primary" size="small">邀请</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -84,95 +51,173 @@
       layout="prev, pager, next, jumper"
       :total="10">
     </el-pagination>
+
   </div>
 </template>
 
 <script>
-import {unique} from "webpack-merge";
 export default {
-  name: "List",
-  props: {
-    disabled: {
-      type: Boolean,
-      default: true
+  name: "ExpertList",
+  data() {
+    return {
+      currentPage: 1,
+      filters:[],
+      input: '',
+      tableData: [{
+        name: '张三',
+        keysId: '石油',
+        type: '......',
+        unit: 'xxx公司',
+        information: '......'
+      },
+        {
+          name: '李四',
+          keysId: '教育',
+          type: '......',
+          unit: 'xxx公司',
+          information: '......'
+        },
+        {
+          name: '王五',
+          keysId: '生物',
+          type: '......',
+          unit: 'xxx公司',
+          information: '......'
+        }],
+      // form: {
+      //   name: '',
+      //   keysId: '',
+      //   type: '',
+      //   unit: '',
+      //   information: ''
+      // },
+      // dataRules: {
+      //   name: [{
+      //     required: true,
+      //     message: '专家姓名不能为空',
+      //     trigger: 'blur'
+      //   }],
+      //   keysId: [{
+      //     required: true,
+      //     message: '专家关键词不能为空',
+      //     trigger: 'blur'
+      //   }],
+      //   type: [{
+      //     required: true,
+      //     message: '专家类型不能为空',
+      //     trigger: 'blur'
+      //   }],
+      //   unit: [{
+      //     required: true,
+      //     message: '所属单位不能为空',
+      //     trigger: 'blur'
+      //   }]
+      //   ,
+      //   information: [{
+      //     required: true,
+      //     message: '专家简介不能为空',
+      //     trigger: 'blur'
+      //   }]
+      // }
+    }
+  },
+  methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
     },
-    placeholder: {
-      type: String,
-      default: '输入关键词进行搜索'
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
     },
-    data() {
-      return {
-        currentPage: 1,
-        filters: [],
-        input: '',
+    filterTag(value, row) {
+      for(let item in row.tag){
+        if(row.tag[item]===value){
+          return true;
+        }
       }
+      return false;
     },
-    methods: {
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      },
-      // 选中查看某一条
-      handleClick(row) {
-        console.log(row);
-        this.$router.push({
-          path: 'ReportDetail',
-          query: {
-            id: row.id,
-          }
-        });
-      },
-      filterTag(value, row) {
-        for (let item in row.tag) {
-          if (row.tag[item] === value) {
-            return true;
-          }
-        }
-        return false;
-      },
-      getFilters() {
-        for (let item in this.tableData) {
-          for (let tag in this.tableData[item].tag) {
-            let temp = {text: '', value: '',}
-            temp.text = this.tableData[item].tag[tag];
-            temp.value = this.tableData[item].tag[tag];
-            this.filters.push(temp);
-          }
-        }
-        let array = [];
-        for (let i = 0; i < this.filters.length; i++) {
-          let f = true;
-          for (let j = 0; j < array.length; j++) {
-            if (this.filters[i].value === array[j].value) {
-              f = false;
+    //从后端获取专家列表放在界面上
+    getList() {
+      this.$API.g_getExpertList()
+        .then(
+          data => {
+            console.log(data);
+            for(let i=0;i<data.experts.length;i++){
+              let temp={
+                name: '',
+                keysId: '',
+                type: '',
+                unit: '',
+                information: ''
+              };
+              temp.name = data.experts[i].expertName;
+              temp.keysId = data.experts[i].keysId;
+              temp.type = data.experts[i].expertType;
+              temp.unit = data.experts[i].expertUnit;
+              temp.information = data.experts[i].expertInformation;
+
+              //this.expertsListData.push(temp);
+              this.tableData.push(temp);
+
             }
           }
-          if (f) {
-            array.push(this.filters[i]);
+        )
+        .catch(
+          error => {
+            console.log(error);
+          }
+        )
+    },
+    //发送被邀请专家姓名
+    invite(row) {
+      this.$API.p_getExpertName({
+        expertName: row.name
+      })
+        .then(
+        )
+        .catch(
+          error => {
+          }
+        )
+    },
+
+    getFilters(){
+      for(let item in this.tableData){
+        for(let tag in this.tableData[item].tag){
+          let temp={text:'',value:'',}
+          temp.text=this.tableData[item].tag[tag];
+          temp.value=this.tableData[item].tag[tag];
+          this.filters.push(temp);
+        }
+      }
+      let array =[];
+      for(let i = 0; i < this.filters.length; i++) {
+        let f=true;
+        for(let j=0;j<array.length;j++){
+          if(this.filters[i].value===array[j].value){
+            f=false;
           }
         }
-        this.filters = array;
-      },
+        if(f){
+          array.push(this.filters[i]);
+        }
+      }
+      this.filters=array;
     },
-    mounted() {
-      this.getFilters();
-    },
-    search() {
-      this.$emit("search", ['search', this.keyword])
-    },
-    invite() {
-    },
+  },
+  mounted(){
+    this.getList();
+    this.getFilters();
   }
 }
 </script>
 
 <style scoped>
-.left{
-  text-align: left
+.right{
+  float: right;
 }
-.center{
-  text-align: center
+.table{
+  margin-top: 80px;
 }
+
 </style>

@@ -117,11 +117,6 @@ const router = new Router({
           component: () => import("../components/company/JudgeList")
         },
         {
-          path:'AllocateExpert',
-          name:'AllocateExpert',
-          component:AllocateExpert,
-        },
-        {
           path: 'ShowJudgement',
           name: 'ShowJudgement',
           component: () => import("../components/company/ShowJudgement")
