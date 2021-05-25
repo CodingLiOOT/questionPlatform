@@ -125,24 +125,7 @@ export default {
     return {
       currentPage: 1,
       filters: [],
-      judgeListData: [{
-        id: 1,
-        name: '架构模式',
-        time: '2021.05.04',
-        managerId: 9791
-      },
-        {
-          id: 2,
-          name: '设计模式',
-          time: '2021.05.04',
-          managerId: 2871
-        },
-        {
-          id: 3,
-          name: '算法的选择',
-          time: '2021.05.04',
-          managerId: 7890
-        }],
+      judgeListData: [],
       // 指标类格式
       JClassForm: {
         JClassId: '',
@@ -161,6 +144,10 @@ export default {
       editId: '',  //判断编辑的是哪一行
       judgementData: []
     }
+  },
+  mounted() {
+    this.getFilters();
+    this.getList();
   },
   methods: {
     handleSizeChange(val) {
@@ -205,17 +192,17 @@ export default {
       this.$API.g_getJClassList({})
         .then(
           data => {
-            for (let i = 0; i < data.JClass.length; i++) {
+            for (let i = 0; i < data.jClass.length; i++) {
               let temp = {
                 id: '',
                 name: '',
                 time: '',
                 managerId: ''
               };
-              temp.id = data.JClass[i].JClassId;
-              temp.name = data.JClass[i].JClassName;
-              temp.time = data.JClass[i].JClassTime;
-              temp.managerId = data.JClass[i].managerId;
+              temp.id = data.jClass[i].jClassId;
+              temp.name = data.jClass[i].jClassName;
+              temp.time = data.jClass[i].jClassTime;
+              temp.managerId = data.jClass[i].managerId;
 
               this.judgeListData.push(temp);
             }
@@ -236,10 +223,6 @@ export default {
           id: row.id,
         }
       });
-    },
-    mounted() {
-      this.getFilters();
-      this.getList();
     },
     handleChangeTab(tab, event) {
       console.log(tab, event);

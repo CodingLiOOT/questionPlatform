@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
         if (users.size() != 0) {
             throw new DefinitionException(ErrorEnum.DUPLICATE_USERNAME_OR_MAIL);
         }
+        verifyCodeUtils.verifyCode(user.getMail(),user.getVerifyCode());
         verifyCodeUtils.verifyCode(user.getMail(), user.getVerifyCode());
         user.setID(UUID.randomUUID().toString());
         user.setPassword(encodeUtil.genCode(user.getPassword(), user.getMail()));
@@ -70,5 +71,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User selectUserByUserName(String username) {
         return userMapper.selectUserByUserName(username);
+    }
+
+    @Override
+    public String selectTypeByUserName(String username) {
+        return userMapper.selectTypeByUserName(username);
     }
 }

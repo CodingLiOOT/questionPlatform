@@ -135,7 +135,9 @@ export default {
             console.log(error);
         })
     },
-
+    mounted() {
+      this.getFilters();
+    },
     UrlSearch() {
       let str = location.href; //获取到整个地址
       let num = str.indexOf("?")
@@ -144,8 +146,6 @@ export default {
       return str;
     }
   },
-
-
 }
 </script>
 

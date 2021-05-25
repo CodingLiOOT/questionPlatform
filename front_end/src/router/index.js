@@ -12,6 +12,7 @@ import Evaluate from "../components/company/Evaluate";
 import ExpertsList from "../components/company/ExpertsList";
 import Edit from "../components/company/Edit";
 import JudgeList from "../components/company/JudgeList";
+import AllocateExpert from "../components/company/AllocateExpert";
 
 Vue.use(Router)
 
@@ -110,14 +111,25 @@ const router = new Router({
           component: () => import("../components/company/JudgeList")
         },
         {
+
           path: 'JudgeList',
           name: 'JudgeList',
           component: () => import("../components/company/JudgeList")
         },
         {
+          path:'AllocateExpert',
+          name:'AllocateExpert',
+          component:AllocateExpert,
+        },
+        {
           path: 'ShowJudgement',
           name: 'ShowJudgement',
           component: () => import("../components/company/ShowJudgement")
+        },
+        {
+          path:'AllocateExpert',
+          name:'AllocateExpert',
+          component:AllocateExpert,
         }
       ]
     },
