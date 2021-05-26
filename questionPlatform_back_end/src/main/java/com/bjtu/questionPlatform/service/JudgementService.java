@@ -27,4 +27,6 @@ public interface JudgementService {
     List<Judgement> getAllJudgements();
     void createJudgement(Judgement judgement);
 
+    String getjClassName(String jClassId);
+
 }

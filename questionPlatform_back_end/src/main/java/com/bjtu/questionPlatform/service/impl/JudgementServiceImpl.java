@@ -59,4 +59,9 @@ public class JudgementServiceImpl implements JudgementService {
         judgementMapper.createJudgement(judgement);
 
     }
+
+    @Override
+    public String getjClassName(String jClassId) {
+        return judgementMapper.getjClassName(jClassId);
+    }
 }

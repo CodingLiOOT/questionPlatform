@@ -27,6 +27,8 @@ public interface JudgementMapper {
     @Select("select * from JudgeClass")
     List<JudgeClass> getAllJudgeClass();
 
+    @Select("select jClassName from judgeClass where jClassId=#{jClassId}")
+    String getjClassName(String jClassId);
 
     @Update("update report set jClassId=#{jClassId} where reportId=#{reportId}")
     void allocateJudge(Report report);
@@ -35,7 +37,7 @@ public interface JudgementMapper {
     List<Judgement> selectJudgementByJClassId(String jClassId);
 
     @Insert("insert into JudgeClass (JClassId,JClassName,JClassTime,managerId) "+
-            "values (#{JClassId},#{jClassName},NOW(),#{managerId})")
+            "values (#{jClassId},#{jClassName},NOW(),#{managerId})")
     void createJClass(JudgeClass judgeClass);
 
     @Insert("insert into judgement (judgementId,judgementContent,managerId,judgementProportion,judgementName,JClassId,judgementtype) "+
