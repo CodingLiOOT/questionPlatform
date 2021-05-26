@@ -50,4 +50,10 @@ public interface JudgementMapper {
     @Select("select * from judgement")
     List<Judgement> getAllJudgements();
 
+    @Select("select * from judgeClass where jClassId=#{jClassId}")
+    JudgeClass getjClass(String jClassId);
+
+    @Select("select * from judgement where jClassId=#{jClassId}")
+    List<Judgement> getJudgementByJClassId(String jClassId);
+
 }
