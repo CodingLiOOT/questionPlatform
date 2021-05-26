@@ -170,17 +170,8 @@ export default {
           }
         )
     },
-    //发送被邀请专家姓名
+    //向InviteExpert页面传递被邀请专家姓名
     invite(row) {
-      /*this.$API.p_getExpertName({
-        expertName: row.name
-      })
-        .then(
-        )
-        .catch(
-          error => {
-          }
-        )*/
       console.log(row);
       this.$router.push({
         path: 'InviteExpert',

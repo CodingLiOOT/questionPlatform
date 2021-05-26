@@ -53,7 +53,7 @@ export default {
   methods:{
     invite() {
       let expertName = this.UrlSearch();
-      this.$API.p_allocateJudgement({
+      this.$API.p_inviteExpert({
         expertName: expertName,
         reportId: this.form.reportId,
         reportName: this.form.reportName,

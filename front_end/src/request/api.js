@@ -94,8 +94,8 @@ export default class api {
   static g_getExpertList=()=>post('judgement/getExpertList',null);
 
   /**
-   * 发送被邀请专家姓名
-   * @param p
+   * 邀请专家接口，发送被邀请专家姓名、报告编号、关键词、名称
+   * @param {Object} p []
    * @returns {Promise | Promise<unknown>}
    */
   static p_inviteExpert=p=>post('Company/inviteExpert',p);
