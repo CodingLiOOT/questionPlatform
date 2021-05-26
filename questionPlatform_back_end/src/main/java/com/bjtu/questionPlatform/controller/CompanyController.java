@@ -1,33 +1,33 @@
 package com.bjtu.questionPlatform.controller;
 
 import com.bjtu.questionPlatform.entity.Expert;
-import com.bjtu.questionPlatform.entity.Report;
-import com.bjtu.questionPlatform.entity.User;
 import com.bjtu.questionPlatform.service.ExpertService;
 import com.bjtu.questionPlatform.service.MailService;
-import com.bjtu.questionPlatform.service.UserService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-
 @Slf4j
 @RestController
-@RequestMapping(value = "/api/Expert")
-public class ExpertController {
+@RequestMapping(value = "/api/Company")
+public class CompanyController {
     @Autowired
     private ExpertService expertService;
+    @Autowired
+    private MailService mailService;
 
-    // 返回报告详情和打分指标
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/sendCode")
-    public void getReportJudge(@RequestBody Report report) {
-
-        
+    public void sendVerifyCode(@RequestBody Expert expert) {
+        expertService.invite(expert,"123,com","Hell0");
     }
 
-
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/createExpert")
+    public void register(@RequestBody Expert expert) {
+        expertService.createExpert(expert);
+    }
 }
