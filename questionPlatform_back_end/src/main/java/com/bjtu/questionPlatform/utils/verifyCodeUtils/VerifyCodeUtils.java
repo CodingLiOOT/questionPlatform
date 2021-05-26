@@ -33,7 +33,10 @@ public class VerifyCodeUtils {
     }
 
     public boolean verifyCode(String key, String value) {
+        System.out.println(jedis);
         if (!value.equals(jedis.get(key))) {
+            System.out.println(key);
+            System.out.println(jedis.get(key));
             throw new DefinitionException(ErrorEnum.ERROR_VERIFY_CODE);
         }
         jedis.del(key);

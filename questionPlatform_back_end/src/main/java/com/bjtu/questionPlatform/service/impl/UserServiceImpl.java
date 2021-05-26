@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
             throw new DefinitionException(ErrorEnum.DUPLICATE_USERNAME_OR_MAIL);
         }
         verifyCodeUtils.verifyCode(user.getMail(),user.getVerifyCode());
-        verifyCodeUtils.verifyCode(user.getMail(), user.getVerifyCode());
+//        verifyCodeUtils.verifyCode(user.getMail(), user.getVerifyCode());
         user.setID(UUID.randomUUID().toString());
         user.setPassword(encodeUtil.genCode(user.getPassword(), user.getMail()));
         userMapper.register(user);

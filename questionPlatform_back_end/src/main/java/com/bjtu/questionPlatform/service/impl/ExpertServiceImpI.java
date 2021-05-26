@@ -43,9 +43,9 @@ public class ExpertServiceImpI implements ExpertService {
     private JavaMailSender mailSender;
 
 
-    private void send(String to, String link,String sendMessage) {
+    private void send(String to, String sendMessage,String link) {
         Context context = new Context();
-        context.setVariable("message", link);
+        context.setVariable("inviteMessage", sendMessage);
 
         SimpleMailMessage message = new SimpleMailMessage();
 
@@ -61,15 +61,15 @@ public class ExpertServiceImpI implements ExpertService {
     }
 
     @Override
-    public void invite(Expert expert,String link,String message) {
-        send(expert.getMail(), link,message);
+    public void invite(Expert expert,String link) {
+        send(expert.getMail(), link, inviteCodeUtils.setCode(expert.getExpertName()));
     }
 
 
     @Override
-    public void invite(String expertName,String link,String message) {
+    public void invite(String expertName,String link) {
         Expert expert= expertMapper.selectExpertByExpertName(expertName);
-        send(expert.getMail(), link,message);
+        send(expert.getMail(), link, inviteCodeUtils.setCode(expertName));
     }
 
     @Override
@@ -88,7 +88,7 @@ public class ExpertServiceImpI implements ExpertService {
     @Override
     public void expertLogin(String expertName,String code) {
         Expert expert=expertMapper.selectExpertByExpertName(expertName);
-        if (expert==null||inviteCodeUtils.verifyCode(expertName,code)){
+        if (expert==null|| ! inviteCodeUtils.verifyCode(expertName,code)){
             throw new DefinitionException(ErrorEnum.ERROR_NICKNAME_OR_PASSWORD);
         }
     }
