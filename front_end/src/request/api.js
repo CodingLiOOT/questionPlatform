@@ -98,7 +98,7 @@ export default class api {
    * @param p
    * @returns {Promise | Promise<unknown>}
    */
-  static p_getExpertName=p=>post('Company/getExpertName',p);
+  static p_inviteExpert=p=>post('Company/inviteExpert',p);
 
   /**
    * 专家分配接口，发送报告关键词，获取分配专家

@@ -34,6 +34,7 @@
         label="专家简介"
         width="200">
       </el-table-column>
+
       <el-table-column
         fixed="right"
         label="操作"
@@ -42,6 +43,7 @@
           <el-button @click="invite(scope.row)" type="primary" size="small">邀请</el-button>
         </template>
       </el-table-column>
+
     </el-table>
     <el-pagination
       @size-change="handleSizeChange"
@@ -170,7 +172,7 @@ export default {
     },
     //发送被邀请专家姓名
     invite(row) {
-      this.$API.p_getExpertName({
+      /*this.$API.p_getExpertName({
         expertName: row.name
       })
         .then(
@@ -178,7 +180,14 @@ export default {
         .catch(
           error => {
           }
-        )
+        )*/
+      console.log(row);
+      this.$router.push({
+        path: 'InviteExpert',
+        query: {
+          name: row.name,
+        }
+      });
     },
 
     getFilters(){
