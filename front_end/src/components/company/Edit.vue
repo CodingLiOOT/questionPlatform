@@ -60,24 +60,7 @@ export default {
     return {
       currentPage: 1,
       filters: [],
-      judgeListData: [{
-        id: 1,
-        name: '架构模式',
-        time: '2016-05-03',
-        managerId: 9791
-      },
-        {
-          id: 2,
-          name: '设计模式',
-          time: '2016-05-03',
-          managerId: 2871
-        },
-        {
-          id: 3,
-          name: '算法的选择',
-          time: '2016-05-03',
-          managerId: 7890
-        }],
+      judgeListData: [],
       form: {
         name: '',
         content: '',
@@ -87,7 +70,37 @@ export default {
       activeName: 'show'
     }
   },
+  mounted() {
+    this.getFilters();
+    this.getList()
+  },
   methods: {
+    getList() {
+      this.$API.g_getJClassList({})
+        .then(
+          data => {
+            for (let i = 0; i < data.jClass.length; i++) {
+              let temp = {
+                id: '',
+                name: '',
+                time: '',
+                managerId: ''
+              };
+              temp.id = data.jClass[i].jClassId;
+              temp.name = data.jClass[i].jClassName;
+              temp.time = data.jClass[i].jClassTime;
+              temp.managerId = data.jClass[i].managerId;
+
+              this.judgeListData.push(temp);
+            }
+          }
+        )
+        .catch(
+          error => {
+            console.log(error);
+          }
+        )
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
@@ -125,9 +138,7 @@ export default {
       }
       this.filters = array;
     },
-    mounted() {
-      this.getFilters();
-    },
+
     onSubmit() {
       console.log("send judgement");
     },
@@ -135,10 +146,9 @@ export default {
       let reportId = this.UrlSearch();
       this.$API.p_allocateJudgement({
         reportId: reportId,
-        JClassId: row.id+"",
+        jClassId: row.id+"",
       })
         .then(
-
         )
         .catch(
           error => {

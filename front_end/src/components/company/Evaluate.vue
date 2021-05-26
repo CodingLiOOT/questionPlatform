@@ -42,7 +42,7 @@
       </el-table-column>
 
       <el-table-column
-        prop="information"
+        prop="jClassName"
         label="指标类">
       </el-table-column>
 
@@ -69,41 +69,13 @@
 
 <script>
 import {unique} from "webpack-merge";
-
 export default {
   name: "Evaluate",
   data() {
     return {
       currentPage: 1,
       filters: [],
-      tableData: [{
-        id: 1,
-        name: '中石油探井信息资源共享',
-        time: '2016-05-03',
-        tag: ['石油', '井'],
-        information: '未分配',
-      },
-        {
-          id: 2,
-          name: '中石化可研报告',
-          time: '2016-05-03',
-          tag: ['石油', '国家能源'],
-          information: '未分配',
-        },
-        {
-          id: 3,
-          name: '电力信息资源共享',
-          time: '2016-05-03',
-          tag: ['电', '安全'],
-          information: '未分配',
-        },
-        {
-          id: 4,
-          name: '煤矿信息资源共享',
-          time: '2016-05-03',
-          tag: ['煤矿'],
-          information: '未分配',
-        },]
+      tableData: []
     }
   },
   methods: {
@@ -142,13 +114,14 @@ export default {
                 time: '',
                 tag: [],
                 information: '',
+                jClassName:'',
               };
               temp.id = data.reports[i].reportId;
               temp.name = data.reports[i].reportName;
               temp.time = data.reports[i].createTime;
-              temp.information = data.reports[i].JClassName;
-              if (temp.information === '') {
-                temp.information = '未分配';
+              temp.jClassName=data.reports[i].jClassName;
+              if (temp.jClassName == null) {
+                temp.jClassName = '未分配';
               }
               for (let j = 0; j < data.reports[i].keyWord.length; j++) {
                 let k = data.reports[i].keyWord[j].word;
@@ -190,10 +163,10 @@ export default {
   mounted() {
     this.getAllReportList();
     this.getFilters();
+    this.getList();
   }
 }
 </script>
 
 <style scoped>
-
 </style>
