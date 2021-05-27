@@ -75,4 +75,9 @@ public class ReportServiceImpl implements ReportService {
     public Report selectReportById(String reportId) {
         return reportMapper.selectReportById(reportId);
     }
+
+    @Override
+    public List<String> selectReportIdByExpertName(String ExpertName) {
+        return reportMapper.selectReportIdByExpertName(ExpertName);
+    }
 }

@@ -37,7 +37,9 @@ public interface ReportMapper {
             "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName})")
     void upload(Report report);
 
-  
+    @Select("select ReportId from Score where ExpertName = #{ExpertName}")
+    List<String> selectReportIdByExpertName(String ExpertName);
+
     // 不用了
     @Select("select * from report where username = #{username}")
     List<Report> selectReportByUsername(String username);

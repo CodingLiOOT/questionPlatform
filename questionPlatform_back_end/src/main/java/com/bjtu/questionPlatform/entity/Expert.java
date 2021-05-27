@@ -6,6 +6,8 @@ public class Expert {
     String expertType;
     String expertUnit;
     String expertInformation;
+    String mail;
+    String phone;
 
     public String getExpertName() {
         return expertName;
@@ -47,4 +49,19 @@ public class Expert {
         this.expertInformation = expertInformation;
     }
 
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }

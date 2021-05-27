@@ -3,7 +3,9 @@ package com.bjtu.questionPlatform.controller;
 
 import com.bjtu.questionPlatform.entity.*;
 import com.bjtu.questionPlatform.service.JudgementService;
+
 import com.bjtu.questionPlatform.service.ReportService;
+
 import com.bjtu.questionPlatform.service.UserService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 
@@ -39,8 +41,10 @@ import java.util.List;
 public class JudgementController {
     @Autowired
     private JudgementService judgementService;
+
     @Autowired
     private ReportService reportService;
+
 
     @CrossOrigin
     @ResponseResultBody
@@ -90,7 +94,7 @@ public class JudgementController {
         List<JudgeClass> js=judgementService.getAllJClasses();
         int num=js.size()+1;
         JudgeClass jc=new JudgeClass();
-        jc.setJClassId(num+"");
+        jc.setjClassId(num+"");
         System.out.println("classname:"+j.getjClassName());
         System.out.println("managerId:"+j.getManagerId());
         jc.setjClassName(j.getjClassName());
@@ -123,6 +127,7 @@ public class JudgementController {
 
     }
 
+
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/getJClassList")
@@ -132,15 +137,15 @@ public class JudgementController {
         List<JudgeClass> jc=judgementService.getAllJudgeClass();
         for (int i = 0; i <jc.size() ; i++) {
             HashMap<String, Object> item = new HashMap<>();
-            item.put("JClassId", jc.get(i).getJClassId());
-            item.put("JClassName", jc.get(i).getjClassName());
-            item.put("JClassTime", jc.get(i).getjClassTime());
+            item.put("jClassId", jc.get(i).getjClassId());
+            item.put("jClassName", jc.get(i).getjClassName());
+            item.put("jClassTime", jc.get(i).getjClassTime());
             item.put("managerid", jc.get(i).getManagerId());
             JClass.add(item);
         }
 
         HashMap<String, Object> data = new HashMap<>();
-        data.put("JClass", JClass);
+        data.put("jClass", JClass);
         return data;
 
     }
@@ -183,6 +188,7 @@ public class JudgementController {
 
             }
             item.put("keyWord", keyWordsOfTheReport);
+            item.put("jClassName",judgementService.getjClassName(reportlist.get(i).getjClassId()));
             reports.add(item);
         }
 

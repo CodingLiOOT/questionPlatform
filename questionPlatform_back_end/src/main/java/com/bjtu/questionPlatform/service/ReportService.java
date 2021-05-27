@@ -33,4 +33,6 @@ public interface ReportService {
 
     Report selectReportById(String reportId);
 
+    List<String> selectReportIdByExpertName(String ExpertName);
+
 }

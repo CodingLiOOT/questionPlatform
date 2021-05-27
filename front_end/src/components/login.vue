@@ -45,7 +45,6 @@
   </div>
 </template>
 <script>
-
 export default {
   data() {
     return {
@@ -87,7 +86,6 @@ export default {
     }
   },
   name: 'login',
-
   methods: {
     login() {
       if(this.type==='0') {
@@ -95,7 +93,6 @@ export default {
         //console.log(this.dataForm.password);
         this.$refs["dataForm"].validate((valid) => {
           if (valid) {
-
             this.$API.p_Login({
               username: this.dataForm.userName,
               password: this.dataForm.password,
@@ -116,7 +113,6 @@ export default {
                 }
               )
               .catch(err => {
-
               })
           } else {
             return false
@@ -129,7 +125,6 @@ export default {
         //console.log(this.dataForm.emailCode);
         this.$refs["emailDataForm"].validate((valid) => {
           if (valid) {
-
             this.$API.p_Login({
               mail: this.emailDataForm.email,
               verifyCode: this.emailDataForm.emailCode,
@@ -144,7 +139,6 @@ export default {
                 }
               )
               .catch(err => {
-
               })
           } else {
             return false
@@ -165,9 +159,8 @@ export default {
       this.$API.p_SendCode({
         mail: this.emailDataForm.email
       })
-      .then(
-
-      )
+        .then(
+        )
     },
     //发送手机验证码倒计时
     timer() {
@@ -196,7 +189,6 @@ export default {
   background: rgba(38, 50, 56, .6) url(../assets/login_bg.jpg) no-repeat;
   background-size: 100% 100%;
 }
-
 .login-content {
   position: absolute;
   top: 0;
@@ -209,7 +201,6 @@ export default {
   background-color: #112234;
   opacity: .8;
 }
-
 .login-main {
   color: beige;
   padding: 20px 20px 10px 20px;
@@ -230,9 +221,7 @@ a {
 a:hover {
   color: coral;
 }
-
 .login-btn-submit{
   margin-top: 10px;
 }
-
 </style>

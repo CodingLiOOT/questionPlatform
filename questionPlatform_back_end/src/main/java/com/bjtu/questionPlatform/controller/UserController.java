@@ -38,6 +38,7 @@ public class UserController {
     @ResponseResultBody
     @PostMapping(value = "/login")
     public HashMap<String, Object> login(@RequestBody User user) {
+
         HashMap<String, Object> data = new HashMap<>();
         data.put("token", userService.userLogin(user));
         data.put("user",userService.selectUserByUserName(user.getUsername()));
