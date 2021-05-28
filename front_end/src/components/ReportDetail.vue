@@ -97,7 +97,6 @@ export default {
       })
         .then(
           res=>{
-            alert(this.$store.state.token)
             this.src=pdf.createLoadingTask({
               url: res.file,
               httpHeaders: {

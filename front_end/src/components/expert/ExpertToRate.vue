@@ -202,7 +202,7 @@ export default {
       })
         .then(
           data => {
-            alert(this.$store.state.token)
+            
             this.src=pdf.createLoadingTask({
               url: data.reportPdf,
               httpHeaders: {

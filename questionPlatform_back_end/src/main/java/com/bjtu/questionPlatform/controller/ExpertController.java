@@ -32,8 +32,6 @@ public class ExpertController {
     @Autowired
     private ExpertService expertService;
 
-    @Autowired
-    private ReportService reportService;
 
 
     // 返回报告详情和打分指标
