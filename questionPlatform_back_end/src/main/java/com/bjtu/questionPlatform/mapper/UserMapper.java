@@ -30,7 +30,7 @@ public interface UserMapper {
     @Select("select type from user where username = #{username} or mail = #{mail}")
     public String selectTypeByUserName(String username);
 
-    @Insert("insert into user (ID,username,password,createdDate,mail,state，type) "+
+    @Insert("insert into user (ID,username,password,createdDate,mail,state,type) "+
             "values (#{ID},#{username},#{password},NOW(),#{mail},1,1)")
     void register(User user);
 

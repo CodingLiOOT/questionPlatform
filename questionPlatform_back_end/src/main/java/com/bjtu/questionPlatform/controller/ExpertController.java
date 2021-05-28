@@ -1,31 +1,34 @@
 package com.bjtu.questionPlatform.controller;
 
-import com.bjtu.questionPlatform.entity.Expert;
-import com.bjtu.questionPlatform.entity.KeyWord;
 
-import com.bjtu.questionPlatform.entity.Report;
-import com.bjtu.questionPlatform.entity.User;
-import com.bjtu.questionPlatform.service.ExpertService;
-import com.bjtu.questionPlatform.service.MailService;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.bjtu.questionPlatform.entity.*;
+import com.bjtu.questionPlatform.service.*;
 
-import com.bjtu.questionPlatform.service.ReportService;
-
-import com.bjtu.questionPlatform.service.UserService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
+
 @Slf4j
 @RestController
 @RequestMapping(value = "/api/Expert")
 public class ExpertController {
+    @Autowired
+    private ReportService reportService;
+    @Autowired
+    private JudgementService judgementService;
+    @Autowired
+    private ScoreService scoreService;
     @Autowired
     private ExpertService expertService;
 
@@ -36,10 +39,126 @@ public class ExpertController {
     // 返回报告详情和打分指标
     @CrossOrigin
     @ResponseResultBody
-    @PostMapping(value = "/sendCode")
-    public void getReportJudge(@RequestBody Report report) {
+    @PostMapping(value = "/getOneReport")
+    public HashMap<String, Object> getReportJudge(@RequestBody Report report) {
+        List<HashMap<String, Object>> judgements = new ArrayList<>();
+        HashMap<String, Object> jClass = new HashMap<>();
 
-        
+        Report r=reportService.selectReportById(report.getReportId());
+        // 获取报告pdf内容
+        String url="localhost:8090/static/"+r.getReportPath();
+        // 获取该报告的jclass
+        JudgeClass judgeClass= judgementService.getjClass(r.getjClassId());
+        List<Judgement> j=judgementService.getJudgementByJClassId(r.getjClassId());
+
+        for (int i = 0; i < j.size(); i++) {
+            HashMap<String, Object> judgement = new HashMap<>();
+            judgement.put("judgeId", j.get(i).getJudgementid());
+            judgement.put("judgeName", j.get(i).getJudgementname());
+            judgement.put("judgeContent",j.get(i).getJudgementcontent());
+            judgement.put("judgeProportion",j.get(i).getJudgementproportion());
+            judgements.add(judgement);
+        }
+        jClass.put("judgements",judgements);
+        jClass.put("jClassId",r.getjClassId());
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("reportPdf",url);
+        data.put("jClass",jClass);
+        return data;
+    }
+
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/sendScores")
+    public void sendScores(@RequestBody Score score) {
+        Report report=reportService.selectReportById(score.getReportId());
+        System.out.println(score.getReportId());
+        // 插入每个score和judgeId
+        String judgeWithScore = score.getJudgeWithScore();
+        System.out.println("judgeWithScore"+judgeWithScore);
+        JSONArray jsonArray = JSON.parseArray(judgeWithScore);
+
+        for(int i=0;i<jsonArray.size();i++){
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            Score s=new Score();
+            // 插入judgement相关数据
+            s.setExpertname(score.getExpertname());
+            s.setReportId(score.getReportId());
+            s.setJudgementid(jsonObject.getString("judgeId"));
+            s.setScore(jsonObject.getString("score"));
+            s.setID(report.getID());
+            scoreService.createScore(s);
+        }
+
+        Score totalScore=new Score();
+        totalScore.setTotalScore(score.getTotalScore());
+        totalScore.setSuggestion(score.getSuggestion());
+        totalScore.setReportId(score.getReportId());
+        totalScore.setExpertname(score.getExpertname());
+        scoreService.createTotalScore(totalScore);
+
+    }
+
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/getScoreDetails")
+    public HashMap<String, Object> getScoreDetails(@RequestBody Report report) {
+
+
+        List<HashMap<String, Object>> judgements = new ArrayList<>();
+        HashMap<String, Object> jClass = new HashMap<>();
+
+        Report r=reportService.selectReportById(report.getReportId());
+
+        //获取打分情况
+        List<TotalScore> sc=reportService.selectTotalScoreByReportId(r.getReportId());
+        String totalScore=sc.get(0).getTotalscore();
+        String suggestion=sc.get(0).getSuggestion();
+
+        // 获取报告pdf内容
+        String url="localhost:8090/static/"+r.getReportPath();
+        // 获取该报告的jclass
+        JudgeClass judgeClass= judgementService.getjClass(r.getjClassId());
+        List<Judgement> j=judgementService.getJudgementByJClassId(r.getjClassId());
+        List<HashMap<String, Object>> keyWord = new ArrayList<>();
+
+        //获取关键词
+        List<KeyWord> w=reportService.selectKeyWordByReportId(report.getReportId());
+        for (int i = 0; i < w.size(); i++) {
+            HashMap<String, Object> word = new HashMap<>();
+            word.put("word", w.get(i).getKeysContent());
+            keyWord.add(word);
+        }
+
+
+        //获取指标详情
+        for (int i = 0; i < j.size(); i++) {
+            HashMap<String, Object> judgement = new HashMap<>();
+            Score s=expertService.selectScore(report.getReportId(),j.get(i).getJudgementid());
+            judgement.put("judgeId", j.get(i).getJudgementid());
+            judgement.put("judgeName", j.get(i).getJudgementname());
+            judgement.put("judgeContent",j.get(i).getJudgementcontent());
+            judgement.put("judgeProportion",j.get(i).getJudgementproportion());
+            judgement.put("score",s.getScore());
+            judgements.add(judgement);
+        }
+        jClass.put("judgement",judgements);
+        jClass.put("jClassId",r.getjClassId());
+        jClass.put("jClassName",judgeClass.getjClassName());
+        jClass.put("managerId",judgeClass.getManagerId());
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("reportPdf",url);
+        data.put("jClass",jClass);
+        data.put("totalScore", totalScore);
+        data.put("suggestion",suggestion);
+        data.put("keyWords",keyWord);
+
+
+        return data;
+
+
     }
 
 

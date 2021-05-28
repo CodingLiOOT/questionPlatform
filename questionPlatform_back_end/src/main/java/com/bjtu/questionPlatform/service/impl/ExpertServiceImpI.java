@@ -1,6 +1,7 @@
 package com.bjtu.questionPlatform.service.impl;
 
 import com.bjtu.questionPlatform.entity.Expert;
+import com.bjtu.questionPlatform.entity.Score;
 import com.bjtu.questionPlatform.entity.User;
 import com.bjtu.questionPlatform.mapper.ExpertMapper;
 import com.bjtu.questionPlatform.mapper.UserMapper;
@@ -83,5 +84,10 @@ public class ExpertServiceImpI implements ExpertService {
     @Override
     public Expert selectExpertByExpertName(String expertName) {
         return expertMapper.selectExpertByUserName(expertName);
+    }
+
+    @Override
+    public Score selectScore(String reportId,String judgementId){
+        return expertMapper.selectScore(reportId, judgementId);
     }
 }

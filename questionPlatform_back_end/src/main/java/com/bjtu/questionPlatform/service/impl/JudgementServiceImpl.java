@@ -64,4 +64,14 @@ public class JudgementServiceImpl implements JudgementService {
     public String getjClassName(String jClassId) {
         return judgementMapper.getjClassName(jClassId);
     }
+
+    @Override
+    public JudgeClass getjClass(String jClassId) {
+        return judgementMapper.getjClass(jClassId);
+    }
+
+    @Override
+    public List<Judgement> getJudgementByJClassId(String jClassId) {
+        return judgementMapper.getJudgementByJClassId(jClassId);
+    }
 }
