@@ -9,6 +9,7 @@ import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +25,8 @@ public class ExpertController {
     private JudgementService judgementService;
     @Autowired
     private ScoreService scoreService;
+    @Autowired
+    private ExpertService expertService;
 
     // 返回报告详情和打分指标
     @CrossOrigin
@@ -86,6 +89,67 @@ public class ExpertController {
         totalScore.setReportId(score.getReportId());
         totalScore.setExpertname(score.getExpertname());
         scoreService.createTotalScore(totalScore);
+
+    }
+
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/getScoreDetails")
+    public HashMap<String, Object> getScoreDetails(@RequestBody Report report) {
+
+
+        List<HashMap<String, Object>> judgements = new ArrayList<>();
+        HashMap<String, Object> jClass = new HashMap<>();
+
+        Report r=reportService.selectReportById(report.getReportId());
+
+        //获取打分情况
+        List<TotalScore> sc=reportService.selectTotalScoreByReportId(r.getReportId());
+        String totalScore=sc.get(0).getTotalscore();
+        String suggestion=sc.get(0).getSuggestion();
+
+        // 获取报告pdf内容
+        String url="localhost:8090/static/"+r.getReportPath();
+        // 获取该报告的jclass
+        JudgeClass judgeClass= judgementService.getjClass(r.getjClassId());
+        List<Judgement> j=judgementService.getJudgementByJClassId(r.getjClassId());
+        List<HashMap<String, Object>> keyWord = new ArrayList<>();
+
+        //获取关键词
+        List<KeyWord> w=reportService.selectKeyWordByReportId(report.getReportId());
+        for (int i = 0; i < w.size(); i++) {
+            HashMap<String, Object> word = new HashMap<>();
+            word.put("word", w.get(i).getKeysContent());
+            keyWord.add(word);
+        }
+
+
+        //获取指标详情
+        for (int i = 0; i < j.size(); i++) {
+            HashMap<String, Object> judgement = new HashMap<>();
+            Score s=expertService.selectScore(report.getReportId(),j.get(i).getJudgementid());
+            judgement.put("judgeId", j.get(i).getJudgementid());
+            judgement.put("judgeName", j.get(i).getJudgementname());
+            judgement.put("judgeContent",j.get(i).getJudgementcontent());
+            judgement.put("judgeProportion",j.get(i).getJudgementproportion());
+            judgement.put("score",s.getScore());
+            judgements.add(judgement);
+        }
+        jClass.put("judgement",judgements);
+        jClass.put("jClassId",r.getjClassId());
+        jClass.put("jClassName",judgeClass.getjClassName());
+        jClass.put("managerId",judgeClass.getManagerId());
+
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("reportPdf",url);
+        data.put("jClass",jClass);
+        data.put("totalScore", totalScore);
+        data.put("suggestion",suggestion);
+        data.put("keyWords",keyWord);
+
+
+        return data;
+
 
     }
 
