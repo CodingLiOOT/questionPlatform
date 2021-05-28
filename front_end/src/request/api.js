@@ -85,6 +85,7 @@ export default class api {
    * @param {Object} p [发送的参数]
    * @returns {Promise<unknown>}
    */
+
   static p_allocateJudgement=p=>post('judgement/allocateJudgement',p);
 
   /**
@@ -94,11 +95,28 @@ export default class api {
   static g_getExpertList=()=>post('judgement/getExpertList',null);
 
   /**
+
+   * 邀请专家接口，发送被邀请专家姓名、报告编号、关键词、名称
+   * @param {Object} p []
+   * @returns {Promise | Promise<unknown>}
+   */
+  static p_inviteExpert=p=>post('Company/inviteExpert',p);
+
+  /**
+
    * 专家分配接口，发送报告关键词，获取分配专家
    * @param {Object} p [发送的参数：报告编号、关键词、名称、创建日期]
    * @returns {Promise<unknown>}
    */
   static p_createExpert=p=>post('Company/createExpert',p);
+
+
+
+  /**
+   * 待打分列表接口
+   * @returns {Promise | Promise<unknown>}
+   */
+  static g_getReportList=p=>post('Expert/getReportList',p);
 
   /**
 
@@ -121,5 +139,6 @@ export default class api {
    * @returns {Promise<unknown>}
    */
   static p_getScoreDetails=p=>post('Expert/getScoreDetails',p);
+
 
 }
