@@ -30,4 +30,16 @@ public class ExpertController {
     }
 
 
+    //专家登录
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/expertLogin")
+    public HashMap<String, Object> expertLogin(@RequestBody String expertName,@RequestBody String code) {
+        expertService.expertLogin(expertName,code);
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("expert",expertService.selectExpertByExpertName(expertName));
+        return data;
+    }
+
+
 }
