@@ -3,7 +3,7 @@ package com.bjtu.questionPlatform.entity;
 public class Score {
     String expertname;
     String judgementid;
-    String reportid;
+    String reportId;
     String ID;  //上传报告的用户id
     String score;
     String suggestion;  // 专家建议
@@ -26,12 +26,12 @@ public class Score {
         this.judgementid = judgementid;
     }
 
-    public String getReportid() {
-        return reportid;
+    public String getReportId() {
+        return reportId;
     }
 
-    public void setReportid(String reportid) {
-        this.reportid = reportid;
+    public void setReportId(String reportId) {
+        this.reportId = reportId;
     }
 
     public String getScore() {

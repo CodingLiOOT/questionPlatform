@@ -119,20 +119,7 @@ export default {
       loadedRatio: 0,
       curPageNum: 0,
 
-      tableData: [{
-        judgeId: '1',
-        judgeName: '排序算法',
-        judgeContent: '快速排序，简单排序，冒泡排序',
-        judgeProportion: '4',
-        score: 100
-      },
-        {
-          judgeId: '2',
-          judgeName: '查找算法',
-          judgeContent: 'BFS,DFS',
-          judgeProportion: '3',
-          score: 100
-        }],
+      tableData: [],
       RateForm: {
         suggestArea: '',
         totalScore: ''
@@ -140,6 +127,8 @@ export default {
 
       editData: [],  //编辑行初始数据
       editId: '',  //判断编辑的是哪一行
+
+      scores:'',
     }
   },
   components:{
@@ -149,8 +138,8 @@ export default {
     this.id = this.$route.params.id;
   },
   mounted() {
-    this.getFilters();
     this.getList();
+    this.getFilters();
     this.showPDF();
   },
 
@@ -213,20 +202,28 @@ export default {
       })
         .then(
           data => {
+            alert(this.$store.state.token)
+            this.src=pdf.createLoadingTask({
+              url: data.reportPdf,
+              httpHeaders: {
+                token:this.$store.state.token
+              },
+            })
             //显示该报告相应指标
             let jClassId = data.jClass.jClassId;
             for (let i = 0; i < data.jClass.judgements.length; i++) {
               let temp = {
-                id: '',
-                name: '',
-                content: '',
-                proportion: ''
+                judgeId: '',
+                judgeName: '',
+                judgeContent: '',
+                judgeProportion: '',
+                score:'',
               };
-              temp.id = data.jClass.judgements[i].judgeId;
-              temp.name = data.jClass.judgements[i].judgeName;
-              temp.content = data.jClass.judgements[i].judgeContent;
-              temp.proportion = data.jClass.judgements[i].judgeProportion;
-
+              temp.judgeId = data.jClass.judgements[i].judgeId;
+              temp.judgeName = data.jClass.judgements[i].judgeName;
+              temp.judgeContent = data.jClass.judgements[i].judgeContent;
+              temp.judgeProportion= data.jClass.judgements[i].judgeProportion;
+              temp.score=0;
               this.tableData.push(temp);
             }
           }
@@ -263,6 +260,7 @@ export default {
     onSubmit() {
       let str = this.UrlSearch();
       let judgeWithScore = new Array(0);
+      this.scores=judgeWithScore;
       let judgeWithScoreSize = 0;
       for(let i=0;i<scoreListSize;i++){
         let element = {
@@ -271,11 +269,10 @@ export default {
         };
         judgeWithScoreSize = judgeWithScore.push(element);
       }
-
       this.$API.p_sendScores({
         reportId: str,
-        expertName: '张三',
-        judgeWithScore: judgeWithScore,
+        expertname: '李一',
+        judgeWithScore: JSON.stringify(this.scores),
         totalScore: this.count(),
         suggestion: this.RateForm.suggestArea
       })
