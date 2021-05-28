@@ -97,16 +97,16 @@ public class ExpertController {
     @PostMapping(value = "/getScoreDetails")
     public HashMap<String, Object> getScoreDetails(@RequestBody Report report) {
 
+
         List<HashMap<String, Object>> judgements = new ArrayList<>();
         HashMap<String, Object> jClass = new HashMap<>();
 
         Report r=reportService.selectReportById(report.getReportId());
 
         //获取打分情况
-        List<Score> sc=reportService.selectScoreByReportId(report.getReportId());
-        String totalScore=sc.get(0).getTotalScore();
+        List<TotalScore> sc=reportService.selectTotalScoreByReportId(r.getReportId());
+        String totalScore=sc.get(0).getTotalscore();
         String suggestion=sc.get(0).getSuggestion();
-
 
         // 获取报告pdf内容
         String url="localhost:8090/static/"+r.getReportPath();
@@ -123,6 +123,7 @@ public class ExpertController {
             keyWord.add(word);
         }
 
+
         //获取指标详情
         for (int i = 0; i < j.size(); i++) {
             HashMap<String, Object> judgement = new HashMap<>();
@@ -131,7 +132,7 @@ public class ExpertController {
             judgement.put("judgeName", j.get(i).getJudgementname());
             judgement.put("judgeContent",j.get(i).getJudgementcontent());
             judgement.put("judgeProportion",j.get(i).getJudgementproportion());
-            judgement.put("score",Float.parseFloat(s.getScore()));
+            judgement.put("score",s.getScore());
             judgements.add(judgement);
         }
         jClass.put("judgement",judgements);
@@ -142,9 +143,11 @@ public class ExpertController {
         HashMap<String, Object> data = new HashMap<>();
         data.put("reportPdf",url);
         data.put("jClass",jClass);
-        data.put("totalScore", Float.parseFloat(totalScore));
+        data.put("totalScore", totalScore);
         data.put("suggestion",suggestion);
         data.put("keyWords",keyWord);
+
+
         return data;
 
 

@@ -20,30 +20,29 @@
             <el-divider content-position="right"></el-divider>
           </el-row>
           <el-row class="el-row">
-            <el-card shadow="hover" v-for="item in jClass" :key="item" class="item">
+            <el-card shadow="hover">
               <el-row class="expertName">
                 <el-col :span="6">
                   专家打分情况
                 </el-col>
               </el-row>
               <el-row>
-                总体打分：{{ totalScore }}
+                总体打分：{{ this.totalScore }}
               </el-row>
               <el-row>
                 指标打分：
               </el-row>
               <el-row>
-                指标类名称: {{ item.jClassName }}
-                管理员编号: {{ item.managerId }}
+                指标类名称: {{ this.jClass.jClassName }}
               </el-row>
-              <el-row v-for="j in item.judgement" :key="j">
+              <el-row v-for="j in  this.jClass.judgement" :key="j">
                 指标名称: {{ j.judgementName }}
                 指标内容: {{ j.judgeContent }}
                 指标权重: {{ j.judgeProportion }}
                 分数: {{ j.score }}
               </el-row>
               <el-row>
-                专家建议: {{ suggestion }}
+                专家建议: {{  this.suggestion }}
               </el-row>
             </el-card>
           </el-row>
@@ -96,9 +95,7 @@ export default {
       // 关键词
       keyWord: [],
       // 指标类
-      jClass: [],
-      // 指标
-      judgements: [],
+      jClass: '',
       // 总分
       totalScore: '',
       // 建议
@@ -110,52 +107,61 @@ export default {
   },
   methods: {
     showDetail() {
+      let reportId = this.UrlSearch();
       this.$API.p_getScoreDetails({
-        reportId: this.$route.query.reportId
+        reportId: reportId,
       })
         .then(
           res => {
-            this.src = pdf.createLoadingTask({
-              url: res.file,
-              httpHeaders: {
-                token: this.$store.state.token
-              },
-            })
+            // this.src = pdf.createLoadingTask({
+            //   url: res.file,
+            //   httpHeaders: {
+            //     token: this.$store.state.token
+            //   },
+            // })
             for (let i = 0; i < res.keyWords.length; i++) {
               this.keyWord.push(res.keyWords[i].word);
             }
             this.totalScore = res.totalScore;
             this.suggestion = res.suggestion;
-            for (let i = 0; i < res.jClass.length; i++) {
-              let jClass = {
-                jClassId: '',
-                jClassName: '',
-                managerId: '',
-                judgement: [],
-              };
-              jClass.jClassId = res.jClass[i].jClassId;
-              jClass.jClassName = res.jClass[i].jClassName;
-              jClass.managerId = res.jClass[i].managerId;
-              this.jClass.push(jClass);
-            }
-            for (let i = 0; i < res.judgement.length; i++) {
+            let newjClass = {
+              jClassId: '',
+              jClassName: '',
+              managerId: '',
+              judgement: [],
+            };
+            newjClass.jClassId = res.jClass.jClassId;
+            newjClass.jClassName = res.jClass.jClassName;
+            newjClass.managerId = res.jClass.managerId;
+
+            for (let i = 0; i < res.jClass.judgement.length; i++) {
               let j = {
                 judgeId: '',
-                judgeName: '',
+                judgementName: '',
                 judgeContent: '',
                 judgeProportion: '',
                 score: '',
               };
-              j.judgeId = res.judgement[i].judgeId;
-              j.judgeName = res.judgement[i].judgeName;
-              j.judgeContent = res.judgement[i].judgeContent;
-              j.judgeProportion = res.judgement[i].judgeProportion;
-              j.score = res.judgement[i].score;
-              this.judgement.push(j);
+              j.judgeId = res.jClass.judgement[i].judgeId;
+              j.judgementName = res.jClass.judgement[i].judgeName;
+              j.judgeContent = res.jClass.judgement[i].judgeContent;
+              j.judgeProportion = res.jClass.judgement[i].judgeProportion;
+              j.score = res.jClass.judgement[i].score;
+              newjClass.judgement.push(j);
             }
+
+            this.jClass = newjClass;
+
           }
         )
         .catch({})
+    },
+    UrlSearch() {
+      let str = location.href; //获取到整个地址
+      let num = str.indexOf("?")
+      str = str.substr(num + 1); //取得num+1后所有参数，这里的num+1是下标 str.substr(start [, length ]
+      str = str.substring(3, str.length);
+      return str;
     },
     // 上一页函数，
     prePage() {
