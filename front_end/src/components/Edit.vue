@@ -2,14 +2,9 @@
   <div>
     <el-row>
       <el-col :span="12">
-        <el-form
-          ref="form"
-          :inline="true"
-          label-width="80px"
-        >
+        <el-form ref="form" :inline="true" label-width="80px">
           <el-row class="el-row">
-            <el-input placeholder="评估指标描述"
-                      style="width: 350px;margin-right: 10px">
+            <el-input v-model="input" placeholder="评估指标描述"style="width: 350px;margin-right: 10px">
             </el-input>
           </el-row>
         </el-form>
@@ -45,7 +40,7 @@
 <script>
 import pdf from "vue-pdf";
 export default {
-  name: "ReportDetail",
+  name: "Edit",
   data(){
     return{
       id:'',
@@ -56,6 +51,7 @@ export default {
       // 加载进度
       loadedRatio: 0,
       curPageNum: 0,
+      input:"",
     }
   },
   components:{

@@ -7,10 +7,12 @@ import MainPage from "../components/MainPage";
 import Upload from "../components/Upload";
 import List from "../components/List";
 import ReportDetail from "../components/ReportDetail";
-import Company from "../components/Company";
-import Evaluate from "../components/Evaluate";
-import ExpertsList from "../components/ExpertsList";
-import Edit from "../components/Edit";
+import Company from "../components/company/Company";
+import Evaluate from "../components/company/Evaluate";
+import ExpertsList from "../components/company/ExpertsList";
+import Edit from "../components/company/Edit";
+import JudgeList from "../components/company/JudgeList";
+import AllocateExpert from "../components/company/AllocateExpert";
 
 Vue.use(Router)
 
@@ -102,6 +104,32 @@ const router = new Router({
           path:'Edit',
           name:'Edit',
           component:Edit,
+        },
+        {
+          path: 'JudgeList',
+          name: 'JudgeList',
+          component: () => import("../components/company/JudgeList")
+        },
+        {
+
+          path: 'JudgeList',
+          name: 'JudgeList',
+          component: () => import("../components/company/JudgeList")
+        },
+        {
+          path:'AllocateExpert',
+          name:'AllocateExpert',
+          component:AllocateExpert,
+        },
+        {
+          path: 'ShowJudgement',
+          name: 'ShowJudgement',
+          component: () => import("../components/company/ShowJudgement")
+        },
+        {
+          path:'AllocateExpert',
+          name:'AllocateExpert',
+          component:AllocateExpert,
         }
       ]
     },
@@ -135,7 +163,17 @@ const router = new Router({
           path: 'ExpertHome',
           name: 'ExpertHome',
           component: () => import("../components/expert/ExpertHome"),
-        }
+        },
+        {
+          path: 'ShowScoreDetails',
+          name: 'ShowScoreDetails',
+          component: () => import("../components/expert/ShowScoreDetails"),
+        },
+        {
+          path: 'EditScore',
+          name: 'EditScore',
+          component: () => import("../components/expert/EditScore"),
+        },
       ]
     },
   ],

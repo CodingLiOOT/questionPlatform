@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/ExpertMainPage/ExpertRated' }">已打分报告列表</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/Company/Evaluate' }">报告列表</el-breadcrumb-item>
     </el-breadcrumb>
     <br/>
     <el-table
@@ -11,17 +11,19 @@
       <el-table-column
         prop="id"
         label="报告编号"
-        width="80">
+        width="100">
       </el-table-column>
+
       <el-table-column
         prop="name"
         label="报告名称"
-        width="300">
+        width="250">
       </el-table-column>
+
       <el-table-column
         prop="tag"
         label="标签"
-        width="300"
+        width="200"
         :filters=this.filters
         :filter-method="filterTag"
         filter-placement="bottom-end">
@@ -32,25 +34,27 @@
           </el-tag>
         </template>
       </el-table-column>
+
       <el-table-column
         prop="time"
-        label="创建时间">
+        label="创建时间"
+        width="120">
       </el-table-column>
+
       <el-table-column
-        prop="score"
-        label="评分"
-        fixed="right">
-        <template slot-scope="scope">
-          <el-button @click="showDetails(scope.row)" type="primary" size="small">查看</el-button>
-        </template>
+        prop="jClassName"
+        label="指标类">
       </el-table-column>
+
       <el-table-column
+        fixed="right"
         label="操作"
-        fixed="right">
+        width="120">
         <template slot-scope="scope">
-          <el-button @click="edit(scope.row)" type="success" size="small">编辑</el-button>
+          <el-button @click="handleClick(scope.row)" type="primary" size="small">分配指标类</el-button>
         </template>
       </el-table-column>
+
     </el-table>
     <el-pagination
       @size-change="handleSizeChange"
@@ -65,37 +69,13 @@
 
 <script>
 import {unique} from "webpack-merge";
-
 export default {
-  name: "ExpertRated",
+  name: "Evaluate",
   data() {
     return {
       currentPage: 1,
       filters: [],
-      tableData: [{
-        id: 1,
-        name: '中石油探井信息资源共享',
-        time: '2016-05-03',
-        tag: ['石油', '井'],
-      },
-        {
-          id: 2,
-          name: '中石化可研报告',
-          time: '2016-05-03',
-          tag: ['石油', '国家能源'],
-        },
-        {
-          id: 3,
-          name: '电力信息资源共享',
-          time: '2016-05-03',
-          tag: ['电', '安全'],
-        },
-        {
-          id: 4,
-          name: '煤矿信息资源共享',
-          time: '2016-05-03',
-          tag: ['煤矿'],
-        },]
+      tableData: []
     }
   },
   methods: {
@@ -105,6 +85,16 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
+    // 选中查看某一条
+    handleClick(row) {
+      console.log(row);
+      this.$router.push({
+        path: 'Edit',
+        query: {
+          id: row.id,
+        }
+      });
+    },
     filterTag(value, row) {
       for (let item in row.tag) {
         if (row.tag[item] === value) {
@@ -112,6 +102,39 @@ export default {
         }
       }
       return false;
+    },
+    getAllReportList() {
+      this.$API.p_getAllReportList()
+        .then(
+          data => {
+            for (let i = 0; i < data.reports.length; i++) {
+              let temp = {
+                id: '',
+                name: '',
+                time: '',
+                tag: [],
+                information: '',
+                jClassName:'',
+              };
+              temp.id = data.reports[i].reportId;
+              temp.name = data.reports[i].reportName;
+              temp.time = data.reports[i].createTime;
+              temp.jClassName=data.reports[i].jClassName;
+              if (temp.jClassName == null) {
+                temp.jClassName = '未分配';
+              }
+              for (let j = 0; j < data.reports[i].keyWord.length; j++) {
+                let k = data.reports[i].keyWord[j].word;
+                temp.tag.push(k);
+              }
+              this.tableData.push(temp);
+            }
+          }
+        )
+        .catch(
+          error => {
+          }
+        )
     },
     getFilters() {
       for (let item in this.tableData) {
@@ -136,31 +159,14 @@ export default {
       }
       this.filters = array;
     },
-    // 选中查看某一个报告的打分详情
-    showDetails(row) {
-      this.$router.push({
-        path: 'ShowScoreDetails',
-        query: {
-          id: row.id,
-        }
-      });
-    },
-    // 选中编辑某一个报告的打分
-    edit(row) {
-      this.$router.push({
-        path: 'EditScore',
-        query: {
-          id: row.id,
-        }
-      });
-    },
   },
   mounted() {
+    this.getAllReportList();
     this.getFilters();
+    this.getList();
   }
 }
 </script>
 
 <style scoped>
-
 </style>
