@@ -42,7 +42,7 @@
         fixed="right"
         label="操作">
         <template slot-scope="scope">
-          <el-button type="text" size="small" style="color: red">打分</el-button>
+          <el-button @click="handleRate(scope.row)" type="text" size="small" style="color: red">打分</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -104,6 +104,15 @@ export default {
       console.log(row);
       this.$router.push({
         path: 'ReportDetail',
+        query: {
+          id: row.id,
+        }
+      });
+    },
+    handleRate(row) {
+      //alert(row.id);
+      this.$router.push({
+        path: 'ExpertToRate',
         query: {
           id: row.id,
         }
