@@ -2,20 +2,25 @@ package com.bjtu.questionPlatform.controller;
 
 import com.bjtu.questionPlatform.entity.Expert;
 import com.bjtu.questionPlatform.entity.KeyWord;
+
 import com.bjtu.questionPlatform.entity.Report;
 import com.bjtu.questionPlatform.entity.User;
 import com.bjtu.questionPlatform.service.ExpertService;
 import com.bjtu.questionPlatform.service.MailService;
+
 import com.bjtu.questionPlatform.service.ReportService;
+
 import com.bjtu.questionPlatform.service.UserService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 
 @Slf4j
 @RestController
@@ -23,8 +28,10 @@ import java.util.List;
 public class ExpertController {
     @Autowired
     private ExpertService expertService;
+
     @Autowired
     private ReportService reportService;
+
 
     // 返回报告详情和打分指标
     @CrossOrigin
@@ -34,6 +41,7 @@ public class ExpertController {
 
         
     }
+
 
     @CrossOrigin
     @ResponseResultBody
@@ -80,6 +88,7 @@ public class ExpertController {
         data.put("keyWords", keyWords);
         return data;
     }
+
 
 
 }
