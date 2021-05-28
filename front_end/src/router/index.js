@@ -163,6 +163,11 @@ const router = new Router({
           path: 'ExpertHome',
           name: 'ExpertHome',
           component: () => import("../components/expert/ExpertHome"),
+        },
+        {
+          path: 'ExpertToRate',
+          name: 'ExpertToRate',
+          component: () => import("../components/expert/ExpertToRate"),
         }
       ]
     },
