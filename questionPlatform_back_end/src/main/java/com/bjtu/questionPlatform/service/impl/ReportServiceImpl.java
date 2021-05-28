@@ -31,6 +31,10 @@ public class ReportServiceImpl implements ReportService {
         return reportMapper.selectGradesByReportId(reportId);
     }
     @Override
+    public List<TotalScore> selectTotalScoreByReportId(String reportId){
+        return reportMapper.selectTotalScoreByReportId(reportId);
+    }
+    @Override
     public List<Score> selectScoreByReportId(String reportId){
         return reportMapper.selectScoreByReportId(reportId);
     }
@@ -74,5 +78,10 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public Report selectReportById(String reportId) {
         return reportMapper.selectReportById(reportId);
+    }
+
+    @Override
+    public List<String> selectReportIdByExpertName(String ExpertName) {
+        return reportMapper.selectReportIdByExpertName(ExpertName);
     }
 }

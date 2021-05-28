@@ -42,7 +42,7 @@
         fixed="right"
         label="操作">
         <template slot-scope="scope">
-          <el-button type="text" size="small" style="color: red">打分</el-button>
+          <el-button @click="handleRate(scope.row)" type="text" size="small" style="color: red">打分</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -109,6 +109,15 @@ export default {
         }
       });
     },
+    handleRate(row) {
+      //alert(row.id);
+      this.$router.push({
+        path: 'ExpertToRate',
+        query: {
+          id: row.id,
+        }
+      });
+    },
     filterTag(value, row) {
       for (let item in row.tag) {
         if (row.tag[item] === value) {
@@ -116,6 +125,41 @@ export default {
         }
       }
       return false;
+    },
+    //获取待打分列表
+    getReportList() {
+      this.$API.g_getReportList({
+        expertName:'sd'
+      })
+        .then(
+          data => {
+              console.log(data);
+              for (let i = 0; i < data.reports.length; i++) {
+                let temp = {
+                  id: '',
+                  name: '',
+                  time: '',
+                  tag: [],
+                };
+                temp.id = data.reports[i].reportId;
+                temp.name = data.reports[i].reportName;
+                temp.time = data.reports[i].createTime;
+                for (let j = 0; j < data.reports[i].keyWord.length; j++) {
+                  let k = data.reports[i].keyWord[j].word;
+                  temp.tag.push(k);
+                }
+                alert(temp)
+                this.tableData.push(temp);
+
+              }
+
+          }
+        )
+        .catch(
+          error => {
+            console.log(error);
+          }
+        )
     },
     getFilters() {
       for (let item in this.tableData) {
@@ -142,6 +186,7 @@ export default {
     },
   },
   mounted() {
+    this.getReportList();
     this.getFilters();
   }
 }

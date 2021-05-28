@@ -29,4 +29,8 @@ public interface JudgementService {
 
     String getjClassName(String jClassId);
 
+    JudgeClass getjClass(String jClassId);
+
+    List<Judgement> getJudgementByJClassId(String jClassId);
+
 }

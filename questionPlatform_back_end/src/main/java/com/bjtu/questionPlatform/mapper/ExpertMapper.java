@@ -1,9 +1,7 @@
 package com.bjtu.questionPlatform.mapper;
 
 
-import com.bjtu.questionPlatform.entity.Expert;
-import com.bjtu.questionPlatform.entity.Role;
-import com.bjtu.questionPlatform.entity.User;
+import com.bjtu.questionPlatform.entity.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -24,5 +22,8 @@ public interface ExpertMapper {
             "values (#{expertName},1,1,#{mail},#{phone},#{expertUnit},#{expertInformation})")
     //插入的专家类型暂时没想好咋写
     void createExpert(Expert expert);
+
+    @Select("select * from score where reportid = #{reportId} and judgementid = #{judgementId}")
+    Score selectScore(String reportId, String judgementId);
 
 }
