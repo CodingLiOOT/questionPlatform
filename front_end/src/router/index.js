@@ -165,6 +165,13 @@ const router = new Router({
           component: () => import("../components/expert/ExpertHome"),
         },
         {
+
+          path: 'ExpertToRate',
+          name: 'ExpertToRate',
+          component: () => import("../components/expert/ExpertToRate"),
+        },
+                        
+        {
           path: 'ShowScoreDetails',
           name: 'ShowScoreDetails',
           component: () => import("../components/expert/ShowScoreDetails"),
@@ -174,6 +181,7 @@ const router = new Router({
           name: 'EditScore',
           component: () => import("../components/expert/EditScore"),
         },
+
       ]
     },
   ],

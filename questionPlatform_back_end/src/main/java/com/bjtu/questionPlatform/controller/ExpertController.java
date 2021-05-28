@@ -64,8 +64,8 @@ public class ExpertController {
     @ResponseResultBody
     @PostMapping(value = "/sendScores")
     public void sendScores(@RequestBody Score score) {
-        Report report=reportService.selectReportById(score.getReportid());
-
+        Report report=reportService.selectReportById(score.getReportId());
+        System.out.println(score.getReportId());
         // 插入每个score和judgeId
         String judgeWithScore = score.getJudgeWithScore();
         System.out.println("judgeWithScore"+judgeWithScore);
@@ -76,7 +76,7 @@ public class ExpertController {
             Score s=new Score();
             // 插入judgement相关数据
             s.setExpertname(score.getExpertname());
-            s.setReportid(score.getReportid());
+            s.setReportId(score.getReportId());
             s.setJudgementid(jsonObject.getString("judgeId"));
             s.setScore(jsonObject.getString("score"));
             s.setID(report.getID());
@@ -86,7 +86,7 @@ public class ExpertController {
         Score totalScore=new Score();
         totalScore.setTotalScore(score.getTotalScore());
         totalScore.setSuggestion(score.getSuggestion());
-        totalScore.setReportid(score.getReportid());
+        totalScore.setReportId(score.getReportId());
         totalScore.setExpertname(score.getExpertname());
         scoreService.createTotalScore(totalScore);
 
