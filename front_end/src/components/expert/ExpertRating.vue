@@ -117,6 +117,41 @@ export default {
       }
       return false;
     },
+    //获取待打分列表
+    getReportList() {
+      this.$API.g_getReportList({
+        expertName:'sd'
+      })
+        .then(
+          data => {
+              console.log(data);
+              for (let i = 0; i < data.reports.length; i++) {
+                let temp = {
+                  id: '',
+                  name: '',
+                  time: '',
+                  tag: [],
+                };
+                temp.id = data.reports[i].reportId;
+                temp.name = data.reports[i].reportName;
+                temp.time = data.reports[i].createTime;
+                for (let j = 0; j < data.reports[i].keyWord.length; j++) {
+                  let k = data.reports[i].keyWord[j].word;
+                  temp.tag.push(k);
+                }
+                alert(temp)
+                this.tableData.push(temp);
+
+              }
+
+          }
+        )
+        .catch(
+          error => {
+            console.log(error);
+          }
+        )
+    },
     getFilters() {
       for (let item in this.tableData) {
         for (let tag in this.tableData[item].tag) {
@@ -142,6 +177,7 @@ export default {
     },
   },
   mounted() {
+    this.getReportList();
     this.getFilters();
   }
 }
