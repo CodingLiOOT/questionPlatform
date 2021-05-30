@@ -1,4 +1,4 @@
-package com.bjtu.questionPlatform.utils.verifyCodeUtils;
+package com.bjtu.questionPlatform.utils.InviteCodeUtils;
 
 import com.bjtu.questionPlatform.utils.exceptionHandler.exception.DefinitionException;
 import com.bjtu.questionPlatform.utils.exceptionHandler.exception.ErrorEnum;
@@ -9,37 +9,27 @@ import redis.clients.jedis.Jedis;
 
 import java.util.Random;
 
-/**
- * @program: questionPlatform_back_end
- * @description: verify code tools
- * @author: CodingLiOOT
- * @create: 2021-03-28 16:28
- * @version: 1.0
- **/
 @Slf4j
 @Component
-public class VerifyCodeUtils {
+public class InviteCodeUtils {
     private final Jedis jedis = JedisInstance.getInstance().getResource();
 
-    public String generateCode(String key) {
+    public String setCode(String expertName) { // 根据专家姓名生成随机数
         StringBuilder str = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
             str.append(random.nextInt(10));
         }
         String code = str.toString();
-        jedis.setex(key, 300, code);
+        jedis.setex(expertName, 21600, code); // 存储6个小时
         return code;
     }
 
-    public boolean verifyCode(String key, String value) {
-        System.out.println(jedis);
-        if (!value.equals(jedis.get(key))) {
-            System.out.println(key);
-            System.out.println(jedis.get(key));
+    public boolean verifyCode(String expertName, String value) { // 将用户名和验证码进行对比
+        if (!value.equals(jedis.get(expertName))) {
             throw new DefinitionException(ErrorEnum.ERROR_VERIFY_CODE);
         }
-        jedis.del(key);
+        jedis.del(expertName);
         return true;
     }
 
