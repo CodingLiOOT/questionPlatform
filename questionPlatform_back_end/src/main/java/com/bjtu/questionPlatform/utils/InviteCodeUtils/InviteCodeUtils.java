@@ -29,7 +29,7 @@ public class InviteCodeUtils {
         if (!value.equals(jedis.get(expertName))) {
             throw new DefinitionException(ErrorEnum.ERROR_VERIFY_CODE);
         }
-        jedis.del(expertName);
+//        jedis.del(expertName);
         return true;
     }
 

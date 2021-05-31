@@ -34,10 +34,10 @@ public class ExpertController {
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/expertLogin")
-    public HashMap<String, Object> expertLogin(@RequestBody String expertName,@RequestBody String code) {
-        expertService.expertLogin(expertName,code);
+    public HashMap<String, Object> expertLogin(@RequestBody Expert expert) {
+        expertService.expertLogin(expert.getExpertName(),expert.getCode());
         HashMap<String, Object> data = new HashMap<>();
-        data.put("expert",expertService.selectExpertByExpertName(expertName));
+        data.put("expert",expertService.selectExpertByExpertName(expert.getExpertName()));
         return data;
     }
 

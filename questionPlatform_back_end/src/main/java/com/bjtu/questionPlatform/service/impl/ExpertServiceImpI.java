@@ -67,7 +67,8 @@ public class ExpertServiceImpI implements ExpertService {
 
     @Override
     public void invite(Expert expert,String link) {
-        send(expert.getMail(), link,inviteCodeUtils.setCode(expert.getExpertName()));
+        String mail=expertMapper.selectMailByExpertName(expert.getExpertName());
+        send(mail, link,inviteCodeUtils.setCode(expert.getExpertName()));
     }
 
 
