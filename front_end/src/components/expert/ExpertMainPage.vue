@@ -4,7 +4,7 @@
       <p style="float: left;color: #ffffff">国家能源集团信息化项目信息资源共享评估平台</p>
       <div class="header-main">
         <div><router-link to="/ExpertInvitation" style="float: right">退出</router-link></div>
-        <div style="float: right;padding-right: 20px;">专家xxx</div>
+        <div style="float: right;padding-right: 20px;">专家</div>
       </div>
     </el-header>
     <el-container class="el-container">
@@ -15,13 +15,13 @@
           router="true"
           style="width:200px">
           <el-menu-item index="/ExpertMainPage/ExpertRating">
-            <span slot="title">待打分方案</span>
+            <span slot="title">待打分报告</span>
           </el-menu-item>
           <el-menu-item index="/ExpertMainPage/ExpertRated">
-            <template slot="title">已打分方案</template>
+            <template slot="title">已打分报告</template>
           </el-menu-item>
           <el-menu-item index="/ExpertMainPage/ExpertHome">
-            <template slot="title">个人中心</template>
+            <template slot="title">专家个人中心</template>
           </el-menu-item>
         </el-menu>
       </aside>

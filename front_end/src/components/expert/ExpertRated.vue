@@ -1,5 +1,9 @@
 <template>
   <div>
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item :to="{ path: '/ExpertMainPage/ExpertRated' }">已打分报告列表</el-breadcrumb-item>
+    </el-breadcrumb>
+    <br/>
     <el-table
       :data="tableData"
       border
@@ -34,15 +38,17 @@
       </el-table-column>
       <el-table-column
         prop="score"
-        label="评分">
+        label="评分"
+        fixed="right">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+          <el-button @click="showDetails(scope.row)" type="primary" size="small">查看</el-button>
         </template>
       </el-table-column>
       <el-table-column
-        label="操作">
+        label="操作"
+        fixed="right">
         <template slot-scope="scope">
-          <el-button type="text" size="small" style="color: red">编辑</el-button>
+          <el-button @click="edit(scope.row)" type="success" size="small">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -99,16 +105,6 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
     },
-    // 选中查看某一条
-    handleClick(row) {
-      console.log(row);
-      this.$router.push({
-        path: 'ReportDetail',
-        query: {
-          id: row.id,
-        }
-      });
-    },
     filterTag(value, row) {
       for (let item in row.tag) {
         if (row.tag[item] === value) {
@@ -139,6 +135,24 @@ export default {
         }
       }
       this.filters = array;
+    },
+    // 选中查看某一个报告的打分详情
+    showDetails(row) {
+      this.$router.push({
+        path: 'ShowScoreDetails',
+        query: {
+          id: row.id,
+        }
+      });
+    },
+    // 选中编辑某一个报告的打分
+    edit(row) {
+      this.$router.push({
+        path: 'EditScore',
+        query: {
+          id: row.id,
+        }
+      });
     },
   },
   mounted() {
