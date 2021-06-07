@@ -38,7 +38,7 @@
               </el-row>
               <el-row class="expertDetails">
                 <el-col :span="6">
-                  指标类名称： {{ this.jClass.jClassName }}
+                  指标类名称：{{ this.jClass.jClassName }}
                 </el-col>
               </el-row>
               <el-row v-for="j in  this.jClass.judgement" :key="j" class="expertDetails">
@@ -51,7 +51,7 @@
               </el-row>
               <el-row class="expertDetails">
                 <el-col :span="6">
-                  专家建议： {{ this.suggestion }}
+                  专家建议：{{ this.suggestion }}
                 </el-col>
               </el-row>
             </el-card>
