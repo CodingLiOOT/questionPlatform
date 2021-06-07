@@ -9,12 +9,8 @@
           <el-form-item prop="expertName">
             <el-input v-model="InvitationForm.expertName" placeholder="姓名"></el-input>
           </el-form-item>
-          <el-form-item prop="email">
-            <el-input v-model="InvitationForm.email" type="email" placeholder="邮箱"></el-input>
-          </el-form-item>
           <el-form-item prop="code" :inline="true" >
-            <el-input v-model="InvitationForm.code" placeholder="邀请码" style="width:230px"></el-input>
-            <el-button :disabled="disabled" @click="sendCode" class="sendcode" style="width:125px">{{btnTxt}}</el-button>
+            <el-input v-model="InvitationForm.code" placeholder="邀请码"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button class="invitation-btn-submit" type="primary" @click="submit()">确认</el-button>
@@ -29,59 +25,40 @@
 export default {
   name: "ExpertInvitation",
   data() {
-    /**
-     * 验证专家姓名
-     * @param rule [规则名称]
-     * @param value [输入框值]
-     * @param callback [回调函数]
-     */
-    let validateExpertName=(rule,value,callback)=>{
-      if (value === "") {
-        callback(new Error("请输入姓名"));
-      } else {
-        const regPass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if (!regPass.test(value)) {
-          callback(new Error("至少八位字符，包含大小写字母和数字，不含特殊字符"));
-        }
-        callback();
-      }
-    };
-
-    /**
-     * 验证邮箱
-     * @param rule [规则名称]
-     * @param value [输入框值]
-     * @param callback [回调函数]
-     */
-    let validEmail = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入邮箱"));
-      } else {
-        const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
-        if (regEmail.test(value)) {
-          callback();
-        }
-        callback(new Error("请输入合法邮箱"))
-      }
-    };
-
-    /**
-     * 验证邀请码
-     * @param rule [规则名称]
-     * @param value [输入框值]
-     * @param callback [回调函数]
-     */
-    let validateCode = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入邀请码"));
-      } else {
-        const regPass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        if (!regPass.test(value)) {
-          callback(new Error("至少八位字符，包含大小写字母和数字，不含特殊字符"));
-        }
-        callback();
-      }
-    };
+    // /**
+    //  * 验证专家姓名
+    //  * @param rule [规则名称]
+    //  * @param value [输入框值]
+    //  * @param callback [回调函数]
+    //  */
+    // let validateExpertName=(rule,value,callback)=>{
+    //   if (value === "") {
+    //     callback(new Error("请输入姓名"));
+    //   } else {
+    //     const regPass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    //     if (!regPass.test(value)) {
+    //       callback(new Error("至少八位字符，包含大小写字母和数字，不含特殊字符"));
+    //     }
+    //     callback();
+    //   }
+    // };
+    // /**
+    //  * 验证邀请码
+    //  * @param rule [规则名称]
+    //  * @param value [输入框值]
+    //  * @param callback [回调函数]
+    //  */
+    // let validateCode = (rule, value, callback) => {
+    //   if (value === "") {
+    //     callback(new Error("请输入邀请码"));
+    //   } else {
+    //     const regPass = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    //     if (!regPass.test(value)) {
+    //       callback(new Error("至少八位字符，包含大小写字母和数字，不含特殊字符"));
+    //     }
+    //     callback();
+    //   }
+    // };
 
     return {
       InvitationForm: {
@@ -91,7 +68,7 @@ export default {
       },
       InvitationRule: {
         expertName: [{
-          validator: validateExpertName,
+          // validator: validateExpertName,
           trigger: 'change'
         },
           {
@@ -99,17 +76,8 @@ export default {
             message: '请输入姓名',
             trigger: 'blur'
           }],
-        email: [{
-          validator: validEmail,
-          trigger: 'change'
-        },
-          {
-            required: true,
-            message: '请输入邮箱',
-            trigger: 'blur'
-          }],
         code: [{
-          validator: validateCode,
+          // validator: validateCode,
           trigger: 'change'
         },
           {
@@ -127,21 +95,29 @@ export default {
   },
   methods: {
     submit() {
-      this.$router.replace('/ExpertMainPage');
-      // this.$refs.InvitationForm.validate((valid) => {
-      //   if (valid) {
-      //     this.$API.p_Invitation({
-      //       code:this.InvitationForm.code
-      //     })
-      //       .then(
-      //         res=>{
-      //           this.$router.replace('/expertRating');
-      //         }
-      //       )
-      //   } else {
-      //     return false;
-      //   }
-      // })
+      this.$refs.InvitationForm.validate((valid) => {
+        // if (valid) {
+          this.$API.p_expertLogin({
+            expertName: this.InvitationForm.expertName,
+            code: this.InvitationForm.code,
+          })
+            .then(
+              res => {
+                this.$router.push({
+                  path: 'ExpertMainPage/ExpertRating',
+                  query: {
+                    expertName: this.InvitationForm.expertName
+                  }
+                })
+              })
+            .catch(error => {
+              alert('专家信息有误');
+              console.log(error);
+            });
+        // } else {
+        //   return false;
+        // }
+      })
     },
     //发送邮箱验证码，30秒后重新发送
     sendCode(){
