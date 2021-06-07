@@ -21,6 +21,7 @@ public class CompanyController {
     @ResponseResultBody
     @PostMapping(value = "/inviteExpert")
     public void sendVerifyCode(@RequestBody Expert expert) {
+
         expertService.invite(expert,"123.com");
     }
 
