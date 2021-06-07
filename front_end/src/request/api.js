@@ -107,4 +107,16 @@ export default class api {
    */
   static p_createExpert=p=>post('Company/createExpert',p);
 
+  /**
+   * 待打分列表接口
+   * @returns {Promise | Promise<unknown>}
+   */
+  static g_getReportList=p=>post('Expert/getReportList',p);
+
+  /**
+   * 专家登录接口，发送专家信息到后端
+   * @param {Object} p [发送的参数]
+   * @returns {Promise<unknown>}
+   */
+  static p_expertLogin=p=>post('Expert/expertLogin',p);
 }
