@@ -15,7 +15,7 @@ public interface ExpertMapper {
 
 
     @Select("select * from expert where expertName = #{expertName}")
-    Expert selectExpertByExpertName(String expertName);
+    Expert selectExpertByUserName(String expertName);
     @Select("select * from expert where keysId = #{keysId}")
     List<User> selectExpertByKeysId(String keysId);
 
