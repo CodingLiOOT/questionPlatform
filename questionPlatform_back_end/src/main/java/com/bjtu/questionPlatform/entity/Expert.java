@@ -1,7 +1,6 @@
 package com.bjtu.questionPlatform.entity;
 
 public class Expert {
-    // 专家
     String expertName;
     String keysId;
     String expertType;

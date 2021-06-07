@@ -14,6 +14,7 @@ spring:
     username: root
     #输入自己的账户密码
     password: 78089091
+
     driver-class-name: com.mysql.cj.jdbc.Driver
   web:
     resources:
