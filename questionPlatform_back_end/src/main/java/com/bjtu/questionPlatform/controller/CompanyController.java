@@ -19,9 +19,9 @@ public class CompanyController {
 
     @CrossOrigin
     @ResponseResultBody
-    @PostMapping(value = "/sendCode")
+    @PostMapping(value = "/inviteExpert")
     public void sendVerifyCode(@RequestBody Expert expert) {
-        expertService.invite(expert,"123,com","Hell0");
+        expertService.invite(expert,"123.com");
     }
 
     @CrossOrigin

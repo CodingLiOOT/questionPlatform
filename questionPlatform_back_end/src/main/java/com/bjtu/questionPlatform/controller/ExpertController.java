@@ -44,6 +44,19 @@ public class ExpertController {
 
 
 
+    //专家登录
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/expertLogin")
+    public HashMap<String, Object> expertLogin(@RequestBody Expert expert) {
+        expertService.expertLogin(expert.getExpertName(),expert.getCode());
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("expert",expertService.selectExpertByExpertName(expert.getExpertName()));
+        return data;
+    }
+
+
+
     // 返回报告详情和打分指标
     @CrossOrigin
     @ResponseResultBody
