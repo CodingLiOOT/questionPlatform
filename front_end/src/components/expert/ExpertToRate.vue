@@ -202,7 +202,7 @@ export default {
       })
         .then(
           data => {
-
+            
             this.src=pdf.createLoadingTask({
               url: data.reportPdf,
               httpHeaders: {
