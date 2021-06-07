@@ -21,28 +21,38 @@
           </el-row>
           <el-row class="el-row">
             <el-card shadow="hover">
-              <el-row class="expertName">
+              <el-row class="expertDetails">
                 <el-col :span="6">
                   专家打分情况
                 </el-col>
               </el-row>
-              <el-row>
-                总体打分：{{ this.totalScore }}
+              <el-row class="expertDetails">
+                <el-col :span="6">
+                  总体打分：{{ this.totalScore }}
+                </el-col>
               </el-row>
-              <el-row>
-                指标打分：
+              <el-row class="expertDetails">
+                <el-col :span="6">
+                  指标打分：
+                </el-col>
               </el-row>
-              <el-row>
-                指标类名称: {{ this.jClass.jClassName }}
+              <el-row class="expertDetails">
+                <el-col :span="6">
+                  指标类名称： {{ this.jClass.jClassName }}
+                </el-col>
               </el-row>
-              <el-row v-for="j in  this.jClass.judgement" :key="j">
-                指标名称: {{ j.judgementName }}
-                指标内容: {{ j.judgeContent }}
-                指标权重: {{ j.judgeProportion }}
-                分数: {{ j.score }}
+              <el-row v-for="j in  this.jClass.judgement" :key="j" class="expertDetails">
+                <el-col :span="6">
+                  指标名称：{{ j.judgementName }}<br/>
+                  指标内容：{{ j.judgeContent }}<br/>
+                  指标权重：{{ j.judgeProportion }}<br/>
+                  分数：{{ j.score }}<br/>
+                </el-col>
               </el-row>
-              <el-row>
-                专家建议: {{  this.suggestion }}
+              <el-row class="expertDetails">
+                <el-col :span="6">
+                  专家建议： {{ this.suggestion }}
+                </el-col>
               </el-row>
             </el-card>
           </el-row>
@@ -207,7 +217,7 @@ export default {
   margin-bottom: 1rem;
 }
 
-.expertName {
-  margin-left: 0
+.expertDetails {
+  margin-left: 0;
 }
 </style>
