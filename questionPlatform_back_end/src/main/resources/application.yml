@@ -10,10 +10,14 @@ spring:
     default-encoding: utf-8
   datasource:
     #    url: jdbc:mysql://39.107.205.151:3306/fwwb_dataset?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: root
-    #输入自己的账户密码
-    password: 78089091
+#    url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#    username: root
+#    #输入自己的账户密码
+#    password: 78089091
+      url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      username: root
+      #输入自己的账户密码
+      password: 78089091
 
     driver-class-name: com.mysql.cj.jdbc.Driver
   web:
