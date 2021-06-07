@@ -21,8 +21,9 @@ public class CompanyController {
     @ResponseResultBody
     @PostMapping(value = "/inviteExpert")
     public void sendVerifyCode(@RequestBody Expert expert) {
-
-        expertService.invite(expert,"123.com");
+        Expert e=expertService.selectExpertByExpertName(expert.getExpertName());
+        System.out.println(e.getMail());
+        expertService.invite(e,"123.com");
     }
 
     @CrossOrigin
