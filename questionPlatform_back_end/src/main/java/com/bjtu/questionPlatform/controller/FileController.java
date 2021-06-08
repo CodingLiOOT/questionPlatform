@@ -168,6 +168,7 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         System.out.println("获取某一报告"+report.getReportId());
 
 
+
         List<KeyWord>w=reportService.selectKeyWordByReportId(report.getReportId());
         for (int i = 0; i < w.size(); i++) {
             HashMap<String, Object> word = new HashMap<>();
