@@ -111,10 +111,40 @@ export default class api {
   static p_createExpert=p=>post('Company/createExpert',p);
 
 
+
   /**
    * 待打分列表接口
    * @returns {Promise | Promise<unknown>}
    */
   static g_getReportList=p=>post('Expert/getReportList',p);
+
+  /**
+
+   * 获取报告pdf和指标接口，发送报告编号，获取相应pdf文档和指标类
+   * @param {Object} p [发送的参数：报告编号]
+   * @returns {Promise<unknown>}
+   */
+  static p_getOneReport=p=>post('Expert/getOneReport',p);
+
+  /**
+   * 发送报告各项打分情况
+   * @param {Object} p [发送的参数：报告各项指标相应分数]
+   * @returns {Promise<unknown>}
+   */
+  static p_sendScores=p=>post('Expert/sendScores',p);
+
+/**
+   * 专家查看打分详情接口，发送报告编号，获取报告打分的所有信息
+   * @param {Object} p [发送的参数：报告编号]
+   * @returns {Promise<unknown>}
+   */
+  static p_getScoreDetails=p=>post('Expert/getScoreDetails',p);
+
+  /**
+   * 专家登录接口，发送专家信息到后端
+   * @param {Object} p [发送的参数]
+   * @returns {Promise<unknown>}
+   */
+  static p_expertLogin=p=>post('Expert/expertLogin',p);
 
 }

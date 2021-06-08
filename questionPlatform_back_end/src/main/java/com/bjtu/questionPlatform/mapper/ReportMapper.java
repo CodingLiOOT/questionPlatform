@@ -27,6 +27,9 @@ public interface ReportMapper {
     @Select("select * from totalscore where reportId = #{reportId}")
     List<Grade> selectGradesByReportId(String reportId);
 
+    @Select("select * from totalscore where reportId = #{reportId}")
+    List<TotalScore> selectTotalScoreByReportId(String reportId);
+
     @Select("select * from score where reportId = #{reportId}")
     List<Score> selectScoreByReportId(String reportId);
 

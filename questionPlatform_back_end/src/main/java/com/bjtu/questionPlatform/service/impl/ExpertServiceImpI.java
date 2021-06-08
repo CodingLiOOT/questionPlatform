@@ -1,10 +1,12 @@
 package com.bjtu.questionPlatform.service.impl;
 
 import com.bjtu.questionPlatform.entity.Expert;
+import com.bjtu.questionPlatform.entity.Score;
 import com.bjtu.questionPlatform.entity.User;
 import com.bjtu.questionPlatform.mapper.ExpertMapper;
 import com.bjtu.questionPlatform.mapper.UserMapper;
 import com.bjtu.questionPlatform.service.ExpertService;
+import com.bjtu.questionPlatform.utils.InviteCodeUtils.InviteCodeUtils;
 import com.bjtu.questionPlatform.utils.exceptionHandler.exception.DefinitionException;
 import com.bjtu.questionPlatform.utils.exceptionHandler.exception.ErrorEnum;
 import com.bjtu.questionPlatform.utils.token.JWTUtils;
@@ -31,6 +33,9 @@ public class ExpertServiceImpI implements ExpertService {
     private VerifyCodeUtils verifyCodeUtils;
     @Autowired
     private ExpertMapper expertMapper;
+
+    @Autowired
+    private InviteCodeUtils inviteCodeUtils;
 
 
     @Value("${mail.fromMail.addr}")
@@ -61,16 +66,24 @@ public class ExpertServiceImpI implements ExpertService {
     }
 
     @Override
-    public void invite(Expert expert,String link,String message) {
-
-        send(expert.getMail(), link,message);
+    public void invite(Expert expert,String link) {
+        String mail=expertMapper.selectMailByExpertName(expert.getExpertName());
+        send(mail, link,inviteCodeUtils.setCode(expert.getExpertName()));
     }
 
 
     @Override
-    public void invite(String expertName,String link,String message) {
-        Expert expert= expertMapper.selectExpertByUserName(expertName);
-        send(expert.getMail(), link,message);
+    public void invite(String expertName,String link) {
+        Expert expert= expertMapper.selectExpertByExpertName(expertName);
+        send(expert.getMail(), link,inviteCodeUtils.setCode(expert.getExpertName()));
+    }
+
+    @Override
+    public void expertLogin(String expertName, String code) {
+        Expert expert=expertMapper.selectExpertByExpertName(expertName);
+        if ( expert== null || !inviteCodeUtils.verifyCode(expertName,code)){
+            throw new DefinitionException(ErrorEnum.ERROR_NICKNAME_OR_PASSWORD);
+        }
     }
 
     @Override
@@ -82,6 +95,11 @@ public class ExpertServiceImpI implements ExpertService {
 
     @Override
     public Expert selectExpertByExpertName(String expertName) {
-        return expertMapper.selectExpertByUserName(expertName);
+        return expertMapper.selectExpertByExpertName(expertName);
+    }
+
+    @Override
+    public Score selectScore(String reportId,String judgementId){
+        return expertMapper.selectScore(reportId, judgementId);
     }
 }

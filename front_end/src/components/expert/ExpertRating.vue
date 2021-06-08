@@ -124,25 +124,25 @@ export default {
       })
         .then(
           data => {
-              console.log(data);
-              for (let i = 0; i < data.reports.length; i++) {
-                let temp = {
-                  id: '',
-                  name: '',
-                  time: '',
-                  tag: [],
-                };
-                temp.id = data.reports[i].reportId;
-                temp.name = data.reports[i].reportName;
-                temp.time = data.reports[i].createTime;
-                for (let j = 0; j < data.reports[i].keyWord.length; j++) {
-                  let k = data.reports[i].keyWord[j].word;
-                  temp.tag.push(k);
-                }
-                alert(temp)
-                this.tableData.push(temp);
-
+            console.log(data);
+            for (let i = 0; i < data.reports.length; i++) {
+              let temp = {
+                id: '',
+                name: '',
+                time: '',
+                tag: [],
+              };
+              temp.id = data.reports[i].reportId;
+              temp.name = data.reports[i].reportName;
+              temp.time = data.reports[i].createTime;
+              for (let j = 0; j < data.reports[i].keyWord.length; j++) {
+                let k = data.reports[i].keyWord[j].word;
+                temp.tag.push(k);
               }
+              alert(temp)
+              this.tableData.push(temp);
+
+            }
 
           }
         )
