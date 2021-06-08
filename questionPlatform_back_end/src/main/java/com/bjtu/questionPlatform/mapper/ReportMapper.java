@@ -38,7 +38,7 @@ public interface ReportMapper {
     List<Judgement> selectJudgementByJudgementId(String judgementid);
 
     @Insert("insert into report (reportId,ID,reportPath,reportTime,reportName) "+
-            "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName})")
+            "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName},#{reportName})")
     void upload(Report report);
 
     @Select("select ReportId from expertReport where ExpertName = #{ExpertName} and finish=#{finish}")
@@ -56,8 +56,8 @@ public interface ReportMapper {
     List<KeyWord> getAllKeyWords();
 
 
-    @Insert("insert into report (reportId,ID,reportPath,reportTime,reportName) "+
-            "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName})")
+    @Insert("insert into report (reportId,ID,reportPath,reportTime,reportName,reportStatus) "+
+            "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName},#{reportStatus})")
     void createReport(Report report);
 
     @Insert("insert into keyWord (keysId,reportId,keysContent,keysTime) "+
@@ -72,5 +72,10 @@ public interface ReportMapper {
 
     @Select("select * from expertReport where reportId=#{reportId} and finish=#{finish}")
     List<ExpertReport> getExpertReport(String reportId,int finish);
+
+    @Update("update report set reportStatus= #{reportStatus} where reportId= #{reportId}")
+    void updateStatus(Report report);
+
+
 
 }
