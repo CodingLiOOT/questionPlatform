@@ -38,4 +38,9 @@ public interface ExpertMapper {
     @Select("select * from keyword")
     List<KeyWord> getAllKeys();
 
+    @Insert("insert into expertReport (expertName,reportId,finish) "+
+            "values (#{expertName},#{reportId},0")
+        //插入的专家类型暂时没想好咋写
+    void inviteExpert(String expertName,String reportId);
+
 }

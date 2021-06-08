@@ -99,8 +99,4 @@ public class ReportServiceImpl implements ReportService {
     public List<ExpertReport> getExpertReport(String reportId,int finish) {
         return reportMapper.getExpertReport(reportId,finish);
     }
-
-    public void updateStatus(Report report){
-        reportMapper.updateStatus(report);
-    }
 }

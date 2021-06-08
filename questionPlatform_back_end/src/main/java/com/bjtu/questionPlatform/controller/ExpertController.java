@@ -1,6 +1,5 @@
 package com.bjtu.questionPlatform.controller;
 
-<<<<<<< HEAD
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -8,14 +7,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.bjtu.questionPlatform.entity.*;
 import com.bjtu.questionPlatform.service.*;
 
-=======
-import com.bjtu.questionPlatform.entity.Expert;
-import com.bjtu.questionPlatform.entity.User;
-import com.bjtu.questionPlatform.service.ExpertService;
-import com.bjtu.questionPlatform.service.MailService;
-import com.bjtu.questionPlatform.service.UserService;
-import com.bjtu.questionPlatform.utils.InviteCodeUtils.InviteCodeUtils;
->>>>>>> 0ce68d9 (feat: 邀请专家和专家登录)
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +28,6 @@ public class ExpertController {
     @Autowired
     private JudgementService judgementService;
     @Autowired
-<<<<<<< HEAD
     private ScoreService scoreService;
     @Autowired
     private ExpertService expertService;
@@ -67,7 +57,7 @@ public class ExpertController {
 
         Report r=reportService.selectReportById(report.getReportId());
         // 获取报告pdf内容
-        String url="http://localhost:8090/static/"+r.getReportPath();
+        String url="localhost:8090/static/"+r.getReportPath();
         // 获取该报告的jclass
         JudgeClass judgeClass= judgementService.getjClass(r.getjClassId());
         List<Judgement> j=judgementService.getJudgementByJClassId(r.getjClassId());
@@ -86,7 +76,6 @@ public class ExpertController {
         HashMap<String, Object> data = new HashMap<>();
         data.put("reportPdf",url);
         data.put("jClass",jClass);
-        data.put("reportStatus",r.getReportStatus());
         return data;
     }
 
@@ -119,7 +108,14 @@ public class ExpertController {
         totalScore.setReportId(score.getReportId());
         totalScore.setExpertname(score.getExpertname());
         scoreService.createTotalScore(totalScore);
-
+        // 专家打完分把打分状态改为1
+        reportService.modifyFinishStatus(1,score.getReportId(),score.getExpertname());
+        // 判断是否可以把报告状态改为打分完成
+        // 获取这个报告id和完成状态为0的列表
+        List<ExpertReport>list=reportService.getExpertReport(score.getReportId(),0);
+        if(list.size()==0){
+            reportService.modifyReportStatus(4,score.getReportId());
+        }
     }
 
     @CrossOrigin
@@ -139,7 +135,7 @@ public class ExpertController {
         String suggestion=sc.get(0).getSuggestion();
 
         // 获取报告pdf内容
-        String url="http://localhost:8090/static/"+r.getReportPath();
+        String url="localhost:8090/static/"+r.getReportPath();
         // 获取该报告的jclass
         JudgeClass judgeClass= judgementService.getjClass(r.getjClassId());
         List<Judgement> j=judgementService.getJudgementByJClassId(r.getjClassId());
@@ -162,7 +158,6 @@ public class ExpertController {
             judgement.put("judgeName", j.get(i).getJudgementname());
             judgement.put("judgeContent",j.get(i).getJudgementcontent());
             judgement.put("judgeProportion",j.get(i).getJudgementproportion());
-            System.out.println("s"+s);
             judgement.put("score",s.getScore());
             judgements.add(judgement);
         }
@@ -177,38 +172,39 @@ public class ExpertController {
         data.put("totalScore", totalScore);
         data.put("suggestion",suggestion);
         data.put("keyWords",keyWord);
-        data.put("reportStatus",r.getReportStatus());
 
 
         return data;
 
 
-=======
-    private MailService mailService;
-
-    @Autowired
-    private InviteCodeUtils inviteCodeUtils;
-
-
-    @CrossOrigin
-    @ResponseResultBody
-    @PostMapping(value = "/sendCode")
-    public void sendVerifyCode(@RequestBody String expertName) {
-        String expertCode =inviteCodeUtils.setCode(expertName); // 根据专家姓名发送6位邀请码，有效时间6小时
-        expertService.invite(expertName,"123.com",expertCode);
->>>>>>> 0ce68d9 (feat: 邀请专家和专家登录)
     }
 
 
     @CrossOrigin
     @ResponseResultBody
-    @PostMapping(value = "/getReportList")
+    @PostMapping(value = "/getRatingReportList")
     public HashMap<String, Object> getReportList(@RequestBody Expert expert) {
         List<HashMap<String, Object>> reports = new ArrayList<>();
         List<HashMap<String, Object>> keyWords = new ArrayList<>();
 
         System.out.println(expert.getExpertName());
-        List<String> reportIds=reportService.selectReportIdByExpertName(expert.getExpertName());
+        List<String> reportIds=reportService.selectReportIdByExpertName(expert.getExpertName(),0);
+        return getStringObjectHashMap(reports, keyWords, reportIds);
+    }
+
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/getRatedReportList")
+    public HashMap<String, Object> getRatedReportList(@RequestBody Expert expert) {
+        List<HashMap<String, Object>> reports = new ArrayList<>();
+        List<HashMap<String, Object>> keyWords = new ArrayList<>();
+
+        System.out.println(expert.getExpertName());
+        List<String> reportIds=reportService.selectReportIdByExpertName(expert.getExpertName(),1);
+        return getStringObjectHashMap(reports, keyWords, reportIds);
+    }
+
+    private HashMap<String, Object> getStringObjectHashMap(List<HashMap<String, Object>> reports, List<HashMap<String, Object>> keyWords, List<String> reportIds) {
         for(int i = 0; i <reportIds.size() ; i++) {
             String ReportId;
             ReportId = reportIds.get(i);
@@ -222,6 +218,8 @@ public class ExpertController {
             }
             item.put("reportName", n);
             item.put("createTime", report.getReportTime());
+            item.put("reportStatus", report.getReportStatus());
+
 
             List<KeyWord>w=reportService.selectKeyWordByReportId(ReportId);
             List<HashMap<String, Object>> keyWordsOfTheReport = new ArrayList<>();
@@ -247,36 +245,4 @@ public class ExpertController {
     }
 
 
-
-<<<<<<< HEAD
-=======
-
-    @CrossOrigin
-    @ResponseResultBody
-    @PostMapping(value = "/expertLogin")
-    public HashMap<String, Object> expertLogin(@RequestBody String expertName,@RequestBody String code) {
-        expertService.expertLogin(expertName,code);
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("expert",expertService.selectExpertByExpertName(expertName));
-        return data;
-    }
-
-
-
-//    @CrossOrigin
-//    @ResponseResultBody
-//    @PostMapping(value = "/login")
-//    public HashMap<String, Object> loginExpert(@RequestBody Expert expert) {
-//        HashMap<String, Object> data = new HashMap<>();
-//        data.put("token", userService.userLogin(user));
-//        data.put("user",userService.selectUserByUserName(user.getUsername()));
-//        data.put("type",userService.selectTypeByUserName(user.getUsername()));
-//        return data;
-//    }
-
-
-
-    
-
->>>>>>> 0ce68d9 (feat: 邀请专家和专家登录)
 }

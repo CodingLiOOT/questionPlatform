@@ -1,7 +1,6 @@
 package com.bjtu.questionPlatform.service.impl;
 
 import com.bjtu.questionPlatform.entity.Expert;
-import com.bjtu.questionPlatform.entity.KeyWord;
 import com.bjtu.questionPlatform.entity.Score;
 import com.bjtu.questionPlatform.entity.User;
 import com.bjtu.questionPlatform.mapper.ExpertMapper;
@@ -93,11 +92,6 @@ public class ExpertServiceImpI implements ExpertService {
     }
 
     @Override
-    public List<KeyWord> getAllKeys() {
-        return expertMapper.getAllKeys();
-    }
-
-    @Override
     public void createExpert(Expert expert) {//创建新专家
         expertMapper.createExpert(expert);
     }
@@ -110,7 +104,7 @@ public class ExpertServiceImpI implements ExpertService {
     }
 
     @Override
-    public Score selectScore(String reportId, String judgementId,String expertName){
-        return expertMapper.selectScore(reportId, judgementId,expertName);
+    public Score selectScore(String reportId,String judgementId){
+        return expertMapper.selectScore(reportId, judgementId);
     }
 }
