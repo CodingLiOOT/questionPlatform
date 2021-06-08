@@ -20,4 +20,6 @@ public interface ExpertService {
 
     void expertLogin(String expertName,String code);
 
+    void inviteExpert(String expertName,String reportId);
+
 }

@@ -1,8 +1,10 @@
 package com.bjtu.questionPlatform.controller;
 
 import com.bjtu.questionPlatform.entity.Expert;
+import com.bjtu.questionPlatform.entity.ExpertReport;
 import com.bjtu.questionPlatform.service.ExpertService;
 import com.bjtu.questionPlatform.service.MailService;
+import com.bjtu.questionPlatform.service.ReportService;
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +17,19 @@ public class CompanyController {
     @Autowired
     private ExpertService expertService;
     @Autowired
+    private ReportService reportService;
+    @Autowired
     private MailService mailService;
 
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/inviteExpert")
-    public void sendVerifyCode(@RequestBody Expert expert) {
-        Expert e=expertService.selectExpertByExpertName(expert.getExpertName());
+    public void sendVerifyCode(@RequestBody ExpertReport expertReport) {
+        Expert e=expertService.selectExpertByExpertName(expertReport.getExpertName());
         System.out.println(e.getMail());
         expertService.invite(e,"123.com");
+        expertService.inviteExpert(expertReport.getExpertName(),expertReport.getReportId());
+        reportService.modifyReportStatus(3,expertReport.getReportId());
     }
 
     @CrossOrigin
