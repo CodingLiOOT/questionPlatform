@@ -12,6 +12,7 @@ public interface ReportService {
 
     List<Grade> selectGradesByReportId(String reportId);
 
+    List<TotalScore> selectTotalScoreByReportId(String reportId);
     List<Score> selectScoreByReportId(String reportId);
 
     List<Judgement> selectJudgementByJudgementId(String judgementid);
@@ -32,5 +33,7 @@ public interface ReportService {
 
 
     Report selectReportById(String reportId);
+
+    List<String> selectReportIdByExpertName(String ExpertName);
 
 }

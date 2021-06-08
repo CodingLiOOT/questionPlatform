@@ -42,8 +42,8 @@
       </el-table-column>
 
       <el-table-column
-        prop="information"
-        label="指标">
+        prop="jClassName"
+        label="指标类">
       </el-table-column>
 
       <el-table-column
@@ -51,7 +51,7 @@
         label="操作"
         width="120">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">分配指标</el-button>
+          <el-button @click="handleClick(scope.row)" type="primary" size="small">分配指标类</el-button>
         </template>
       </el-table-column>
 
@@ -69,41 +69,13 @@
 
 <script>
 import {unique} from "webpack-merge";
-
 export default {
   name: "Evaluate",
   data() {
     return {
       currentPage: 1,
       filters: [],
-      tableData: [{
-        id: 1,
-        name: '中石油探井信息资源共享',
-        time: '2016-05-03',
-        tag: ['石油', '井'],
-        information: '未分配',
-      },
-        {
-          id: 2,
-          name: '中石化可研报告',
-          time: '2016-05-03',
-          tag: ['石油', '国家能源'],
-          information: '未分配',
-        },
-        {
-          id: 3,
-          name: '电力信息资源共享',
-          time: '2016-05-03',
-          tag: ['电', '安全'],
-          information: '未分配',
-        },
-        {
-          id: 4,
-          name: '煤矿信息资源共享',
-          time: '2016-05-03',
-          tag: ['煤矿'],
-          information: '未分配',
-        },]
+      tableData: []
     }
   },
   methods: {
@@ -131,6 +103,39 @@ export default {
       }
       return false;
     },
+    getAllReportList() {
+      this.$API.p_getAllReportList()
+        .then(
+          data => {
+            for (let i = 0; i < data.reports.length; i++) {
+              let temp = {
+                id: '',
+                name: '',
+                time: '',
+                tag: [],
+                information: '',
+                jClassName:'',
+              };
+              temp.id = data.reports[i].reportId;
+              temp.name = data.reports[i].reportName;
+              temp.time = data.reports[i].createTime;
+              temp.jClassName=data.reports[i].jClassName;
+              if (temp.jClassName == null) {
+                temp.jClassName = '未分配';
+              }
+              for (let j = 0; j < data.reports[i].keyWord.length; j++) {
+                let k = data.reports[i].keyWord[j].word;
+                temp.tag.push(k);
+              }
+              this.tableData.push(temp);
+            }
+          }
+        )
+        .catch(
+          error => {
+          }
+        )
+    },
     getFilters() {
       for (let item in this.tableData) {
         for (let tag in this.tableData[item].tag) {
@@ -156,11 +161,12 @@ export default {
     },
   },
   mounted() {
+    this.getAllReportList();
     this.getFilters();
+    this.getList();
   }
 }
 </script>
 
 <style scoped>
-
 </style>

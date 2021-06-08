@@ -13,6 +13,7 @@ import ExpertsList from "../components/company/ExpertsList";
 import Edit from "../components/company/Edit";
 import JudgeList from "../components/company/JudgeList";
 import AllocateExpert from "../components/company/AllocateExpert";
+import InviteExpert from "../components/company/InviteExpert";
 
 Vue.use(Router)
 
@@ -111,9 +112,25 @@ const router = new Router({
           component: () => import("../components/company/JudgeList")
         },
         {
+
+          path: 'JudgeList',
+          name: 'JudgeList',
+          component: () => import("../components/company/JudgeList")
+        },
+        {
+          path: 'ShowJudgement',
+          name: 'ShowJudgement',
+          component: () => import("../components/company/ShowJudgement")
+        },
+        {
           path:'AllocateExpert',
           name:'AllocateExpert',
           component:AllocateExpert,
+        },
+        {
+          path:'InviteExpert',
+          name:'InviteExpert',
+          component:InviteExpert,
         }
       ]
     },
@@ -147,7 +164,25 @@ const router = new Router({
           path: 'ExpertHome',
           name: 'ExpertHome',
           component: () => import("../components/expert/ExpertHome"),
-        }
+        },
+        {
+
+          path: 'ExpertToRate',
+          name: 'ExpertToRate',
+          component: () => import("../components/expert/ExpertToRate"),
+        },
+
+        {
+          path: 'ShowScoreDetails',
+          name: 'ShowScoreDetails',
+          component: () => import("../components/expert/ShowScoreDetails"),
+        },
+        {
+          path: 'EditScore',
+          name: 'EditScore',
+          component: () => import("../components/expert/EditScore"),
+        },
+
       ]
     },
   ],

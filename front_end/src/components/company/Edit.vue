@@ -2,7 +2,7 @@
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/Company/Evaluate' }">报告列表</el-breadcrumb-item>
-      <el-breadcrumb-item>分配指标</el-breadcrumb-item>
+      <el-breadcrumb-item>分配指标类</el-breadcrumb-item>
     </el-breadcrumb>
     <br/>
     <el-table
@@ -11,32 +11,26 @@
       style="width: 100%;height: 100%">
       <el-table-column
         prop="id"
-        label="指标编号"
+        label="指标类编号"
         width="100">
       </el-table-column>
 
       <el-table-column
         prop="name"
-        label="指标名称"
-        width="200">
+        label="指标类名称"
+        width="300">
       </el-table-column>
 
       <el-table-column
-        prop="content"
-        label="指标内容"
-        width="350">
-      </el-table-column>
-
-      <el-table-column
-        prop="proportion"
-        label="指标权重"
-        width="100">
+        prop="time"
+        label="创建时间"
+        width="300">
       </el-table-column>
 
       <el-table-column
         prop="managerId"
         label="管理者编号"
-        width="120">
+        width="150">
       </el-table-column>
 
       <el-table-column
@@ -66,27 +60,7 @@ export default {
     return {
       currentPage: 1,
       filters: [],
-      judgeListData: [{
-        id: 1,
-        name: '架构模式',
-        content: '评价该项目的架构模式，由差到好划分为1~5分',
-        proportion: 3,
-        managerId: 9791
-      },
-        {
-          id: 2,
-          name: '设计模式',
-          content: '评价该项目的架构模式，由差到好划分为1~5分',
-          proportion: 2,
-          managerId: 2871
-        },
-        {
-          id: 3,
-          name: '算法的选择',
-          content: '评价该项目的架构模式，由差到好划分为1~5分',
-          proportion: 5,
-          managerId: 7890
-        }],
+      judgeListData: [],
       form: {
         name: '',
         content: '',
@@ -96,7 +70,37 @@ export default {
       activeName: 'show'
     }
   },
+  mounted() {
+    this.getFilters();
+    this.getList()
+  },
   methods: {
+    getList() {
+      this.$API.g_getJClassList({})
+        .then(
+          data => {
+            for (let i = 0; i < data.jClass.length; i++) {
+              let temp = {
+                id: '',
+                name: '',
+                time: '',
+                managerId: ''
+              };
+              temp.id = data.jClass[i].jClassId;
+              temp.name = data.jClass[i].jClassName;
+              temp.time = data.jClass[i].jClassTime;
+              temp.managerId = data.jClass[i].managerId;
+
+              this.judgeListData.push(temp);
+            }
+          }
+        )
+        .catch(
+          error => {
+            console.log(error);
+          }
+        )
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
@@ -134,9 +138,7 @@ export default {
       }
       this.filters = array;
     },
-    mounted() {
-      this.getFilters();
-    },
+
     onSubmit() {
       console.log("send judgement");
     },
@@ -144,10 +146,9 @@ export default {
       let reportId = this.UrlSearch();
       this.$API.p_allocateJudgement({
         reportId: reportId,
-        judgementId: row.id,
+        jClassId: row.id+"",
       })
         .then(
-
         )
         .catch(
           error => {
