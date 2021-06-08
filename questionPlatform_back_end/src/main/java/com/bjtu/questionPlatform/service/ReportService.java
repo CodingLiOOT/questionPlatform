@@ -36,4 +36,6 @@ public interface ReportService {
 
     List<String> selectReportIdByExpertName(String ExpertName);
 
+    void updateStatus(Report report);
+
 }
