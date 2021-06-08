@@ -6,6 +6,7 @@ import com.bjtu.questionPlatform.entity.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public interface ReportMapper {
     List<Judgement> selectJudgementByJudgementId(String judgementid);
 
     @Insert("insert into report (reportId,ID,reportPath,reportTime,reportName) "+
-            "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName})")
+            "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName},#{reportName})")
     void upload(Report report);
 
     @Select("select ReportId from Score where ExpertName = #{ExpertName}")
@@ -55,12 +56,16 @@ public interface ReportMapper {
     List<KeyWord> getAllKeyWords();
 
 
-    @Insert("insert into report (reportId,ID,reportPath,reportTime,reportName) "+
-            "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName})")
+    @Insert("insert into report (reportId,ID,reportPath,reportTime,reportName,reportStatus) "+
+            "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName},#{reportStatus})")
     void createReport(Report report);
 
     @Insert("insert into keyWord (keysId,reportId,keysContent,keysTime) "+
             "values (#{keysId},#{reportId},#{keysContent},NOW())")
     void createKey(KeyWord keyWord);
+
+    @Update("update report set reportStatus= #{reportStatus} where reportId= #{reportId}")
+    void updateStatus(Report report);
+
 
 }

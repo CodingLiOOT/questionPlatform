@@ -88,6 +88,7 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
                 r.setID(u.getID());
                 r.setReportId(reportId+"");
                 r.setReportName(oldName);
+                r.setReportStatus("1");
                 reportService.createReport(r);
 
                 for(int i=0;i<jsonArray.size();i++){
@@ -122,6 +123,8 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
             String ReportId;
             ReportId = reportlist.get(i).getReportId();
             item.put("reportId", ReportId);
+            String Status=reportlist.get(i).getReportStatus();
+            item.put("reportStatus",Status);
             String n=reportlist.get(i).getReportName();
             int dot = n.lastIndexOf('.');
             if ((dot >-1) && (dot < (n.length()))) {
@@ -164,6 +167,7 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
 
         System.out.println("获取某一报告"+report.getReportId());
 
+
         List<KeyWord>w=reportService.selectKeyWordByReportId(report.getReportId());
         for (int i = 0; i < w.size(); i++) {
             HashMap<String, Object> word = new HashMap<>();
@@ -202,6 +206,9 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         data.put("judgement", judgement);
 
         data.put("file",url);
+
+        String Status= rpt.getReportStatus();
+        data.put("reportStatus",Status);
 
         return data;
     }

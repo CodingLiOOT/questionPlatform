@@ -84,4 +84,8 @@ public class ReportServiceImpl implements ReportService {
     public List<String> selectReportIdByExpertName(String ExpertName) {
         return reportMapper.selectReportIdByExpertName(ExpertName);
     }
+
+    public void updateStatus(Report report){
+        reportMapper.updateStatus(report);
+    }
 }
