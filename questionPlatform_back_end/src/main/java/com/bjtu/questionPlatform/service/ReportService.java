@@ -42,4 +42,6 @@ public interface ReportService {
 
     List<ExpertReport> getExpertReport(String reportId,int finish);
 
+    void updateStatus(Report report);
+
 }
