@@ -108,7 +108,14 @@ public class ExpertController {
         totalScore.setReportId(score.getReportId());
         totalScore.setExpertname(score.getExpertname());
         scoreService.createTotalScore(totalScore);
-
+        // 专家打完分把打分状态改为1
+        reportService.modifyFinishStatus(1,score.getReportId(),score.getExpertname());
+        // 判断是否可以把报告状态改为打分完成
+        // 获取这个报告id和完成状态为0的列表
+        List<ExpertReport>list=reportService.getExpertReport(score.getReportId(),0);
+        if(list.size()==0){
+            reportService.modifyReportStatus(4,score.getReportId());
+        }
     }
 
     @CrossOrigin
@@ -175,13 +182,29 @@ public class ExpertController {
 
     @CrossOrigin
     @ResponseResultBody
-    @PostMapping(value = "/getReportList")
+    @PostMapping(value = "/getRatingReportList")
     public HashMap<String, Object> getReportList(@RequestBody Expert expert) {
         List<HashMap<String, Object>> reports = new ArrayList<>();
         List<HashMap<String, Object>> keyWords = new ArrayList<>();
 
         System.out.println(expert.getExpertName());
-        List<String> reportIds=reportService.selectReportIdByExpertName(expert.getExpertName());
+        List<String> reportIds=reportService.selectReportIdByExpertName(expert.getExpertName(),0);
+        return getStringObjectHashMap(reports, keyWords, reportIds);
+    }
+
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/getRatedReportList")
+    public HashMap<String, Object> getRatedReportList(@RequestBody Expert expert) {
+        List<HashMap<String, Object>> reports = new ArrayList<>();
+        List<HashMap<String, Object>> keyWords = new ArrayList<>();
+
+        System.out.println(expert.getExpertName());
+        List<String> reportIds=reportService.selectReportIdByExpertName(expert.getExpertName(),1);
+        return getStringObjectHashMap(reports, keyWords, reportIds);
+    }
+
+    private HashMap<String, Object> getStringObjectHashMap(List<HashMap<String, Object>> reports, List<HashMap<String, Object>> keyWords, List<String> reportIds) {
         for(int i = 0; i <reportIds.size() ; i++) {
             String ReportId;
             ReportId = reportIds.get(i);
@@ -195,6 +218,8 @@ public class ExpertController {
             }
             item.put("reportName", n);
             item.put("createTime", report.getReportTime());
+            item.put("reportStatus", report.getReportStatus());
+
 
             List<KeyWord>w=reportService.selectKeyWordByReportId(ReportId);
             List<HashMap<String, Object>> keyWordsOfTheReport = new ArrayList<>();
@@ -218,7 +243,6 @@ public class ExpertController {
         data.put("keyWords", keyWords);
         return data;
     }
-
 
 
 }

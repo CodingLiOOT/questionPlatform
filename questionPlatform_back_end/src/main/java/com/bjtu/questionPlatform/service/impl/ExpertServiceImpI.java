@@ -87,6 +87,11 @@ public class ExpertServiceImpI implements ExpertService {
     }
 
     @Override
+    public void inviteExpert(String expertName, String reportId) {
+        expertMapper.inviteExpert(expertName,reportId);
+    }
+
+    @Override
     public void createExpert(Expert expert) {//创建新专家
         expertMapper.createExpert(expert);
     }
