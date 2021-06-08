@@ -171,7 +171,7 @@ const router = new Router({
           name: 'ExpertToRate',
           component: () => import("../components/expert/ExpertToRate"),
         },
-                        
+
         {
           path: 'ShowScoreDetails',
           name: 'ShowScoreDetails',

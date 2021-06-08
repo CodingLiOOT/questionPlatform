@@ -13,6 +13,7 @@
               </el-form-item>
               <router-link to="/forget">忘记密码</router-link>
               <router-link to="/register">注册账号</router-link>
+              <router-link to="/expertInvitation">专家入口</router-link>
               <el-form-item>
                 <el-button class="login-btn-submit" type="primary" @click="login()">登录</el-button>
               </el-form-item>

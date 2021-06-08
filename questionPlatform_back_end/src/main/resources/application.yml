@@ -10,11 +10,18 @@ spring:
     default-encoding: utf-8
   datasource:
     #    url: jdbc:mysql://39.107.205.151:3306/fwwb_dataset?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: root
+#    url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#    username: root
+#    #输入自己的账户密码
+#    password: 78089091
+#      url: jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#      username: root
+#      #输入自己的账户密码
+#      password: 78089091
+    url: jdbc:mysql://rm-bp1ef7p1kjz58v31fzo.mysql.rds.aliyuncs.com:3306/db123?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: tzy
     #输入自己的账户密码
-    password: 78089091
-
+    password: 990223tzyTZY
     driver-class-name: com.mysql.cj.jdbc.Driver
   web:
     resources:
@@ -25,6 +32,7 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.bjtu.questionPlatform.entity
 logging:
+#  config:  F:\new\questionPlatform\questionPlatform_back_end\src\main\resources\log4j2-spring.xml
   config: ./src/main/resources/log4j2-spring.xml
   level:
     cn.jay.repository: trace
