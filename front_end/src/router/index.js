@@ -15,7 +15,6 @@ import JudgeList from "../components/company/JudgeList";
 import AllocateExpert from "../components/company/AllocateExpert";
 import InviteExpert from "../components/company/InviteExpert";
 
-
 Vue.use(Router)
 
 /**
@@ -119,11 +118,6 @@ const router = new Router({
           component: () => import("../components/company/JudgeList")
         },
         {
-          path:'AllocateExpert',
-          name:'AllocateExpert',
-          component:AllocateExpert,
-        },
-        {
           path: 'ShowJudgement',
           name: 'ShowJudgement',
           component: () => import("../components/company/ShowJudgement")
@@ -134,8 +128,8 @@ const router = new Router({
           component:AllocateExpert,
         },
         {
-          path:'Invite',
-          name:'Invite',
+          path:'InviteExpert',
+          name:'InviteExpert',
           component:InviteExpert,
         }
       ]
