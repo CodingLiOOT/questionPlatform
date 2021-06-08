@@ -6,6 +6,7 @@ import com.bjtu.questionPlatform.entity.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -40,8 +41,8 @@ public interface ReportMapper {
             "values (#{reportId},#{ID},#{reportPath},NOW(),#{reportName})")
     void upload(Report report);
 
-    @Select("select ReportId from Score where ExpertName = #{ExpertName}")
-    List<String> selectReportIdByExpertName(String ExpertName);
+    @Select("select ReportId from expertReport where ExpertName = #{ExpertName} and finish=#{finish}")
+    List<String> selectReportIdByExpertName(String ExpertName,int finish);
 
     // 不用了
     @Select("select * from report where username = #{username}")
@@ -62,5 +63,14 @@ public interface ReportMapper {
     @Insert("insert into keyWord (keysId,reportId,keysContent,keysTime) "+
             "values (#{keysId},#{reportId},#{keysContent},NOW())")
     void createKey(KeyWord keyWord);
+
+    @Update("update report set reportStatus=#{reportStatus} where reportId=#{reportId}")
+    void modifyReportStatus(int reportStatus,String reportId);
+
+    @Update("update expertReport set finish=#{finish} where reportId=#{reportId} and expertName=#{expertName}")
+    void modifyFinishStatus(int finish,String reportId,String expertName);
+
+    @Select("select * from expertReport where reportId=#{reportId} and finish=#{finish}")
+    List<ExpertReport> getExpertReport(String reportId,int finish);
 
 }

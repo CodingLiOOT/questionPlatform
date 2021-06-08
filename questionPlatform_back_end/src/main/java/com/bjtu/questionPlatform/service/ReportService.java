@@ -34,6 +34,12 @@ public interface ReportService {
 
     Report selectReportById(String reportId);
 
-    List<String> selectReportIdByExpertName(String ExpertName);
+    List<String> selectReportIdByExpertName(String ExpertName,int finish);
+
+    void modifyReportStatus(int reportStatus,String reportId);
+
+    void modifyFinishStatus(int finish,String reportId,String expertName);
+
+    List<ExpertReport> getExpertReport(String reportId,int finish);
 
 }
