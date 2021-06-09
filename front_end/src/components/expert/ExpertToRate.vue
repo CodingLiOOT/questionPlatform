@@ -109,7 +109,7 @@ export default {
       src:pdf.createLoadingTask({
         url: 'http://localhost:8090/static/try.pdf',
         httpHeaders: {
-          token:this.$store.state.token
+          token:"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjMyNTAyODMsInN1YiI6Ik5hbmN5MTIzIiwiY3JlYXRlZCI6MTYyMzI0Nzg4MzcwNn0.qlIGPbE_yqIWNP6-_OjOPK36AxSTCzrL0cMatml7ocmoeOpByFPXrfV-4cAO2LvA9i4pVLj6jaaTIJRnXr-aQw"
         },
       }),
       pageNum: 1,
@@ -151,9 +151,10 @@ export default {
       .then(
         res => {
           this.src=pdf.createLoadingTask({
-            url: res.file,
+            // url: res.file,
+            url: 'http://localhost:8090/static/try.pdf',
             httpHeaders: {
-              token:this.$store.state.token
+              token:"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjMyNTAyODMsInN1YiI6Ik5hbmN5MTIzIiwiY3JlYXRlZCI6MTYyMzI0Nzg4MzcwNn0.qlIGPbE_yqIWNP6-_OjOPK36AxSTCzrL0cMatml7ocmoeOpByFPXrfV-4cAO2LvA9i4pVLj6jaaTIJRnXr-aQw"
             },
           })
         }
@@ -202,9 +203,9 @@ export default {
       })
         .then(
           data => {
-            
             this.src=pdf.createLoadingTask({
-              url: data.reportPdf,
+              // url: data.reportPdf,
+              url:'http://localhost:8090/static/try.pdf',
               httpHeaders: {
                 token:this.$store.state.token
               },
@@ -271,7 +272,7 @@ export default {
       }
       this.$API.p_sendScores({
         reportId: str,
-        expertname: '李一',
+        expertname: this.$store.state.expert.expertName,
         judgeWithScore: JSON.stringify(this.scores),
         totalScore: this.count(),
         suggestion: this.RateForm.suggestArea

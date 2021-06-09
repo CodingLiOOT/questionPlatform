@@ -28,6 +28,8 @@ public class CompanyController {
         Expert e=expertService.selectExpertByExpertName(expertReport.getExpertName());
         System.out.println(e.getMail());
         expertService.invite(e,"123.com");
+        System.out.println(expertReport.getExpertName());
+        System.out.println(expertReport.getReportId());
         expertService.inviteExpert(expertReport.getExpertName(),expertReport.getReportId());
         reportService.modifyReportStatus(3,expertReport.getReportId());
     }

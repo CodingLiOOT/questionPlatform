@@ -6,7 +6,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state:{
     user:undefined,
-    token:undefined
+    token:undefined,
+    expert:undefined,
   },
   mutations:{
     login(state,payload){
@@ -14,6 +15,12 @@ const store = new Vuex.Store({
       state.token=payload.token;
       sessionStorage.token = payload.token;
       sessionStorage.user=payload.user;
+    },
+    expertLogin(state,payload){
+      state.expert=payload.expert;
+      state.token=payload.token;
+      sessionStorage.token = payload.token;
+      sessionStorage.expert=payload.expert;
     },
     logout(state){
       state.user=undefined;

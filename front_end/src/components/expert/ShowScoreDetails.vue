@@ -22,27 +22,27 @@
           <el-row class="el-row">
             <el-card shadow="hover">
               <el-row class="expertDetails">
-                <el-col :span="6">
+                <el-col>
                   专家打分情况
                 </el-col>
               </el-row>
               <el-row class="expertDetails">
-                <el-col :span="6">
+                <el-col>
                   总体打分：{{ this.totalScore }}
                 </el-col>
               </el-row>
               <el-row class="expertDetails">
-                <el-col :span="6">
+                <el-col>
                   指标打分：
                 </el-col>
               </el-row>
               <el-row class="expertDetails">
-                <el-col :span="6">
+                <el-col>
                   指标类名称：{{ this.jClass.jClassName }}
                 </el-col>
               </el-row>
               <el-row v-for="j in  this.jClass.judgement" :key="j" class="expertDetails">
-                <el-col :span="6">
+                <el-col>
                   指标名称：{{ j.judgementName }}<br/>
                   指标内容：{{ j.judgeContent }}<br/>
                   指标权重：{{ j.judgeProportion }}<br/>
@@ -50,7 +50,7 @@
                 </el-col>
               </el-row>
               <el-row class="expertDetails">
-                <el-col :span="6">
+                <el-col>
                   专家建议：{{ this.suggestion }}
                 </el-col>
               </el-row>
@@ -93,7 +93,7 @@ export default {
       src: pdf.createLoadingTask({
         url: 'http://localhost:8090/static/try.pdf',
         httpHeaders: {
-          token: this.$store.state.token
+          token:"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjMyNTAyODMsInN1YiI6Ik5hbmN5MTIzIiwiY3JlYXRlZCI6MTYyMzI0Nzg4MzcwNn0.qlIGPbE_yqIWNP6-_OjOPK36AxSTCzrL0cMatml7ocmoeOpByFPXrfV-4cAO2LvA9i4pVLj6jaaTIJRnXr-aQw"
         },
       }),
       pageNum: 1,
@@ -120,6 +120,7 @@ export default {
       let reportId = this.UrlSearch();
       this.$API.p_getScoreDetails({
         reportId: reportId,
+        expertname: this.$store.state.expert.expertName
       })
         .then(
           res => {

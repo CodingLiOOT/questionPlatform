@@ -76,34 +76,7 @@ export default {
     return {
       currentPage: 1,
       filters: [],
-      tableData: [{
-        id: 1,
-        name: '中石油探井信息资源共享',
-        time: '2016-05-03',
-        status: '未分配指标',
-        tag: ['石油', '井'],
-      },
-        {
-          id: 2,
-          name: '中石化可研报告',
-          time: '2016-05-03',
-          status: '已分配指标',
-          tag: ['石油', '国家能源'],
-        },
-        {
-          id: 3,
-          name: '电力信息资源共享',
-          time: '2016-05-03',
-          status: '已分配指标',
-          tag: ['电', '安全'],
-        },
-        {
-          id: 4,
-          name: '煤矿信息资源共享',
-          time: '2016-05-03',
-          status: '未评分',
-          tag: ['煤矿'],
-        },]
+      tableData: []
     }
   },
   methods: {
@@ -146,7 +119,10 @@ export default {
     },
     //获取已打分报告列表
     getList() {
-      this.$API.p_getRatedReportList()
+      // alert(this.$store.state.expert.expertName)
+      this.$API.p_getRatedReportList({
+        expertName: this.$store.state.expert.expertName
+      })
         .then(
           data => {
             for (let i = 0; i < data.reports.length; i++) {
@@ -159,25 +135,24 @@ export default {
               };
               temp.id = data.reports[i].reportId;
               temp.name = data.reports[i].reportName;
-              for (let j = 0; j < data.reports[i].reportkeyWord.length; j++) {
-                let k = data.reports[i].reportkeyWord[j].word;
+              for (let j = 0; j < data.keyWords.length; j++) {
+                let k = data.keyWords[j].word;
                 temp.tag.push(k);
               }
-              temp.time = data.reports[i].time;
-
-              let reStatus = data.reports[i].reportStatus;
+              temp.time = data.reports[i].createTime;
+              let reStatus = parseInt(data.reports[i].reportStatus);
               switch (reStatus){
                 case 1:
                   temp.status = '待分配指标类';
                   break;
                 case 2:
-                  temp.status = '待分配指标类';
+                  temp.status = '待分配专家';
                   break;
                 case 3:
-                  temp.status = '待分配指标类';
+                  temp.status = '专家待打分';
                   break;
                 case 4:
-                  temp.status = '待分配指标类';
+                  temp.status = '已完成打分';
                   break;
                 default:
                   temp.status = '无';

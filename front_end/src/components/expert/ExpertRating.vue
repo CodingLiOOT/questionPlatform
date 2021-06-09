@@ -46,7 +46,7 @@
         fixed="right"
         label="操作">
         <template slot-scope="scope">
-          <el-button type="text" size="small" style="color: red">打分</el-button>
+          <el-button @click="giveGrade(scope.row)" type="text" size="small" style="color: red">打分</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -70,34 +70,7 @@ export default {
     return {
       currentPage: 1,
       filters: [],
-      tableData: [{
-        id: 1,
-        name: '中石油探井信息资源共享',
-        time: '2016-05-03',
-        status: '未分配指标',
-        tag: ['石油', '井'],
-      },
-        {
-          id: 2,
-          name: '中石化可研报告',
-          time: '2016-05-03',
-          status: '已分配指标',
-          tag: ['石油', '国家能源'],
-        },
-        {
-          id: 3,
-          name: '电力信息资源共享',
-          time: '2016-05-03',
-          status: '已分配指标',
-          tag: ['电', '安全'],
-        },
-        {
-          id: 4,
-          name: '煤矿信息资源共享',
-          time: '2016-05-03',
-          status: '未评分',
-          tag: ['煤矿'],
-        },]
+      tableData: []
     }
   },
   methods: {
@@ -117,6 +90,15 @@ export default {
         }
       });
     },
+    giveGrade(row) {
+      console.log(row);
+      this.$router.push({
+        path: 'ExpertToRate',
+        query: {
+          id: row.id,
+        }
+      });
+    },
     filterTag(value, row) {
       for (let item in row.tag) {
         if (row.tag[item] === value) {
@@ -126,42 +108,6 @@ export default {
       return false;
     },
     //获取待打分列表
-    /**
-    getReportList() {
-      this.$API.g_getReportList({
-        expertName:'sd'
-      })
-        .then(
-          data => {
-            console.log(data);
-            for (let i = 0; i < data.reports.length; i++) {
-              let temp = {
-                id: '',
-                name: '',
-                time: '',
-                tag: [],
-              };
-              temp.id = data.reports[i].reportId;
-              temp.name = data.reports[i].reportName;
-              temp.time = data.reports[i].createTime;
-              for (let j = 0; j < data.reports[i].keyWord.length; j++) {
-                let k = data.reports[i].keyWord[j].word;
-                temp.tag.push(k);
-              }
-              alert(temp)
-              this.tableData.push(temp);
-
-            }
-
-          }
-        )
-        .catch(
-          error => {
-            console.log(error);
-          }
-        )
-    },
-     */
     getFilters() {
       for (let item in this.tableData) {
         for (let tag in this.tableData[item].tag) {
@@ -187,7 +133,11 @@ export default {
     },
     //获取已打分报告列表
     getList() {
-      this.$API.p_getRatedReportList()
+      // alert(this.$store.state.expert.expertName)
+      this.$API.p_getRatingReportList({
+        // expertName:this.$route.query.expertName
+        expertName:this.$store.state.expert.expertName
+      })
         .then(
           data => {
             for (let i = 0; i < data.reports.length; i++) {
@@ -200,25 +150,24 @@ export default {
               };
               temp.id = data.reports[i].reportId;
               temp.name = data.reports[i].reportName;
-              for (let j = 0; j < data.reports[i].reportkeyWord.length; j++) {
-                let k = data.reports[i].reportkeyWord[j].word;
+              for (let j = 0; j < data.keyWords.length; j++) {
+                let k = data.keyWords[j].word;
                 temp.tag.push(k);
               }
-              temp.time = data.reports[i].time;
-
-              let reStatus = data.reports[i].reportStatus;
+              temp.time = data.reports[i].createTime;
+              let reStatus = parseInt(data.reports[i].reportStatus);
               switch (reStatus){
                 case 1:
                   temp.status = '待分配指标类';
                   break;
                 case 2:
-                  temp.status = '待分配指标类';
+                  temp.status = '待分配专家';
                   break;
                 case 3:
-                  temp.status = '待分配指标类';
+                  temp.status = '专家待打分';
                   break;
                 case 4:
-                  temp.status = '待分配指标类';
+                  temp.status = '已完成打分';
                   break;
                 default:
                   temp.status = '无';
