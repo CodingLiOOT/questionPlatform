@@ -6,6 +6,14 @@
     </el-breadcrumb>
     <br/>
     <el-row>
+      <el-steps :active="active" finish-status="success">
+        <el-step title="报告已上传"></el-step>
+        <el-step title="已分配指标类"></el-step>
+        <el-step title="已分配专家"></el-step>
+        <el-step title="已完成打分"></el-step>
+      </el-steps>
+    </el-row>
+    <el-row>
       <el-col :span="12">
         <el-card shadow="hover">
           <el-row>
@@ -89,6 +97,7 @@ export default {
   name: "ShowScoreDetails",
   data() {
     return {
+      active:'',
       id: '',
       src: pdf.createLoadingTask({
         url: 'http://localhost:8090/static/try.pdf',
@@ -124,6 +133,7 @@ export default {
       })
         .then(
           res => {
+            this.active=res.reportStatus;
             // this.src = pdf.createLoadingTask({
             //   url: res.file,
             //   httpHeaders: {

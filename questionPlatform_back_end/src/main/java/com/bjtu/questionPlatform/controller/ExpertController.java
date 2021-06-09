@@ -85,6 +85,7 @@ public class ExpertController {
         HashMap<String, Object> data = new HashMap<>();
         data.put("reportPdf",url);
         data.put("jClass",jClass);
+        data.put("reportStatus",r.getReportStatus());
         return data;
     }
 
@@ -186,6 +187,7 @@ public class ExpertController {
         data.put("totalScore", totalScore);
         data.put("suggestion",suggestion);
         data.put("keyWords",keyWord);
+        data.put("reportStatus",r.getReportStatus());
 
 
         return data;
