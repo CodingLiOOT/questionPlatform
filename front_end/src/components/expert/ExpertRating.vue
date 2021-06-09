@@ -33,6 +33,10 @@
         label="创建时间">
       </el-table-column>
       <el-table-column
+        prop="status"
+        label="状态">
+      </el-table-column>
+      <el-table-column
         label="详细信息">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
@@ -70,24 +74,28 @@ export default {
         id: 1,
         name: '中石油探井信息资源共享',
         time: '2016-05-03',
+        status: '未分配指标',
         tag: ['石油', '井'],
       },
         {
           id: 2,
           name: '中石化可研报告',
           time: '2016-05-03',
+          status: '已分配指标',
           tag: ['石油', '国家能源'],
         },
         {
           id: 3,
           name: '电力信息资源共享',
           time: '2016-05-03',
+          status: '已分配指标',
           tag: ['电', '安全'],
         },
         {
           id: 4,
           name: '煤矿信息资源共享',
           time: '2016-05-03',
+          status: '未评分',
           tag: ['煤矿'],
         },]
     }
@@ -118,6 +126,7 @@ export default {
       return false;
     },
     //获取待打分列表
+    /**
     getReportList() {
       this.$API.g_getReportList({
         expertName:'sd'
@@ -152,6 +161,7 @@ export default {
           }
         )
     },
+     */
     getFilters() {
       for (let item in this.tableData) {
         for (let tag in this.tableData[item].tag) {
@@ -175,9 +185,60 @@ export default {
       }
       this.filters = array;
     },
+    //获取已打分报告列表
+    getList() {
+      this.$API.p_getRatedReportList()
+        .then(
+          data => {
+            for (let i = 0; i < data.reports.length; i++) {
+              let temp = {
+                id: '',
+                name: '',
+                tag: [],
+                time: '',
+                status: ''
+              };
+              temp.id = data.reports[i].reportId;
+              temp.name = data.reports[i].reportName;
+              for (let j = 0; j < data.reports[i].reportkeyWord.length; j++) {
+                let k = data.reports[i].reportkeyWord[j].word;
+                temp.tag.push(k);
+              }
+              temp.time = data.reports[i].time;
+
+              let reStatus = data.reports[i].reportStatus;
+              switch (reStatus){
+                case 1:
+                  temp.status = '待分配指标类';
+                  break;
+                case 2:
+                  temp.status = '待分配指标类';
+                  break;
+                case 3:
+                  temp.status = '待分配指标类';
+                  break;
+                case 4:
+                  temp.status = '待分配指标类';
+                  break;
+                default:
+                  temp.status = '无';
+                  break;
+              }
+              this.tableData.push(temp);
+            }
+          }
+        )
+        .catch(
+          error => {
+            console.log(error)
+          }
+        )
+    }
   },
+
   mounted() {
-    this.getReportList();
+    //this.getReportList();
+    this.getList();
     this.getFilters();
   }
 }
