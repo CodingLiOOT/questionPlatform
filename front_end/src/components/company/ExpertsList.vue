@@ -65,27 +65,7 @@ export default {
       currentPage: 1,
       filters:[],
       input: '',
-      tableData: [{
-        name: '张三',
-        keysId: '石油',
-        type: '......',
-        unit: 'xxx公司',
-        information: '......'
-      },
-        {
-          name: '李四',
-          keysId: '教育',
-          type: '......',
-          unit: 'xxx公司',
-          information: '......'
-        },
-        {
-          name: '王五',
-          keysId: '生物',
-          type: '......',
-          unit: 'xxx公司',
-          information: '......'
-        }],
+      tableData: [],
       // form: {
       //   name: '',
       //   keysId: '',

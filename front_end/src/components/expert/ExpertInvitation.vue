@@ -103,6 +103,7 @@ export default {
         })
           .then(
             res => {
+              this.$store.commit('expertLogin', res);
               this.$router.push({
                 path: 'ExpertMainPage/ExpertRating',
                 query: {

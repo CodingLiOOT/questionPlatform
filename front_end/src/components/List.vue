@@ -32,6 +32,10 @@
         label="创建时间">
       </el-table-column>
       <el-table-column
+        prop="status"
+        label="状态">
+      </el-table-column>
+      <el-table-column
         fixed="right"
         label="操作"
         width="100">
@@ -130,6 +134,24 @@ export default {
               for(let j=0;j<data.reports[i].keyWord.length;j++){
                 let k=data.reports[i].keyWord[j].word;
                 temp.tag.push(k);
+              }
+              let reStatus = parseInt(data.reports[i].reportStatus);
+              switch (reStatus){
+                case 1:
+                  temp.status = '待分配指标类';
+                  break;
+                case 2:
+                  temp.status = '待分配专家';
+                  break;
+                case 3:
+                  temp.status = '专家待打分';
+                  break;
+                case 4:
+                  temp.status = '已完成打分';
+                  break;
+                default:
+                  temp.status = '无';
+                  break;
               }
               // if(temp.id===data.reports[i].keyWords.reportId)
               //   temp.tag=data.reports[i].keyWords.word;

@@ -27,11 +27,11 @@ public interface ExpertMapper {
         //插入的专家类型暂时没想好咋写
     void createExpert(Expert expert);
 
-    @Select("select * from score where reportid = #{reportId} and judgementid = #{judgementId}")
-    Score selectScore(String reportId, String judgementId);
+    @Select("select * from score where reportid = #{reportId} and judgementid = #{judgementId} and expertName = #{expertName}")
+    Score selectScore(String reportId, String judgementId,String expertName);
 
     @Insert("insert into expertReport (expertName,reportId,finish) "+
-            "values (#{expertName},#{reportId},0")
+            "values (#{expertName},#{reportId},0)")
         //插入的专家类型暂时没想好咋写
     void inviteExpert(String expertName,String reportId);
 

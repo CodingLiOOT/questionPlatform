@@ -47,12 +47,7 @@ export default class api {
 
   static p_testUpload=p=>post('/file/upload',p);
 
-  /**
-   * 邀请码接口，发送专家邀请码到后端
-   * @param {Object} p [发送的参数]
-   * @returns {Promise<unknown>}
-   */
-  static p_Invitation=p=>post('/user/invitation',p);
+
 
   /**
    * 指标类列表接口，获取所有指标类
@@ -130,27 +125,6 @@ export default class api {
    * @returns {Promise<unknown>}
    */
   static p_getScoreDetails=p=>post('Expert/getScoreDetails',p);
-
-  /**
-   * 专家登录接口，发送专家信息到后端
-   * @param {Object} p [发送的参数]
-   * @returns {Promise<unknown>}
-   */
-  static p_expertLogin=p=>post('Expert/expertLogin',p);
-
-  /**
-   * 待打分列表接口
-   * @returns {Promise | Promise<unknown>}
-   */
-  static g_getReportList=p=>post('Expert/getReportList',p);
-
-  /**
-   * 专家登录接口，发送专家信息到后端
-   * @param {Object} p [发送的参数]
-   * @returns {Promise<unknown>}
-   */
-  static p_getScoreDetails=p=>post('Expert/getScoreDetails',p);
-
 
   /**
    * 专家登录接口，发送专家信息到后端
@@ -163,19 +137,14 @@ export default class api {
    * 获取所有已打分报告
    * @returns {Promise<unknown>}
    */
-  static p_getRatedReportList= ()=>post('Expert/getRatedReportList',null);
+  static p_getRatedReportList=p=>post('Expert/getRatedReportList',p);
 
   /**
    * 获取所有未打分报告
    * @returns {Promise<unknown>}
    */
-  static p_getRatingReportList= ()=>post('Expert/getRatingReportList',null);
-  /**
-   * 获取报告详情接口，发送报告关键词，打分情况到前端
-   * @param {Object} p [发送的参数：报告编号]
-   * @returns {Promise<unknown>}
-   */
-  static p_getReportDetail=p=>post('/file/getReport',p);
+  static p_getRatingReportList=p=>post('Expert/getRatingReportList',p);
+
 
   /**
    * 查看列表接口，发送当前用户名，返回列表报告
@@ -185,114 +154,5 @@ export default class api {
   static p_getList=p=>post('/file/getList',p);
 
   static p_testUpload=p=>post('/file/upload',p);
-
-  /**
-   * 邀请码接口，发送专家邀请码到后端
-   * @param {Object} p [发送的参数]
-   * @returns {Promise<unknown>}
-   */
-  static p_Invitation=p=>post('/user/invitation',p);
-
-  /**
-   * 指标类列表接口，获取所有指标类
-   * @returns {Promise<unknown>}
-   */
-  static g_getJClassList=p=>post('judgement/getJClassList',p);
-
-  /**
-   * 查看某一指标类接口，查看一个指标类
-   * @param {Object} p [发送的参数]
-   * @returns {Promise<unknown>}
-   */
-  static p_getOneJudgement=p=>post('judgement/getOneJudgement',p);
-
-  /**
-   * 添加指标类接口，将前端的新指标类数据发送到后端
-   * @param {Object} p [发送的参数]
-   * @returns {Promise<unknown>}
-   */
-  static p_newJudgement=p=>post('judgement/newJudgement',p);
-
-  /**
-   * 获取所有报告列表接口，返回报告列表
-   * @returns {Promise<unknown>}
-   */
-  static p_getAllReportList= ()=>post('judgement/getAllReportList',null);
-
-  /**
-   * 分配指标接口，发送报告id和指标id，返回刷新后的报告列表
-   * @param {Object} p [发送的参数]
-   * @returns {Promise<unknown>}
-   */
-
-  static p_allocateJudgement=p=>post('judgement/allocateJudgement',p);
-
-  /**
-   * 专家列表接口，获取专家列表
-   * @returns {Promise<unknown>}
-   */
-  static g_getExpertList=()=>post('judgement/getExpertList',null);
-
-  /**
-
-   * 邀请专家接口，发送被邀请专家姓名、报告编号、关键词、名称
-   * @param {Object} p []
-   * @returns {Promise | Promise<unknown>}
-   */
-  static p_inviteExpert=p=>post('Company/inviteExpert',p);
-
-  /**
-
-   * 专家分配接口，发送报告关键词，获取分配专家
-   * @param {Object} p [发送的参数：报告编号、关键词、名称、创建日期]
-   * @returns {Promise<unknown>}
-   */
-  static p_createExpert=p=>post('Company/createExpert',p);
-
-
-
-  /**
-   * 待打分列表接口
-   * @returns {Promise | Promise<unknown>}
-   */
-  static g_getReportList=p=>post('Expert/getReportList',p);
-
-  /**
-
-   * 获取报告pdf和指标接口，发送报告编号，获取相应pdf文档和指标类
-   * @param {Object} p [发送的参数：报告编号]
-   * @returns {Promise<unknown>}
-   */
-  static p_getOneReport=p=>post('Expert/getOneReport',p);
-
-  /**
-   * 发送报告各项打分情况
-   * @param {Object} p [发送的参数：报告各项指标相应分数]
-   * @returns {Promise<unknown>}
-   */
-  static p_sendScores=p=>post('Expert/sendScores',p);
-
-/**
-   * 专家查看打分详情接口，发送报告编号，获取报告打分的所有信息
-   * @param {Object} p [发送的参数：报告编号]
-   * @returns {Promise<unknown>}
-   */
-  static p_getScoreDetails=p=>post('Expert/getScoreDetails',p);
-
-  /**
-   * 专家登录接口，发送专家信息到后端
-   * @param {Object} p [发送的参数]
-   * @returns {Promise<unknown>}
-   */
-  static p_expertLogin=p=>post('Expert/expertLogin',p);
-
-  /**
-   * 专家登录接口，发送专家信息到后端
-   * @param {Object} p [发送的参数]
-   * @returns {Promise<unknown>}
-   */
-  static p_expertLogin=p=>post('Expert/expertLogin',p);
-
-
 
 }

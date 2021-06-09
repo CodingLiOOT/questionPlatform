@@ -118,6 +118,8 @@ public class ExpertController {
         totalScore.setExpertname(score.getExpertname());
         scoreService.createTotalScore(totalScore);
         // 专家打完分把打分状态改为1
+        System.out.println("haha"+score.getReportId());
+        System.out.println("haha"+score.getExpertname());
         reportService.modifyFinishStatus(1,score.getReportId(),score.getExpertname());
         // 判断是否可以把报告状态改为打分完成
         // 获取这个报告id和完成状态为0的列表
@@ -130,13 +132,13 @@ public class ExpertController {
     @CrossOrigin
     @ResponseResultBody
     @PostMapping(value = "/getScoreDetails")
-    public HashMap<String, Object> getScoreDetails(@RequestBody Report report) {
+    public HashMap<String, Object> getScoreDetails(@RequestBody Score score) {
 
 
         List<HashMap<String, Object>> judgements = new ArrayList<>();
         HashMap<String, Object> jClass = new HashMap<>();
 
-        Report r=reportService.selectReportById(report.getReportId());
+        Report r=reportService.selectReportById(score.getReportId());
 
         //获取打分情况
         List<TotalScore> sc=reportService.selectTotalScoreByReportId(r.getReportId());
@@ -151,7 +153,7 @@ public class ExpertController {
         List<HashMap<String, Object>> keyWord = new ArrayList<>();
 
         //获取关键词
-        List<KeyWord> w=reportService.selectKeyWordByReportId(report.getReportId());
+        List<KeyWord> w=reportService.selectKeyWordByReportId(score.getReportId());
         for (int i = 0; i < w.size(); i++) {
             HashMap<String, Object> word = new HashMap<>();
             word.put("word", w.get(i).getKeysContent());
@@ -162,7 +164,10 @@ public class ExpertController {
         //获取指标详情
         for (int i = 0; i < j.size(); i++) {
             HashMap<String, Object> judgement = new HashMap<>();
-            Score s=expertService.selectScore(report.getReportId(),j.get(i).getJudgementid());
+            System.out.println("score"+score.getReportId());
+            System.out.println("score"+score.getExpertname());
+            System.out.println("score"+j.get(i).getJudgementid());
+            Score s=expertService.selectScore(score.getReportId(),j.get(i).getJudgementid(),score.getExpertname());
             judgement.put("judgeId", j.get(i).getJudgementid());
             judgement.put("judgeName", j.get(i).getJudgementname());
             judgement.put("judgeContent",j.get(i).getJudgementcontent());
@@ -193,13 +198,13 @@ public class ExpertController {
     private InviteCodeUtils inviteCodeUtils;
 
 
-    @CrossOrigin
-    @ResponseResultBody
-    @PostMapping(value = "/sendCode")
-    public void sendVerifyCode(@RequestBody String expertName) {
-        String expertCode =inviteCodeUtils.setCode(expertName); // 根据专家姓名发送6位邀请码，有效时间6小时
-        expertService.invite(expertName,"123.com",expertCode);
-    }
+//    @CrossOrigin
+//    @ResponseResultBody
+//    @PostMapping(value = "/sendCode")
+//    public void sendVerifyCode(@RequestBody String expertName) {
+//        String expertCode =inviteCodeUtils.setCode(expertName); // 根据专家姓名发送6位邀请码，有效时间6小时
+//        expertService.invite(expertName,"123.com",expertCode);
+//    }
 
 
     @CrossOrigin
@@ -265,29 +270,4 @@ public class ExpertController {
         data.put("keyWords", keyWords);
         return data;
     }
-
-
-    @CrossOrigin
-    @ResponseResultBody
-    @PostMapping(value = "/expertLogin")
-    public HashMap<String, Object> expertLogin(@RequestBody String expertName,@RequestBody String code) {
-        expertService.expertLogin(expertName,code);
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("expert",expertService.selectExpertByExpertName(expertName));
-        return data;
-    }
-
-
-
-//    @CrossOrigin
-//    @ResponseResultBody
-//    @PostMapping(value = "/login")
-//    public HashMap<String, Object> loginExpert(@RequestBody Expert expert) {
-//        HashMap<String, Object> data = new HashMap<>();
-//        data.put("token", userService.userLogin(user));
-//        data.put("user",userService.selectUserByUserName(user.getUsername()));
-//        data.put("type",userService.selectTypeByUserName(user.getUsername()));
-//        return data;
-//    }
-
 }
