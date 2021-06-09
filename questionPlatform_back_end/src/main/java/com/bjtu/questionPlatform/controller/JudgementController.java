@@ -55,6 +55,8 @@ public class JudgementController {
         System.out.println(report.getjClassId());
         //report.setJClassId(1+"");
         judgementService.allocateJudge(report);
+        report.setReportStatus("2");
+        reportService.updateStatus(report);
 
     }
 
@@ -166,6 +168,8 @@ public class JudgementController {
             String ReportId;
             ReportId = reportlist.get(i).getReportId();
             item.put("reportId", ReportId);
+            String Status=reportlist.get(i).getReportStatus();
+            item.put("reportStatus", Status);
             String n=reportlist.get(i).getReportName();
             int dot = n.lastIndexOf('.');
             if ((dot >-1) && (dot < (n.length()))) {

@@ -31,6 +31,7 @@ public class Report implements Serializable {
     private MultipartFile file;
     private String reportPath;
     private String jClassId;
+    private String reportStatus;
 
     public String getReportId() {
         return reportId;
@@ -105,4 +106,11 @@ public class Report implements Serializable {
         this.ID = ID;
     }
 
+    public String getReportStatus() {
+        return reportStatus;
+    }
+
+    public void setReportStatus(String reportStatus) {
+        this.reportStatus = reportStatus;
+    }
 }
