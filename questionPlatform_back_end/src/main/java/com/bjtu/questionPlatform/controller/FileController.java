@@ -205,6 +205,9 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         data.put("grades", grades);
         data.put("judgement", judgement);
 
+        Report r=reportService.selectReportById(report.getReportId());
+        data.put("reportStatus",r.getReportStatus());
+
         data.put("file",url);
 
         String Status= rpt.getReportStatus();

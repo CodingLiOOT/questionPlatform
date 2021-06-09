@@ -5,6 +5,14 @@
     <el-breadcrumb-item>打分</el-breadcrumb-item>
   </el-breadcrumb>
   <br/>
+    <el-row>
+      <el-steps :active="active" finish-status="success">
+        <el-step title="报告已上传"></el-step>
+        <el-step title="已分配指标类"></el-step>
+        <el-step title="已分配专家"></el-step>
+        <el-step title="已完成打分"></el-step>
+      </el-steps>
+    </el-row>
   <el-container>
     <el-aside width="400px">
       <el-col :span="12">
@@ -105,6 +113,7 @@ export default {
 
   data() {
     return {
+      active:'',
       id:'',
       src:pdf.createLoadingTask({
         url: 'http://localhost:8090/static/try.pdf',
@@ -203,6 +212,7 @@ export default {
       })
         .then(
           data => {
+            this.active=data.reportStatus;
             this.src=pdf.createLoadingTask({
               // url: data.reportPdf,
               url:'http://localhost:8090/static/try.pdf',
