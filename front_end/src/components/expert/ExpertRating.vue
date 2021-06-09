@@ -99,6 +99,15 @@ export default {
         }
       });
     },
+    giveGrade(row) {
+      console.log(row);
+      this.$router.push({
+        path: 'ExpertToRate',
+        query: {
+          id: row.id,
+        }
+      });
+    },
     filterTag(value, row) {
       for (let item in row.tag) {
         if (row.tag[item] === value) {
