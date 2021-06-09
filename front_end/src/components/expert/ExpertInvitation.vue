@@ -96,27 +96,27 @@ export default {
   methods: {
     submit() {
       this.$refs.InvitationForm.validate((valid) => {
-        // if (valid) {
-          this.$API.p_expertLogin({
-            expertName: this.InvitationForm.expertName,
-            code: this.InvitationForm.code,
-          })
-            .then(
-              res => {
-                this.$router.push({
-                  path: 'ExpertMainPage/ExpertRating',
-                  query: {
-                    expertName: this.InvitationForm.expertName
-                  }
-                })
+        if (valid) {
+        this.$API.p_expertLogin({
+          expertName: this.InvitationForm.expertName,
+          code: this.InvitationForm.code,
+        })
+          .then(
+            res => {
+              this.$router.push({
+                path: 'ExpertMainPage/ExpertRating',
+                query: {
+                  expertName: this.InvitationForm.expertName
+                }
               })
-            .catch(error => {
-              alert('专家信息有误');
-              console.log(error);
-            });
-        // } else {
-        //   return false;
-        // }
+            })
+          .catch(error => {
+            alert('专家信息有误');
+            console.log(error);
+          });
+      } else {
+        return false;
+      }
       })
     },
     //发送邮箱验证码，30秒后重新发送

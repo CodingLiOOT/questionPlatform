@@ -129,8 +129,8 @@ const router = new Router({
           component:AllocateExpert,
         },
         {
-          path:'Invite',
-          name:'Invite',
+          path:'InviteExpert',
+          name:'InviteExpert',
           component:InviteExpert,
         }
       ]

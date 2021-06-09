@@ -34,7 +34,6 @@
         <el-button type="primary" @click="invite">发送邀请码</el-button>
       </el-form-item>
     </el-form>
-  </div>
 </template>
 
 <script>

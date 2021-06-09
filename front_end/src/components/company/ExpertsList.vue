@@ -174,7 +174,7 @@ export default {
     invite(row) {
       console.log(row);
       this.$router.push({
-        path: 'Invite',
+        path: 'InviteExpert',
         query: {
           name: row.name,
         }
