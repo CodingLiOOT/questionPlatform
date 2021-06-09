@@ -22,18 +22,19 @@
       <el-table-column
         prop="type"
         label="专家类型"
-        width="100">
+        width="300">
       </el-table-column>
       <el-table-column
         prop="unit"
         label="所属单位"
-        width="300">
+        width="100">
       </el-table-column>
       <el-table-column
         prop="information"
         label="专家简介"
         width="200">
       </el-table-column>
+
       <el-table-column
         fixed="right"
         label="操作"
@@ -65,6 +66,41 @@ export default {
       filters:[],
       input: '',
       tableData: [],
+      // form: {
+      //   name: '',
+      //   keysId: '',
+      //   type: '',
+      //   unit: '',
+      //   information: ''
+      // },
+      // dataRules: {
+      //   name: [{
+      //     required: true,
+      //     message: '专家姓名不能为空',
+      //     trigger: 'blur'
+      //   }],
+      //   keysId: [{
+      //     required: true,
+      //     message: '专家关键词不能为空',
+      //     trigger: 'blur'
+      //   }],
+      //   type: [{
+      //     required: true,
+      //     message: '专家类型不能为空',
+      //     trigger: 'blur'
+      //   }],
+      //   unit: [{
+      //     required: true,
+      //     message: '所属单位不能为空',
+      //     trigger: 'blur'
+      //   }]
+      //   ,
+      //   information: [{
+      //     required: true,
+      //     message: '专家简介不能为空',
+      //     trigger: 'blur'
+      //   }]
+      // }
     }
   },
   methods: {
@@ -89,32 +125,22 @@ export default {
           data => {
             console.log(data);
             for(let i=0;i<data.experts.length;i++){
-              let keysContent;
-              this.$API.p_getKeyWords({})
-              .then(
-                res=>{
-                  for(let j=0;j<res.keys.length;j++){
-                    if(res.keys[j].keysId===data.experts[i].keysId){
-                      keysContent=res.keys[i].keysContent;
-                      let temp={
-                        name: '',
-                        keysId: '',
-                        type: '',
-                        unit: '',
-                        information: ''
-                      };
-                      temp.name = data.experts[i].expertName;
-                      temp.keysId = keysContent;
-                      temp.type = data.experts[i].expertType;
-                      temp.unit = data.experts[i].expertUnit;
-                      temp.information = data.experts[i].expertInformation;
+              let temp={
+                name: '',
+                keysId: '',
+                type: '',
+                unit: '',
+                information: ''
+              };
+              temp.name = data.experts[i].expertName;
+              temp.keysId = data.experts[i].keysId;
+              temp.type = data.experts[i].expertType;
+              temp.unit = data.experts[i].expertUnit;
+              temp.information = data.experts[i].expertInformation;
 
-                      //this.expertsListData.push(temp);
-                      this.tableData.push(temp);
-                    }
-                  }
-                }
-              )
+              //this.expertsListData.push(temp);
+              this.tableData.push(temp);
+
             }
           }
         )

@@ -6,14 +6,6 @@
     </el-breadcrumb>
     <br/>
     <el-row>
-      <el-steps :active="active" finish-status="success">
-        <el-step title="报告已上传"></el-step>
-        <el-step title="已分配指标类"></el-step>
-        <el-step title="已分配专家"></el-step>
-        <el-step title="已完成打分"></el-step>
-      </el-steps>
-    </el-row>
-    <el-row>
       <el-col :span="12">
         <el-card shadow="hover">
           <el-row>
@@ -97,12 +89,11 @@ export default {
   name: "ShowScoreDetails",
   data() {
     return {
-      active:'',
       id: '',
       src: pdf.createLoadingTask({
         url: 'http://localhost:8090/static/try.pdf',
         httpHeaders: {
-          token:this.$store.state.expert.token
+          token:"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjMyNTAyODMsInN1YiI6Ik5hbmN5MTIzIiwiY3JlYXRlZCI6MTYyMzI0Nzg4MzcwNn0.qlIGPbE_yqIWNP6-_OjOPK36AxSTCzrL0cMatml7ocmoeOpByFPXrfV-4cAO2LvA9i4pVLj6jaaTIJRnXr-aQw"
         },
       }),
       pageNum: 1,
@@ -133,13 +124,12 @@ export default {
       })
         .then(
           res => {
-            this.active=res.reportStatus;
-            this.src = pdf.createLoadingTask({
-              url: res.reportPdf,
-              httpHeaders: {
-                token:this.$store.state.expert.token
-              },
-            })
+            // this.src = pdf.createLoadingTask({
+            //   url: res.file,
+            //   httpHeaders: {
+            //     token: this.$store.state.token
+            //   },
+            // })
             for (let i = 0; i < res.keyWords.length; i++) {
               this.keyWord.push(res.keyWords[i].word);
             }

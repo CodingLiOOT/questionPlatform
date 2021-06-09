@@ -5,14 +5,6 @@
     <el-breadcrumb-item>打分</el-breadcrumb-item>
   </el-breadcrumb>
   <br/>
-    <el-row>
-      <el-steps :active="active" finish-status="success">
-        <el-step title="报告已上传"></el-step>
-        <el-step title="已分配指标类"></el-step>
-        <el-step title="已分配专家"></el-step>
-        <el-step title="已完成打分"></el-step>
-      </el-steps>
-    </el-row>
   <el-container>
     <el-aside width="400px">
       <el-col :span="12">
@@ -113,12 +105,11 @@ export default {
 
   data() {
     return {
-      active:'',
       id:'',
       src:pdf.createLoadingTask({
         url: 'http://localhost:8090/static/try.pdf',
         httpHeaders: {
-          token:this.$store.state.token
+          token:"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjMyNTAyODMsInN1YiI6Ik5hbmN5MTIzIiwiY3JlYXRlZCI6MTYyMzI0Nzg4MzcwNn0.qlIGPbE_yqIWNP6-_OjOPK36AxSTCzrL0cMatml7ocmoeOpByFPXrfV-4cAO2LvA9i4pVLj6jaaTIJRnXr-aQw"
         },
       }),
       pageNum: 1,
@@ -159,12 +150,11 @@ export default {
       })
       .then(
         res => {
-          alert(res.reportPdf)
           this.src=pdf.createLoadingTask({
-            url: res.file,
-            // url: 'http://localhost:8090/static/try.pdf',
+            // url: res.file,
+            url: 'http://localhost:8090/static/try.pdf',
             httpHeaders: {
-              token:this.$store.state.token
+              token:"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjMyNTAyODMsInN1YiI6Ik5hbmN5MTIzIiwiY3JlYXRlZCI6MTYyMzI0Nzg4MzcwNn0.qlIGPbE_yqIWNP6-_OjOPK36AxSTCzrL0cMatml7ocmoeOpByFPXrfV-4cAO2LvA9i4pVLj6jaaTIJRnXr-aQw"
             },
           })
         }
@@ -213,10 +203,9 @@ export default {
       })
         .then(
           data => {
-            this.active=data.reportStatus;
             this.src=pdf.createLoadingTask({
-              url: data.reportPdf,
-              // url:'http://localhost:8090/static/try.pdf',
+              // url: data.reportPdf,
+              url:'http://localhost:8090/static/try.pdf',
               httpHeaders: {
                 token:this.$store.state.token
               },

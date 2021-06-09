@@ -104,7 +104,7 @@ public class ExpertServiceImpI implements ExpertService {
     }
 
     @Override
-    public Score selectScore(String reportId,String judgementId){
-        return expertMapper.selectScore(reportId, judgementId);
+    public Score selectScore(String reportId, String judgementId,String expertName){
+        return expertMapper.selectScore(reportId, judgementId,expertName);
     }
 }

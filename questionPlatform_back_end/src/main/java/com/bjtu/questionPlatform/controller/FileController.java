@@ -166,8 +166,6 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         List<HashMap<String, Object>> judgement = new ArrayList<>();
 
         System.out.println("获取某一报告"+report.getReportId());
-        System.out.println("报告地址"+report.getReportName());
-
 
 
         List<KeyWord>w=reportService.selectKeyWordByReportId(report.getReportId());
@@ -200,16 +198,12 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         }
 
         Report rpt= reportService.selectReportById(report.getReportId());
-        System.out.println("id"+report.getReportId());
         String url="http://localhost:8090/static/"+rpt.getReportPath();
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("keyWord", keyWord);
         data.put("grades", grades);
         data.put("judgement", judgement);
-
-        Report r=reportService.selectReportById(report.getReportId());
-        data.put("reportStatus",r.getReportStatus());
 
         data.put("file",url);
 
