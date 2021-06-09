@@ -15,6 +15,7 @@ import JudgeList from "../components/company/JudgeList";
 import AllocateExpert from "../components/company/AllocateExpert";
 import InviteExpert from "../components/company/InviteExpert";
 
+
 Vue.use(Router)
 
 /**
