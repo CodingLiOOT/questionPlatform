@@ -1,5 +1,6 @@
 package com.bjtu.questionPlatform.controller;
 
+<<<<<<< HEAD
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -7,6 +8,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.bjtu.questionPlatform.entity.*;
 import com.bjtu.questionPlatform.service.*;
 
+=======
+import com.bjtu.questionPlatform.entity.Expert;
+import com.bjtu.questionPlatform.entity.User;
+import com.bjtu.questionPlatform.service.ExpertService;
+import com.bjtu.questionPlatform.service.MailService;
+import com.bjtu.questionPlatform.service.UserService;
+import com.bjtu.questionPlatform.utils.InviteCodeUtils.InviteCodeUtils;
+>>>>>>> 0ce68d9 (feat: 邀请专家和专家登录)
 import com.bjtu.questionPlatform.utils.resultUtils.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +37,7 @@ public class ExpertController {
     @Autowired
     private JudgementService judgementService;
     @Autowired
+<<<<<<< HEAD
     private ScoreService scoreService;
     @Autowired
     private ExpertService expertService;
@@ -170,6 +180,20 @@ public class ExpertController {
         return data;
 
 
+=======
+    private MailService mailService;
+
+    @Autowired
+    private InviteCodeUtils inviteCodeUtils;
+
+
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/sendCode")
+    public void sendVerifyCode(@RequestBody String expertName) {
+        String expertCode =inviteCodeUtils.setCode(expertName); // 根据专家姓名发送6位邀请码，有效时间6小时
+        expertService.invite(expertName,"123.com",expertCode);
+>>>>>>> 0ce68d9 (feat: 邀请专家和专家登录)
     }
 
 
@@ -221,4 +245,35 @@ public class ExpertController {
 
 
 
+<<<<<<< HEAD
+=======
+
+    @CrossOrigin
+    @ResponseResultBody
+    @PostMapping(value = "/expertLogin")
+    public HashMap<String, Object> expertLogin(@RequestBody String expertName,@RequestBody String code) {
+        expertService.expertLogin(expertName,code);
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("expert",expertService.selectExpertByExpertName(expertName));
+        return data;
+    }
+
+
+
+//    @CrossOrigin
+//    @ResponseResultBody
+//    @PostMapping(value = "/login")
+//    public HashMap<String, Object> loginExpert(@RequestBody Expert expert) {
+//        HashMap<String, Object> data = new HashMap<>();
+//        data.put("token", userService.userLogin(user));
+//        data.put("user",userService.selectUserByUserName(user.getUsername()));
+//        data.put("type",userService.selectTypeByUserName(user.getUsername()));
+//        return data;
+//    }
+
+
+
+    
+
+>>>>>>> 0ce68d9 (feat: 邀请专家和专家登录)
 }

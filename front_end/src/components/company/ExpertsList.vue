@@ -175,7 +175,6 @@ export default {
       console.log(row);
       this.$router.push({
         path: 'InviteExpert',
-
         query: {
           name: row.name,
         }

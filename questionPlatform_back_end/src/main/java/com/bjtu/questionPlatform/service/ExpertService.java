@@ -6,7 +6,6 @@ import com.bjtu.questionPlatform.entity.Score;
 public interface ExpertService {
 
 
-
     void createExpert(Expert expert);
 
     Expert selectExpertByExpertName(String expertName);
