@@ -53,6 +53,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/judgement/**").permitAll()
                 .antMatchers("/api/Expert/**").permitAll()
 
+                .antMatchers("/static/**").permitAll()
+
 
                 .antMatchers("/error").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").anonymous()  // 允许匿名访问
