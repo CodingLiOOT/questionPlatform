@@ -1,6 +1,9 @@
 server:
   port: 8090
 spring:
+  devtools:
+    livereload:
+      enabled: true
   mvc:
     static-path-pattern: /static/**
   mail:
