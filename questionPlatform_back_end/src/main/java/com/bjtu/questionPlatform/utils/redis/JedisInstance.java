@@ -3,6 +3,8 @@ package com.bjtu.questionPlatform.utils.redis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import java.util.Properties;
+
 /**
  * @program: framework
  * @description: redis config

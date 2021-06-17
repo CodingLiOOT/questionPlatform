@@ -43,16 +43,16 @@ public class ExpertController {
 
 
 
-    //专家登录
-    @CrossOrigin
-    @ResponseResultBody
-    @PostMapping(value = "/expertLogin")
-    public HashMap<String, Object> expertLogin(@RequestBody Expert expert) {
-        expertService.expertLogin(expert.getExpertName(),expert.getCode());
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("expert",expertService.selectExpertByExpertName(expert.getExpertName()));
-        return data;
-    }
+//    //专家登录
+//    @CrossOrigin
+//    @ResponseResultBody
+//    @PostMapping(value = "/expertLogin")
+//    public HashMap<String, Object> expertLogin(@RequestBody Expert expert) {
+//        expertService.expertLogin(expert.getExpertName(),expert.getCode());
+//        HashMap<String, Object> data = new HashMap<>();
+//        data.put("expert",expertService.selectExpertByExpertName(expert.getExpertName()));
+//        return data;
+//    }
 
 
 
@@ -198,7 +198,7 @@ public class ExpertController {
     @PostMapping(value = "/sendCode")
     public void sendVerifyCode(@RequestBody String expertName) {
         String expertCode =inviteCodeUtils.setCode(expertName); // 根据专家姓名发送6位邀请码，有效时间6小时
-        expertService.invite(expertName,"123.com",expertCode);
+        expertService.invite(expertName,"123.com");
     }
 
 

@@ -24,7 +24,7 @@ public class AhpUtil {
 
 //    private static final AhpUtil acw = new AhpUtil();//单例模式
 
-    private AhpUtil(double[] weightList){
+    public AhpUtil(double[] weightList){
         this.weightList=weightList;
         this.numOfWeight=weightList.length;
         this.weightMatrix=new double[numOfWeight][numOfWeight];
