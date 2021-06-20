@@ -142,7 +142,7 @@ export default {
       activeName: 'show',
       editData: [],  //编辑行初始数据
       editId: '',  //判断编辑的是哪一行
-      judgementData: []
+      judgementData: [],
     }
   },
   mounted() {
@@ -234,6 +234,13 @@ export default {
      },
     // 编辑指标接口
     changeClick(row) {
+      if (this.editId !== '') {
+        this.$message({
+          message: '请先保存',
+          type: 'warning',
+        });
+        return;
+      }
       if (this.judgementData.some((item) => {
         return item.id === '';
       })) {
@@ -253,21 +260,18 @@ export default {
       --maxID;
       this.judgementData.splice(index,1);
       this.editId = '';
+      this.judgementData.forEach((item) => {
+        if(item.id > index + 1) {
+            item.id--;
+        }
+      })
     },
     // 取消操作接口
     cancelClick(row) {
-      if (row.id) {
-        for (let i in row) {
-          row[i] = this.editData[i];
-        }
-        this.editId = '';
-      } else {
-        this.judgementData.forEach((item, index) => {
-          if (item.id === '') {
-            this.judgementData.splice(index, 1);
-          }
-        })
+      for (let i in row) {
+        row[i] = this.editData[i];
       }
+      this.editId = '';
     },
     // 保存指标接口，成功以后 this.editId = ''
     saveClick(row) {
@@ -319,7 +323,6 @@ export default {
       for(let i=0; i<listSize; i++){
         console.log(judgeList[i].name);
       }*/
-
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.$API.p_newJudgement({
