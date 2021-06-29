@@ -14,6 +14,8 @@ import Edit from "../components/company/Edit";
 import JudgeList from "../components/company/JudgeList";
 import AllocateExpert from "../components/company/AllocateExpert";
 import InviteExpert from "../components/company/InviteExpert";
+import DetailReport from "../components/company/DetailReport";
+import ExpertReportDetail from "../components/expert/ExpertReportDetail"
 
 
 Vue.use(Router)
@@ -92,6 +94,11 @@ const router = new Router({
       redirect:'/Company/Evaluate',
       component:Company,
       children:[
+        {
+          path:'DetailReport',
+          name:'DetailReport',
+          component:DetailReport,
+        },
         {
           path:'Evaluate',
           name:'Evaluate',
@@ -182,6 +189,12 @@ const router = new Router({
           path: 'EditScore',
           name: 'EditScore',
           component: () => import("../components/expert/EditScore"),
+        },
+        //ExpertReportDetail
+        {
+          path: 'ExpertReportDetail',
+          name: 'ExpertReportDetail',
+          component: ExpertReportDetail,
         },
 
       ]

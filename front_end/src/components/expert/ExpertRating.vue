@@ -84,7 +84,7 @@ export default {
     handleClick(row) {
       console.log(row);
       this.$router.push({
-        path: 'ReportDetail',
+        path: 'ExpertReportDetail',
         query: {
           id: row.id,
         }

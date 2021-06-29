@@ -9,44 +9,6 @@
       </el-steps>
     </el-row>
     <el-row>
-      <el-col :span="12">
-        <el-card shadow="hover">
-          <el-row>
-            <el-col :span="4">
-              标签词：
-            </el-col>
-            <el-col :span="20">
-              <el-tag v-for="item in keyWord" :key="item" class="text item">{{item}}</el-tag>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-divider content-position="right"></el-divider>
-          </el-row>
-          <el-row class="el-row">
-            <el-card shadow="hover" v-for="item in grades" :key="item" class="item">
-              <el-row class="expertName">
-                <el-col :span="6">
-                  专家:{{item.expertName}}打分情况
-                </el-col>
-              </el-row>
-              <el-row>
-                总体打分：{{item.totalScore}}
-              </el-row>
-              <el-row>
-                指标打分：
-              </el-row>
-              <el-row v-for="j in item.judgement" :key="j" >
-                指标名称: {{j.judgementName}}
-                分数: {{j.score}}
-              </el-row>
-              <el-row>
-                专家建议: {{item.suggestion}}
-              </el-row>
-            </el-card>
-          </el-row>
-        </el-card>
-      </el-col>
-      <el-col :span="12">
         <div class="tools">
           <el-button :theme="'default'" type="submit" :title="'基础按钮'" @click.stop="prePage" class="mr10"> 上一页</el-button>
           <el-button :theme="'default'" type="submit" :title="'基础按钮'" @click.stop="nextPage" class="mr10"> 下一页</el-button>
@@ -62,7 +24,6 @@
              @error="pdfError($event)"
              @link-clicked="page = $event">
         </pdf>
-      </el-col>
     </el-row>
   </div>
 </template>
