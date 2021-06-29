@@ -203,7 +203,6 @@ export default {
               temp.name = data.jClass[i].jClassName;
               temp.time = data.jClass[i].jClassTime;
               temp.managerId = data.jClass[i].managerId;
-
               this.judgeListData.push(temp);
             }
           }
@@ -227,11 +226,11 @@ export default {
     handleChangeTab(tab, event) {
       console.log(tab, event);
     },
-     checkMaxId(id) {
-       if(id > maxID) {
-         maxID = id;
-       }
-     },
+    checkMaxId(id) {
+      if(id > maxID) {
+        maxID = id;
+      }
+    },
     // 编辑指标接口
     changeClick(row) {
       if (this.editId !== '') {
@@ -262,7 +261,7 @@ export default {
       this.editId = '';
       this.judgementData.forEach((item) => {
         if(item.id > index + 1) {
-            item.id--;
+          item.id--;
         }
       })
     },
@@ -361,5 +360,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
