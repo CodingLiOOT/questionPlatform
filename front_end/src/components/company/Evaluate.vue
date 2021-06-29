@@ -53,9 +53,10 @@
       <el-table-column
         fixed="right"
         label="操作"
-        width="120">
+        width="200">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="primary" size="small">分配指标类</el-button>
+          <el-button @click="handleDetail(scope.row)" type="text" size="small">查看</el-button>
+          <el-button @click="handleClick(scope.row)" type="text" size="small">分配指标类</el-button>
         </template>
       </el-table-column>
 
@@ -83,6 +84,15 @@ export default {
     }
   },
   methods: {
+    handleDetail(row) {
+      console.log(row);
+      this.$router.push({
+        path: 'DetailReport',
+        query: {
+          reportId: row.id,
+        }
+      });
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
