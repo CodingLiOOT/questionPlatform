@@ -1,6 +1,7 @@
 package com.bjtu.questionPlatform.service;
 
 import com.bjtu.questionPlatform.entity.Expert;
+import com.bjtu.questionPlatform.entity.KeyWord;
 import com.bjtu.questionPlatform.entity.Score;
 
 import java.util.List;
@@ -22,5 +23,7 @@ public interface ExpertService {
     void expertLogin(String expertName,String code);
 
     void inviteExpert(String expertName,String reportId);
+
+    List<KeyWord> getAllKeys();
 
 }

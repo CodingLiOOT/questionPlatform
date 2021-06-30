@@ -134,12 +134,11 @@ export default {
         .then(
           res => {
             this.active=res.reportStatus;
-            // this.src = pdf.createLoadingTask({
-            //   url: res.file,
-            //   httpHeaders: {
-            //     token: this.$store.state.token
-            //   },
-            // })
+            this.src = pdf.createLoadingTask({
+              url: res.reportPdf,
+              httpHeaders: {
+              },
+            })
             for (let i = 0; i < res.keyWords.length; i++) {
               this.keyWord.push(res.keyWords[i].word);
             }

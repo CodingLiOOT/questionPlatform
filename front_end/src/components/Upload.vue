@@ -17,7 +17,7 @@
             :file-list="fileList"
             :http-request="uploadOk">
             <el-button size="small" type="primary">选择文件</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过15mb</div>
           </el-upload>
         </el-form-item>
         <el-form-item>

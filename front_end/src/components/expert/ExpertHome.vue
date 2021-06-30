@@ -16,17 +16,8 @@
           <el-form-item label="所属单位">
             <span>{{ props.row.unit }}</span>
           </el-form-item>
-          <el-form-item label="关键词">
-            <span>{{ props.row.key }}</span>
-          </el-form-item>
           <el-form-item label="专家类型">
             <span>{{ props.row.type }}</span>
-          </el-form-item>
-          <el-form-item label="邮箱">
-            <span>{{ props.row.email }}</span>
-          </el-form-item>
-          <el-form-item label="电话">
-            <span>{{ props.row.phone }}</span>
           </el-form-item>
           <el-form-item label="专家简介">
             <span>{{ props.row.introduction }}</span>
@@ -57,16 +48,36 @@ export default {
   name: 'ExpertHome',
   data() {
     return {
-      tableData: [{
-        name: '张三',
-        unit: '北京交通大学软件学院',
-        key: '数据库',
-        type: '数据库专家',
-        email: '12345678@bjtu.edu.cn',
-        phone: '19876543210',
-        introduction: '数据库专家'
-      }]
+      tableData: []
     }
+  },
+  methods:{
+    getExpertInfo(){
+      this.$API.g_getExpertList({})
+      .then(
+        res=>{
+          for(let i=0;i<res.experts.length;i++){
+            if(res.experts[i].expertName===this.$store.state.expert.expertName){
+              let temp={
+                name: '',
+                unit: '',
+                type: '',
+                introduction: ''
+              }
+              let t=res.experts[i];
+              temp.name=t.expertName;
+              temp.unit=t.expertUnit;
+              temp.type=t.expertType;
+              temp.introduction=t.expertInformation;
+              this.tableData.push(temp);
+            }
+          }
+      }
+      )
+    }
+  },
+  mounted() {
+    this.getExpertInfo()
   }
 }
 </script>

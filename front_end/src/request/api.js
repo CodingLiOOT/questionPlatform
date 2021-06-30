@@ -155,4 +155,6 @@ export default class api {
 
   static p_testUpload=p=>post('/file/upload',p);
 
+  static p_getKeyWords=p=>post('/Company/getKeyWords',p);
+
 }

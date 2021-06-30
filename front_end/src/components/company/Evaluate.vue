@@ -102,12 +102,23 @@ export default {
     // 选中查看某一条
     handleClick(row) {
       console.log(row);
-      this.$router.push({
-        path: 'Edit',
-        query: {
-          id: row.id,
+      for(let i=0;i<this.tableData.length;i++){
+        if(this.tableData[i].id===row.id){
+          // more than 2 means it has been allocated to an expert
+          if(this.tableData[i].reportStatus>'2'){
+            this.$message('已经邀请专家，无法修改指标类');
+          }
+          else{
+            this.$router.push({
+              path: 'Edit',
+              query: {
+                id: row.id,
+              }
+            });
+          }
         }
-      });
+      }
+
     },
     filterTag(value, row) {
       for (let item in row.tag) {
@@ -129,10 +140,13 @@ export default {
                 tag: [],
                 information: '',
                 jClassName:'',
+                status:'',
+                reportStatus:'',
               };
               temp.id = data.reports[i].reportId;
               temp.name = data.reports[i].reportName;
               temp.time = data.reports[i].createTime;
+              temp.reportStatus=data.reports[i].reportStatus;
               temp.jClassName=data.reports[i].jClassName;
               if (temp.jClassName == null) {
                 temp.jClassName = '未分配';

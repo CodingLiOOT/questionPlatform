@@ -67,11 +67,12 @@ export default {
       })
         .then(
           res=>{
+            alert("res")
+            alert(res.file)
             this.src=pdf.createLoadingTask({
               url: res.file,
               httpHeaders: {
                 token:this.$store.state.token
-                // token:"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjMyNTAyODMsInN1YiI6Ik5hbmN5MTIzIiwiY3JlYXRlZCI6MTYyMzI0Nzg4MzcwNn0.qlIGPbE_yqIWNP6-_OjOPK36AxSTCzrL0cMatml7ocmoeOpByFPXrfV-4cAO2LvA9i4pVLj6jaaTIJRnXr-aQw"
               },
             })
             this.active=res.reportStatus;
