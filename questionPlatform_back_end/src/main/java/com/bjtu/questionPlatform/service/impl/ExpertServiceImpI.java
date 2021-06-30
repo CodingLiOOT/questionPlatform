@@ -1,6 +1,7 @@
 package com.bjtu.questionPlatform.service.impl;
 
 import com.bjtu.questionPlatform.entity.Expert;
+import com.bjtu.questionPlatform.entity.KeyWord;
 import com.bjtu.questionPlatform.entity.Score;
 import com.bjtu.questionPlatform.entity.User;
 import com.bjtu.questionPlatform.mapper.ExpertMapper;
@@ -89,6 +90,11 @@ public class ExpertServiceImpI implements ExpertService {
     @Override
     public void inviteExpert(String expertName, String reportId) {
         expertMapper.inviteExpert(expertName,reportId);
+    }
+
+    @Override
+    public List<KeyWord> getAllKeys() {
+        return expertMapper.getAllKeys();
     }
 
     @Override

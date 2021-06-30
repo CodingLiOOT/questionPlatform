@@ -15,12 +15,12 @@
       <el-form-item label="关键词：">
         <el-input v-model="form.keysId" placeholder="">
           <el-select v-model="form.keysId" slot="prepend" placeholder="请选择">
-          <el-option label="石油" value="石油"></el-option>
-          <el-option label="井" value="井"></el-option>
-          <el-option label="国家能源" value="国家能源"></el-option>
-          <el-option label="电" value="电"></el-option>
-          <el-option label="安全" value="安全"></el-option>
-          <el-option label="煤矿" value="煤矿"></el-option>
+            <el-option
+              v-for="item in keys"
+              :key="item.keysId"
+              :label="item.keysContent"
+              :value="item.keysContent">
+            </el-option>
         </el-select>
         </el-input>
       </el-form-item>
@@ -66,9 +66,31 @@ export default {
         mail: '',
         phone: '',
       },
+      keys:[],
     }
   },
   methods:{
+    getKeyWords(){
+      this.$API.p_getKeyWords({})
+        .then(
+          data=>{
+            for(let i=0;i<data.keys.length;i++){
+              let temp={
+                keysId:'',
+                keysContent:'',
+              }
+              temp.keysId=data.keys[i].keysId;
+              temp.keysContent=data.keys[i].keysContent;
+              this.keys.push(temp);
+            }
+          }
+        )
+        .catch(
+          error => {
+            console.log(error);
+          }
+        )
+    },
     onSubmit() {
       this.$API.p_createExpert({
         expertName: this.form.expertName,
@@ -81,24 +103,24 @@ export default {
       })
         .then(
           data=>{
-            for(let i=0;i<data.experts.length;i++){
-              let temp={
-                expertName: '',
-                keysId: '',
-                expertType: '',
-                expertUnit:'',
-                expertInformation: '',
-                mail:'',
-                phone:'',
-              };
-              temp.expertName=data.experts[i].expertName;
-              temp.keysId=data.experts[i].keysId;
-              temp.expertType=data.experts[i].expertType;
-              temp.expertUnit=data.experts[i].expertUnit;
-              temp.expertInformation=data.experts[i].expertInformation;
-              temp.mail=data.experts[i].mail;
-              temp.phone=data.experts[i].phone;
-            }
+            // for(let i=0;i<data.experts.length;i++){
+            //   let temp={
+            //     expertName: '',
+            //     keysId: '',
+            //     expertType: '',
+            //     expertUnit:'',
+            //     expertInformation: '',
+            //     mail:'',
+            //     phone:'',
+            //   };
+            //   temp.expertName=data.experts[i].expertName;
+            //   temp.keysId=data.experts[i].keysId;
+            //   temp.expertType=data.experts[i].expertType;
+            //   temp.expertUnit=data.experts[i].expertUnit;
+            //   temp.expertInformation=data.experts[i].expertInformation;
+            //   temp.mail=data.experts[i].mail;
+            //   temp.phone=data.experts[i].phone;
+            // }
           }
         )
         .catch(
@@ -109,6 +131,9 @@ export default {
 
     }
   },
+  mounted() {
+    this.getKeyWords()
+  }
 }
 </script>
 

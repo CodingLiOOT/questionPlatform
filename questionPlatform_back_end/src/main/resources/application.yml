@@ -21,7 +21,8 @@ spring:
 #      username: root
 #      #输入自己的账户密码
 #      password: 78089091
-    url: jdbc:mysql://rm-bp1ef7p1kjz58v31fzo.mysql.rds.aliyuncs.com:3306/db123?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#    url: jdbc:mysql://rm-bp1ef7p1kjz58v31fzo.mysql.rds.aliyuncs.com:3306/db123?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://rm-bp1ef7p1kjz58v31fzo.mysql.rds.aliyuncs.com:3306/test1?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: tzy
     #输入自己的账户密码
     password: 990223tzyTZY

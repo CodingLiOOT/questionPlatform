@@ -173,6 +173,7 @@ public class ExpertController {
             judgement.put("judgeName", j.get(i).getJudgementname());
             judgement.put("judgeContent",j.get(i).getJudgementcontent());
             judgement.put("judgeProportion",j.get(i).getJudgementproportion());
+            System.out.println("s"+s);
             judgement.put("score",s.getScore());
             judgements.add(judgement);
         }

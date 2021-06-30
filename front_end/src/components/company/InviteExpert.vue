@@ -48,27 +48,7 @@ export default {
         createTime: '',
         keyWords: [],
       },
-      reports: [
-      //   {
-      //   reportId: '1',
-      //   reportName: '报告1',
-      //   createTime: '2020-6-6',
-      //   keyWords: ["石油","中石油"],
-      //   jClassName: '未分配',
-      // },{
-      //   reportId: '2',
-      //   reportName: '报告2',
-      //   createTime: '2020-6-7',
-      //   keyWords: ["中石油","中石化"],
-      //   jClassName: '未分配',
-      // },{
-      //   reportId: '3',
-      //   reportName: '报告3',
-      //   createTime: '2020-6-9',
-      //   keyWords: ["关键词1"],
-      //   jClassName: '未分配',
-      // },
-      ],
+      reports: [],
     }
   },
   methods: {
@@ -103,18 +83,20 @@ export default {
                 keyWords: [],
                 jClassName: '',
               };
-              temp.reportId = data.reports[i].reportId;
-              temp.reportName = data.reports[i].reportName;
-              temp.createTime = data.reports[i].createTime;
-              temp.jClassName = data.reports[i].jClassName;
-              if (temp.jClassName == null) {
-                temp.jClassName = '未分配';
+              if(data.reports[i].reportStatus==='2'){
+                temp.reportId = data.reports[i].reportId;
+                temp.reportName = data.reports[i].reportName;
+                temp.createTime = data.reports[i].createTime;
+                temp.jClassName = data.reports[i].jClassName;
+                if (temp.jClassName == null) {
+                  temp.jClassName = '未分配';
+                }
+                for (let j = 0; j < data.reports[i].keyWord.length; j++) {
+                  let k = data.reports[i].keyWord[j].word;
+                  temp.keyWords.push(k);
+                }
+                this.reports.push(temp);
               }
-              for (let j = 0; j < data.reports[i].keyWord.length; j++) {
-                let k = data.reports[i].keyWord[j].word;
-                temp.keyWords.push(k);
-              }
-              this.reports.push(temp);
             }
           }
         )
