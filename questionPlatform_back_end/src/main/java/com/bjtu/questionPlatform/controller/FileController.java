@@ -199,6 +199,7 @@ private final static String rootPath=System.getProperty("user.dir")+"\\src\\main
         }
 
         Report rpt= reportService.selectReportById(report.getReportId());
+        System.out.println("id"+report.getReportId());
         String url="http://localhost:8090/static/"+rpt.getReportPath();
 
         HashMap<String, Object> data = new HashMap<>();

@@ -133,8 +133,6 @@ export default {
       })
         .then(
           res => {
-            alert(this.$store.state.expert.token)
-            alert(this.$store.state.token)
             this.active=res.reportStatus;
             this.src = pdf.createLoadingTask({
               url: res.reportPdf,
