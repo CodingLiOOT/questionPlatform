@@ -118,7 +118,7 @@ export default {
       src:pdf.createLoadingTask({
         url: 'http://localhost:8090/static/try.pdf',
         httpHeaders: {
-          token:"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjMyNTAyODMsInN1YiI6Ik5hbmN5MTIzIiwiY3JlYXRlZCI6MTYyMzI0Nzg4MzcwNn0.qlIGPbE_yqIWNP6-_OjOPK36AxSTCzrL0cMatml7ocmoeOpByFPXrfV-4cAO2LvA9i4pVLj6jaaTIJRnXr-aQw"
+          token:this.$store.state.token
         },
       }),
       pageNum: 1,
@@ -164,7 +164,7 @@ export default {
             url: res.file,
             // url: 'http://localhost:8090/static/try.pdf',
             httpHeaders: {
-              token:"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjMyNTAyODMsInN1YiI6Ik5hbmN5MTIzIiwiY3JlYXRlZCI6MTYyMzI0Nzg4MzcwNn0.qlIGPbE_yqIWNP6-_OjOPK36AxSTCzrL0cMatml7ocmoeOpByFPXrfV-4cAO2LvA9i4pVLj6jaaTIJRnXr-aQw"
+              token:this.$store.state.token
             },
           })
         }

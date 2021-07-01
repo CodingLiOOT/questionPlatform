@@ -102,7 +102,7 @@ export default {
       src: pdf.createLoadingTask({
         url: 'http://localhost:8090/static/try.pdf',
         httpHeaders: {
-          token:"eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjMyNTAyODMsInN1YiI6Ik5hbmN5MTIzIiwiY3JlYXRlZCI6MTYyMzI0Nzg4MzcwNn0.qlIGPbE_yqIWNP6-_OjOPK36AxSTCzrL0cMatml7ocmoeOpByFPXrfV-4cAO2LvA9i4pVLj6jaaTIJRnXr-aQw"
+          token:this.$store.state.expert.token
         },
       }),
       pageNum: 1,
@@ -133,10 +133,13 @@ export default {
       })
         .then(
           res => {
+            alert(this.$store.state.expert.token)
+            alert(this.$store.state.token)
             this.active=res.reportStatus;
             this.src = pdf.createLoadingTask({
               url: res.reportPdf,
               httpHeaders: {
+                token:this.$store.state.expert.token
               },
             })
             for (let i = 0; i < res.keyWords.length; i++) {
