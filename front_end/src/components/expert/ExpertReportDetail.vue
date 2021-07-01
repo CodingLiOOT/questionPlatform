@@ -63,12 +63,10 @@ export default {
   methods:{
     showDetail(){
       this.$API.p_getReportDetail({
-        reportId:this.$route.query.reportId
+        reportId:this.$route.query.id
       })
         .then(
           res=>{
-            alert("res")
-            alert(res.file)
             this.src=pdf.createLoadingTask({
               url: res.file,
               httpHeaders: {

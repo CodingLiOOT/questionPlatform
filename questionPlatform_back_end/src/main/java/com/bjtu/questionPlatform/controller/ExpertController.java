@@ -66,7 +66,7 @@ public class ExpertController {
 
         Report r=reportService.selectReportById(report.getReportId());
         // 获取报告pdf内容
-        String url="localhost:8090/static/"+r.getReportPath();
+        String url="http://localhost:8090/static/"+r.getReportPath();
         // 获取该报告的jclass
         JudgeClass judgeClass= judgementService.getjClass(r.getjClassId());
         List<Judgement> j=judgementService.getJudgementByJClassId(r.getjClassId());
@@ -147,7 +147,7 @@ public class ExpertController {
         String suggestion=sc.get(0).getSuggestion();
 
         // 获取报告pdf内容
-        String url="localhost:8090/static/"+r.getReportPath();
+        String url="http://localhost:8090/static/"+r.getReportPath();
         // 获取该报告的jclass
         JudgeClass judgeClass= judgementService.getjClass(r.getjClassId());
         List<Judgement> j=judgementService.getJudgementByJClassId(r.getjClassId());
