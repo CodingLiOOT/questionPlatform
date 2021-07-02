@@ -2,6 +2,7 @@ package com.bjtu.questionPlatform.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -29,6 +30,8 @@ public class User implements Serializable {
 
     private String password;
 
+    private String type;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Timestamp createdDate;
 
@@ -39,4 +42,5 @@ public class User implements Serializable {
     private Integer state;
 
     private List<Role> roles;
+
 }

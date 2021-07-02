@@ -13,6 +13,7 @@
               </el-form-item>
               <router-link to="/forget">忘记密码</router-link>
               <router-link to="/register">注册账号</router-link>
+              <router-link to="/expertInvitation">专家入口</router-link>
               <el-form-item>
                 <el-button class="login-btn-submit" type="primary" @click="login()">登录</el-button>
               </el-form-item>
@@ -45,7 +46,6 @@
   </div>
 </template>
 <script>
-
 export default {
   data() {
     return {
@@ -87,7 +87,6 @@ export default {
     }
   },
   name: 'login',
-
   methods: {
     login() {
       if(this.type==='0') {
@@ -95,7 +94,6 @@ export default {
         //console.log(this.dataForm.password);
         this.$refs["dataForm"].validate((valid) => {
           if (valid) {
-
             this.$API.p_Login({
               username: this.dataForm.userName,
               password: this.dataForm.password,
@@ -105,12 +103,17 @@ export default {
                 data => {
                   this.$store.commit('login', data);
                   //this.$router.replace('/index')
-                  let redirect = decodeURIComponent(this.$route.query.redirect || '/index');
+                  let redirect
+                  if(data.type==1){
+                    redirect = decodeURIComponent(this.$route.query.redirect || '/MainPage');
+                  }
+                  else if(data.type==2){
+                    redirect = decodeURIComponent(this.$route.query.redirect || '/Company');
+                  }
                   this.$router.push({path: redirect});
                 }
               )
               .catch(err => {
-
               })
           } else {
             return false
@@ -123,7 +126,6 @@ export default {
         //console.log(this.dataForm.emailCode);
         this.$refs["emailDataForm"].validate((valid) => {
           if (valid) {
-
             this.$API.p_Login({
               mail: this.emailDataForm.email,
               verifyCode: this.emailDataForm.emailCode,
@@ -138,7 +140,6 @@ export default {
                 }
               )
               .catch(err => {
-
               })
           } else {
             return false
@@ -159,9 +160,8 @@ export default {
       this.$API.p_SendCode({
         mail: this.emailDataForm.email
       })
-      .then(
-
-      )
+        .then(
+        )
     },
     //发送手机验证码倒计时
     timer() {
@@ -190,7 +190,6 @@ export default {
   background: rgba(38, 50, 56, .6) url(../assets/login_bg.jpg) no-repeat;
   background-size: 100% 100%;
 }
-
 .login-content {
   position: absolute;
   top: 0;
@@ -203,7 +202,6 @@ export default {
   background-color: #112234;
   opacity: .8;
 }
-
 .login-main {
   color: beige;
   padding: 20px 20px 10px 20px;
@@ -224,9 +222,7 @@ a {
 a:hover {
   color: coral;
 }
-
 .login-btn-submit{
   margin-top: 10px;
 }
-
 </style>
