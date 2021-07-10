@@ -26,10 +26,7 @@
         <router-view></router-view>
       </el-main>
     </el-container>
-<!--          <el-footer>-->
-<!--            <p>Copyright @ 2021 team7.com Inc. All Rights Reserved.</p>-->
-<!--            <p>联系邮箱：18301078@bjtu.edu.cn</p>-->
-<!--          </el-footer>-->
+
 
   </div>
 </template>
